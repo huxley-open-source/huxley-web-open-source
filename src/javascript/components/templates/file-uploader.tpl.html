@@ -1,0 +1,66 @@
+<div>
+  <div class="stats-alert" th-alert><div>{{'component.fileUploader.info' | translate}}</div><div class="small">{{'component.fileUploader.info2' | translate}}</div></div>
+    <div>
+      <input class="file-uploader-input" type="file" nv-file-select uploader="uploader"/><br/>
+      <button class="btn btn-success btn-s" type="button" upload-file>
+        <span class="glyphicon glyphicon-upload"></span> {{'component.fileUploader.chooseFile' | translate}}
+      </button>
+      <button type="button" class="btn btn-success btn-s" ng-click="uploader.uploadAll()" ng-disabled="!uploader.getNotUploadedItems().length" disabled="disabled">
+        <span class="glyphicon glyphicon-upload"></span> {{'component.fileUploader.uploadAll' | translate}}
+      </button>
+      <button type="button" class="btn btn-warning btn-s" ng-click="uploader.cancelAll()" ng-disabled="!uploader.isUploading" disabled="disabled">
+        <span class="glyphicon glyphicon-ban-circle"></span>{{'component.fileUploader.cancelAll' | translate}}
+      </button>
+      <button type="button" class="btn btn-danger btn-s" ng-click="uploader.clearQueue()" ng-disabled="!uploader.queue.length" disabled="disabled">
+        <span class="glyphicon glyphicon-trash"></span> {{'component.fileUploader.removeAll' | translate}}
+      </button>
+    </div>
+
+    <table class="table file-uploader-table">
+      <thead>
+      <tr>
+        <th width="50%">{{'component.fileUploader.name' | translate}}</th>
+        <th ng-show="uploader.isHTML5">{{'component.fileUploader.size' | translate}}</th>
+        <th ng-show="uploader.isHTML5">{{'component.fileUploader.progress' | translate}}</th>
+        <th>{{'component.fileUploader.status' | translate}}</th>
+        <th>{{'component.fileUploader.actions' | translate}}</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="item in uploader.queue" class="ng-scope">
+          <td>
+            <strong class="ng-binding" ng-class="{'error': item.isUploaded && !item.isSuccess}">{{item.file.name}}</strong>
+
+            <div ng-show="uploader.isHTML5 && !item.responseLink" ng-thumb="{ file: item._file, width: 100}"></div>
+            <div class="file-uploader-thumb">
+              <img src="{{item.responseLink}}" ng-show="item.responseLink" draggable="true"/>
+            </div>
+
+          </td>
+          <td ng-show="uploader.isHTML5" nowrap=""  class="ng-binding text-center">{{item.file.size /1024/1024 | number: 0}} MB</td>
+          <td ng-show="uploader.isHTML5">
+            <div class="progress" style="margin-bottom: 0;">
+              <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }" style="width: 0%;"></div>
+            </div>
+          </td>
+          <td class="text-center">
+            <span ng-show="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+            <span ng-show="item.isUploaded && !item.isSuccess"><i class="glyphicon glyphicon-remove error"></i></span>
+          </td>
+          <td nowrap="">
+            <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess || item.responseLink">
+              <span class="glyphicon glyphicon-upload"></span> {{'component.fileUploader.upload'| translate}}
+            </button>
+            <button type="button" class="btn btn-warning btn-xs" ng-click="item.cancel()" ng-disabled="!item.isUploading || item.responseLink" disabled="disabled">
+              <span class="glyphicon glyphicon-ban-circle"></span> {{'component.fileUploader.cancel' | translate}}
+            </button>
+            <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
+              <span class="glyphicon glyphicon-trash"></span> {{'component.fileUploader.remove' | translate}}
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+
+</div>

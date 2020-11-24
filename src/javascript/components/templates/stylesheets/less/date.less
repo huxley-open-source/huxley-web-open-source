@@ -1,0 +1,90 @@
+.date-group {
+
+  > input {
+    width: 90% !important;
+  }
+  > span {
+    display: block;
+  }
+  .btn {
+    height: 34px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    .glyphicon-calendar {
+      font-size: 14px;
+      padding: 7px;
+      margin-bottom: 4px;
+    }
+    &.btn-blue:hover, &.btn-blue:active, &.btn-blue:focus  {
+      color: @white;
+      background-color: @blue;
+    }
+  }
+  .dropdown-menu {
+    margin: -1px;
+    padding: 0;
+    table{
+      td:last-child, th:first-child {
+        padding-right: 0 !important;
+      }
+      td:first-child, th:first-child {
+        padding-left: 0 !important;
+      }
+      thead {
+        tr:first-child, tr:first-child button  {
+          background-color: @blue;
+          color: @white;
+        }
+        tr:last-child {
+          color: @blue-darker;
+        }
+      }
+      &:focus {
+      }
+         outline: 0;
+    }
+    .btn {
+      border: 0px;
+    }
+  }
+}
+
+.th-date-time {
+  .display-flex;
+  > div {
+    flex-basis: 110px;
+    line-height: 33px;
+    &:nth-child(2) {
+      .flex-basis(35px);
+      font-weight: bold;
+      color: #282b32;
+    }
+    &:nth-child(4) {
+      .flex-basis(35px);
+      text-align: center;
+      font-weight: bold;
+      color: #282b32;
+    }
+    &:nth-child(1) {
+      .flex-basis(234px);
+    }
+  }
+  .th-select-box {
+    padding: 0 !important;
+    width: 100%;
+    text-align: center;
+    margin-left: 0 !important;
+    .form-control {
+      padding-left: 0;
+    }
+    .dropdown-menu {
+      min-width: 10px;
+    }
+    > div {
+      width: 100% !important;
+    }
+  }
+  &.help-block{
+    right: 99px !important;
+  }
+}

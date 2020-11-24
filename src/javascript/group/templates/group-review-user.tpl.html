@@ -1,0 +1,110 @@
+<div class="multiview-bottom box">
+  <div th-alert class="stats-alert" closable="false">
+    {{'group.statsList.alert' | translate}}
+  </div>
+  <th-loading loading="$parent.statsLoading">
+    <div class="user-review-container" ng-class="{'student-review': !currentUser.atLeastTeacherAssistant()}">
+      <div>
+        <button ui-sref="group-show.stats-student-individual({userId: user.before})"
+                ng-show="currentUser.atLeastTeacherAssistant()" ng-disabled="!(user.before)" class="btn btn-blue-lighter arrow-back">
+          <i class="arrow-left arrow-blue icon"></i>
+          <i class="arrow-left arrow-blue-lighter icon arrow-small"></i>
+        </button>
+      </div>
+      <div class="user-reviewed">
+        <div>
+          <th-user-box user="user"> </th-user-box>
+        </div>
+
+      </div>
+      <div>
+        <button ui-sref="group-show.stats-student-individual({userId: user.after})"
+                ng-disabled="!(user.after)" ng-show="currentUser.atLeastTeacherAssistant()" class="btn btn-blue-lighter arrow-next">
+          <i class="arrow-right arrow-blue icon"></i>
+          <i class="arrow-right arrow-blue-lighter icon arrow-small"></i>
+        </button>
+      </div>
+
+    </div>
+
+    <div class="stats-box">
+      <div class="stats-box-item">
+        <p class="stats-big">{{user.stats.ndCount}}</p>
+        <p class="stats-box-title">{{'group.statsList.points' | translate}}</p>
+      </div>
+
+      <div class="stats-box-item">
+        <p class="stats-big" ng-class="
+        {
+        'error': user.stats.submissionsCount <= submissionAverage * 0.3
+        }">{{user.stats.submissionsCount}}</p>
+        <p class="stats-box-title">{{'group.stats.data.submissionsCount' | translate}}</p>
+      </div>
+
+      <div class="stats-box-item">
+        <p class="stats-big" ng-class="
+        {
+        'error': user.stats.solvedProblemsCount <= problemsSolvedAverage * 0.3
+        }"> {{user.stats.solvedProblemsCount}}</p>
+        <p class="stats-box-title">{{'group.stats.data.problemsSolved' | translate}}</p>
+      </div>
+
+      <div class="stats-box-item">
+        <p class="stats-big" ng-class="
+        {
+        'error': user.stats.triedProblemsCount <= problemsTriedAverage * 0.3
+        }">{{user.stats.triedProblemsCount}}</p>
+        <p class="stats-box-title">{{'group.stats.data.problemsTried' | translate}}</p>
+      </div>
+    </div>
+
+    <div class="profile-graph-loading-container">
+        <div ng-if="loading" class="profile-graph-loading-margin">
+        </div>
+        <th-loading loading = "loading">
+          <div >
+            <div>
+              <p class="stats-box-item-unique">{{'user.graph.topics'| translate}}</p>
+            </div>
+            <nvd3 options="profileTopics.options" data="profileTopics.data"></nvd3>
+          </div>
+        </th-loading>
+      </div>
+
+    <!--<p class="stats-box-item-unique" ng-if="user.problemsTried > 0">{{'group.stats.data.problemsTried'| translate}}</p>-->
+    <!--<th-loading loading = "loadingSubmissions">-->
+      <!--<table class="table review-table">-->
+        <!--<tbody ng-repeat="prob in problemList | limitTo : 5 : (u.problemOffset -1) * 5">-->
+        <!--<tr ng-if="prob.bestEvaluation !== undefined">-->
+          <!--<td class="review-problem">-->
+            <!--<th-problem-box problem="prob" show-topics="true" nolink="false"></th-problem-box>-->
+            <!--<div class="review-status-box">-->
+              <!--<div>{{'quiz.review.stats' | translate}}:</div>-->
+              <!--<div class="penalty-alert-box">-->
+                <!--<th-problem-status status="prob.bestEvaluation" direction="'bottom'"></th-problem-status>-->
+              <!--</div>-->
+            <!--</div>-->
+          <!--</td>-->
+        <!--</tr>-->
+        <!--<tr ng-if="prob.bestEvaluation !== undefined">-->
+          <!--<td class="review-problem">-->
+            <!--<div>-->
+              <!--<button class="btn btn-blue" ng-class="{disabled: prob.bestEvaluation === undefined}" ng-click="codeReviewUser(prob.id)">-->
+                <!--{{'quiz.review.view' | translate}}-->
+              <!--</button>-->
+            <!--</div>-->
+
+          <!--</td>-->
+        <!--</tr>-->
+        <!--<tr ng-show="matchVisible[prob.id]" ng-if="prob.bestEvaluation !== undefined">-->
+          <!--<td>-->
+            <!--<th-code-view submission="quizScreen.submission[prob.id]" submission-list="problemSubmissions[prob.id]"/>-->
+          <!--</td>-->
+        <!--</tr>-->
+        <!--</tbody>-->
+      <!--</table>-->
+      <!--<div class="pagination-container" ng-if="problemList.length > 5"><pagination items-per-page="5" total-items="problemList.length" ng-model="u.problemOffset" max-size="10" class="pagination-sm" boundary-links="true" direction-links="false" rotate="false" last-text="{{'pagination.last' | translate}}" first-text="{{'pagination.first'| translate}}" ng-change="pageChanged()"></pagination></div>-->
+    <!--</th-loading>-->
+
+  </th-loading>
+</div>

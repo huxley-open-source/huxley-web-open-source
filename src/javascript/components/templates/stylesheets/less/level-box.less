@@ -1,0 +1,33 @@
+.difficulty-level {
+  .display-flex();
+  .align-items-flex(flex-end);
+
+  p {
+    margin-right: 10px;
+    margin-bottom: 0px;
+    color: black;
+  }
+
+  button {
+    font-weight: bold;
+    background-color: @blue-light;
+    text-align: center;
+    color: @white;
+    margin: 0px 0px 0px 0px;
+    border: 1px solid white;
+    padding: 2px;
+    width: 25px;
+    height: 25px;
+    .no-select;
+  }
+
+  button:hover {
+    background-color: @blue;
+    .pointer-cursor;
+  }
+
+  button._1:hover, button._2:hover, button._3:hover, button._4:hover, button._5:hover,
+  button._6:hover, button._7:hover, button._8:hover, button._9:hover, button._10:hover {
+    .default-cursor;
+  }
+}

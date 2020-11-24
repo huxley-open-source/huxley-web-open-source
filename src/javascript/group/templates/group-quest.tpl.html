@@ -1,0 +1,78 @@
+<div class="box multiview-bottom quest-list-small">
+  <span us-spinner spinner-key="spinner"></span>
+  <th-loading loading="loading">
+    <table class="table">
+      <thead>
+      <tr>
+        <th>
+          <span ng-if="quests.length === 0" translate>group.questEmpty</span>
+          <a ng-click="exportQuizes()">Exportar questionários</a>
+        </th>
+        <th class="text-right" ng-if="quests.length > 0" >
+          {{'quiz.info' | translate:{total: group.stats.quizzesCount, open: group.stats.openQuizzesCount, close: group.stats.closedQuizzesCount} }}
+        </th>
+      </tr>
+
+      </thead>
+      <tbody>
+      <tr ng-repeat="quest in quests">
+        <td>
+          <h5>
+            <a ng-href="/quiz/{{quest.id}}">{{quest.title}}</a>
+            <i ng-if="quest.invalid" class="img-short img-small-alert icon background-img" popover="{{'quiz.explanation.emptyProblemList' | translate}}" popover-trigger="mouseenter" popover-placement="right"></i>
+            <a ui-sref="quiz-show.edit-problems({id: quest.id})" ng-show="currentUser.atLeastTeacherAssistant(group)">
+              <i class="img-short img-small-pen icon background-img"></i>
+            </a>
+            <a ui-sref="quiz-clone.edit({id: quest.id})" ng-show="currentUser.atLeastTeacherAssistant()">
+              <i class="fa fa-clone"></i>
+            </a>
+            <span class="dropdown quiz-box-menu">
+              <a  ng-show="currentUser.atLeastTeacherAssistant(group)" dropdown-toggle>
+                <i class="img-small-remove" ></i>
+              </a>
+              <span class="dropdown-menu" role="menu">
+                <div class="popover right in">
+                  <div class="arrow"></div>
+                  <div class="popover-inner">
+                    <div class="popover-content background-alert">
+                      {{'group.quiz.confirmRemove' | translate}}
+                      <div class="group-exclude-user-container">
+                        <div>
+                          <span>{{quest.title}}</span>
+                        </div>
+                      </div>
+                      <div class="group-exclude-user-menu">
+                        <button class="btn btn-blue" ng-click="removeQuiz(quest.id)">{{'group.users.yes' | translate}}</button>
+                        <button class="btn btn-gray">{{'group.users.cancel' | translate}}</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </span>
+
+            </span>
+
+          </h5>
+        </td>
+        <td class="text-right">
+          <div class="time-text-align">
+            <div>
+              <div class="font-small">
+                <span ng-if="(quest.serverTime < quest.startDate)">{{'quiz.lists.start' | translate}} </span>
+                <span ng-if="(quest.serverTime < quest.endDate) && (quest.serverTime > quest.startDate)">{{'quiz.lists.end' | translate}} </span>
+                <span ng-if="quest.serverTime > quest.endDate">{{'quiz.lists.ended' | translate}} </span>
+                <th-time-difference server-date="quest.serverTime" date="quest.startDate" ng-if="(quest.serverTime < quest.startDate)"></th-time-difference>
+                <th-time-difference server-date="quest.serverTime" date="quest.endDate" ng-if="(quest.serverTime > quest.startDate)"></th-time-difference>
+                <p>{{quest.startDate | date:'dd/MM/yyyy HH:mm'}} à {{quest.endDate | date:'dd/MM/yyyy HH:mm'}}</p>
+              </div>
+            </div>
+            <i ng-if="!(quest.startDate <= quest.serverTime && quest.endDate > quest.serverTime)" class="background-img icon img-short img-small-locked"></i>
+            <i ng-if="quest.startDate <= quest.serverTime && quest.endDate > quest.serverTime" class="background-img icon img-short img-small-unlocked"></i>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </th-loading>
+</div>
+<div class="pagination-container" ng-if="paginationData.totalItems > paginationData.itemsPerPage && searched && !loading"><pagination items-per-page="paginationData.itemsPerPage" total-items="paginationData.totalItems" ng-model="paginationData.currentPage" ng-change="pageChanged()" max-size="paginationData.maxSize" class="pagination-sm" boundary-links="true" direction-links="false" rotate="false" last-text="{{'pagination.last' | translate}}" first-text="{{'pagination.first'| translate}}"></pagination></div>

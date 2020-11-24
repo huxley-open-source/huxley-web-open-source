@@ -1,0 +1,72 @@
+.table {
+  &.margin-top-table {
+    margin-top: 30px;
+    > thead > tr {
+      height: 20px;
+      > th {
+        padding-top: 0;
+      }
+    }
+  }
+  > tbody > tr > td {
+    border-top: 1px solid @blue !important;
+    vertical-align: bottom;
+    font-size: 12px;
+    &.vertical-align-middle {
+      vertical-align: middle;
+    }
+    &.warning-cell {
+      background-color: @yellow-light;
+    }
+    &.error-cell {
+      background-color: @red-light;
+    }
+  }
+  >thead>tr>th {
+    border-bottom: 1px solid @blue !important;
+    padding-bottom: 0;
+  }
+  .icon.img-short {
+    vertical-align: bottom;
+  }
+  h5 {
+    a {
+      margin-right: 5px;
+    }
+  }
+}
+
+th .checkbox {
+  margin-bottom: 0;
+  margin-top: 0;
+}
+
+th .checkbox input[type="checkbox"] {
+  margin-top: 1px;
+}
+
+td:first-child, th:first-child {
+  padding-left: 20px !important;
+  &.problem-list-td {
+    padding-left: 0 !important;
+  }
+}
+
+td:last-child, th:first-child {
+  padding-right: 20px !important;
+  &.notification-td, &.problem-list-td {
+    padding-right: 0 !important;
+  }
+}
+
+th {
+  font-size: @font-small;
+}
+
+.group-stats-list-table {
+  td {
+    .user-box:hover {
+      background: @white;
+    }
+  }
+}

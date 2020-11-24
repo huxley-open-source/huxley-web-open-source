@@ -1,0 +1,89 @@
+<div class="box multiview-bottom">
+      <div class="profileForm">
+        <div class="create-form">
+          <form ng-submit="formSubmit()" name="editProfileForm">
+            <div class="form-group" ng-class="{'has-error': editProfileForm.name.$dirty && !editProfileForm.name.$valid}">
+              <label class="col-sm-3 control-label" for="name">{{ 'user.edit.name' | translate}}</label>
+              <div class="col-sm-9">
+                <input class="form-control" type="text" id="name" ng-maxlength="form.maxLength" name="name" ng-model="language.name" placeholder="{{ 'institution.name' | translate}}" required>
+              </div>
+              <div class="align-form-error">
+                <span class="help-block" ng-if="editProfileForm.name.$dirty && editProfileForm.name.$error.required">{{ 'user.edit.required' | translate}}.</span>
+                <span class="help-block" ng-if="editProfileForm.name.$dirty && editProfileForm.name.$error.maxlength">{{ 'user.edit.longName' | translate}}.</span>
+              </div>
+            </div>
+            <div class="form-group" ng-class="{'has-error': editProfileForm.label.$dirty && !editProfileForm.label.$valid}">
+              <label class="col-sm-3 control-label" for="label">{{ 'language.label' | translate}}</label>
+              <div class="col-sm-9">
+                <input class="form-control" type="text" id="label" ng-maxlength="form.maxLength" name="label" ng-model="language.label" placeholder="{{ 'language.label' | translate}}" required>
+              </div>
+              <div class="align-form-error">
+                <span class="help-block" ng-if="editProfileForm.label.$dirty && editProfileForm.label.$error.required">{{ 'user.edit.required' | translate}}.</span>
+                <span class="help-block" ng-if="editProfileForm.label.$dirty && editProfileForm.label.$error.maxlength">{{ 'user.edit.longName' | translate}}.</span>
+              </div>
+            </div>
+            <div class="form-group" ng-class="{'has-error': editProfileForm.compiler.$dirty && !editProfileForm.compiler.$valid}">
+              <label class="col-sm-3 control-label" for="compiler">{{ 'language.compiler' | translate}}</label>
+              <div class="col-sm-9">
+                <input class="form-control" type="text" id="compiler" ng-maxlength="form.maxLength" name="compiler" ng-model="language.compiler" placeholder="{{ 'language.compiler' | translate}}" required>
+              </div>
+              <div class="align-form-error">
+                <span class="help-block" ng-if="editProfileForm.compiler.$dirty && editProfileForm.compiler.$error.required">{{ 'user.edit.required' | translate}}.</span>
+                <span class="help-block" ng-if="editProfileForm.compiler.$dirty && editProfileForm.compiler.$error.maxlength">{{ 'user.edit.longName' | translate}}.</span>
+              </div>
+            </div>
+            <div class="form-group" ng-class="{'has-error': editProfileForm.extension.$dirty && !editProfileForm.extension.$valid}">
+              <label class="col-sm-3 control-label" for="extension">{{ 'language.extension' | translate}}</label>
+              <div class="col-sm-9">
+                <input class="form-control" type="text" id="extension" ng-maxlength="form.maxLength" name="extension" ng-model="language.extension" placeholder="{{ 'language.extension' | translate}}" required>
+              </div>
+              <div class="align-form-error">
+                <span class="help-block" ng-if="editProfileForm.extension.$dirty && editProfileForm.extension.$error.required">{{ 'user.edit.required' | translate}}.</span>
+                <span class="help-block" ng-if="editProfileForm.extension.$dirty && editProfileForm.extension.$error.maxlength">{{ 'user.edit.longName' | translate}}.</span>
+              </div>
+            </div>
+            <div class="form-group" ng-class="{'has-error': editProfileForm.script.$dirty && !editProfileForm.script.$valid}">
+              <label class="col-sm-3 control-label" for="script">{{ 'language.script' | translate}}</label>
+              <div class="col-sm-9">
+                <input class="form-control" type="text" id="script" ng-maxlength="form.maxLength" name="script" ng-model="language.script" placeholder="{{ 'language.script' | translate}}" required>
+              </div>
+              <div class="align-form-error">
+                <span class="help-block" ng-if="editProfileForm.script.$dirty && editProfileForm.script.$error.required">{{ 'user.edit.required' | translate}}.</span>
+                <span class="help-block" ng-if="editProfileForm.script.$dirty && editProfileForm.script.$error.maxlength">{{ 'user.edit.longName' | translate}}.</span>
+              </div>
+            </div>
+            <div class="form-group" ng-class="{'has-error': editProfileForm.compileParams.$dirty && !editProfileForm.compileParams.$valid}">
+              <label class="col-sm-3 control-label" for="compileParams">{{ 'language.compileParams' | translate}}</label>
+              <div class="col-sm-9">
+                <input class="form-control" type="text" id="compileParams" ng-maxlength="form.maxLength" name="compileParams" ng-model="language.compileParams" placeholder="{{ 'language.compileParams' | translate}}" required>
+              </div>
+              <div class="align-form-error">
+                <span class="help-block" ng-if="editProfileForm.compileParams.$dirty && editProfileForm.compileParams.$error.required">{{ 'user.edit.required' | translate}}.</span>
+                <span class="help-block" ng-if="editProfileForm.compileParams.$dirty && editProfileForm.compileParams.$error.maxlength">{{ 'user.edit.longName' | translate}}.</span>
+              </div>
+            </div>
+            <div class="form-group" ng-class="{'has-error': editProfileForm.execParams.$dirty && !editProfileForm.execParams.$valid}">
+              <label class="col-sm-3 control-label" for="execParams">{{ 'language.execParams' | translate}}</label>
+              <div class="col-sm-9">
+                <input class="form-control" type="text" id="execParams" ng-maxlength="form.maxLength" name="execParams" ng-model="language.execParams" placeholder="{{ 'language.execParams' | translate}}" required>
+              </div>
+              <div class="align-form-error">
+                <span class="help-block" ng-if="editProfileForm.execParams.$dirty && editProfileForm.execParams.$error.required">{{ 'user.edit.required' | translate}}.</span>
+                <span class="help-block" ng-if="editProfileForm.execParams.$dirty && editProfileForm.execParams.$error.maxlength">{{ 'user.edit.longName' | translate}}.</span>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="create-save-container text-right">
+        <button class="btn btn-green" ng-click="sendLanguage()">{{'admin.save' | translate}}</button>
+      </div>
+      <div  ng-if="languageSaved" th-alert class="stats-alert reevaluations-result" closable="false">
+        <span >{{'language.saved' | translate}}<br/></span>
+      </div>
+      <div  ng-if="!languageSaved && searched" th-alert class="stats-alert reevaluations-result" closable="false">
+        <span >{{'language.erroMsg' | translate}}<br/></span>
+      </div>
+    </div>
+
+</div>

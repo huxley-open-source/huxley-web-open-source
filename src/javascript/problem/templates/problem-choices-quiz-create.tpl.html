@@ -1,0 +1,52 @@
+<div class="content container">
+  <div class="box">
+    <th-head header-title="'problem.choices.quiz-create'"></th-head>
+    <div class="create-form">
+      <form ng-submit="saveQuiz()" name="form" novalidate class="row">
+
+        <div class="text-center col-md-12">
+          <h4>{{'problem.choices.quiz-selected-problems-title' | translate}}</h4>
+          <p><em>
+            <small>{{quiz.problems.length||0}} {{'problem.choices.quiz-selected-problems-count' | translate }}</small>
+          </em></p>
+        </div>
+
+        <div class="col-md-6">
+          <p>Todos os problemas</p>
+          <table class="table">
+            <tr ng-repeat="problem in problems"
+                ng-hide="problem.$selected">
+              <td>
+                <th-choice-box problem="problem"
+                               is-authenticated="isAuthenticated"
+                               show-status="true"
+                               show-topics="true"
+                               expand="false"
+                               on-click-problem="selectProblem(problem, $event)"></th-choice-box>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="col-md-6">
+          <p>Problemas selecionados</p>
+          <table class="table">
+            <tr ng-repeat="problem in selectedProblems">
+              <td>
+                <th-choice-box problem="problem"
+                               is-authenticated="isAuthenticated"
+                               show-status="true"
+                               show-topics="true"
+                               expand="false"
+                               on-click-problem="desselectProblem(problem, $event)"></th-choice-box>
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="create-save-container text-right col-md-12">
+          <button type=submit class="btn btn-green">{{'problem.choices.quiz-create-btn' | translate}}</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,93 @@
+<div class="box multiview-bottom">
+  <form ng-hide="kind === 'TEACHER_APPROVAL'">
+    <div class="search-container">
+      <div>
+        <div class="col-lg-5">
+          <div class="input-search-container">
+            <i class="img-large img-large-search img-circle background-color background-img"></i>
+            <input type="text" ng-model="searchParams.q" class="form-control search-input"  ng-change="searchAll()" ui-keypress="{13:'search()'}" placeholder="{{'pendency.list.placeholder' | translate}}" />
+            <div class="search-button-container">
+              <button class="btn btn-blue" ng-click="search();" translate>search</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <div style="clear: both;"></div>
+  <div class="license-list-separator">
+    <th-loading loading = "loading">
+      <table class="table">
+        <thead>
+        <tr>
+          <th>
+            <th-order-arrow label="'pendency.list.institution'" sort-by="'intitution'" order='searchParams.order' element="searchParams.sort" search-function="search()"></th-order-arrow>
+          </th>
+          <th class="text-center">
+            <th-order-arrow label="'pendency.list.stats'" sort-by="'stat'" order='searchParams.order' element="searchParams.sort" search-function="search()"></th-order-arrow>
+          </th>
+          <th ng-if="kind !== 'TEACHER_APPROVAL' && kind !== 'INSTITUTION_APPROVAL'" class="text-center">
+            <th-order-arrow label="'pendency.user'" sort-by="'user'" order='searchParams.order' element="searchParams.sort" search-function="search()"></th-order-arrow>
+          </th>
+          <th ng-if="kind === 'TEACHER_APPROVAL' || kind === 'INSTITUTION_APPROVAL'" class="text-right">
+            <th-order-arrow label="'pendency.user'" sort-by="'user'" order='searchParams.order' element="searchParams.sort" search-function="search()"></th-order-arrow>
+          </th>
+          <th class="text-right" ng-if="kind === 'INSTITUTION_DOCUMENT' || kind === 'TEACHER_DOCUMENT'">
+            <th-order-arrow  label="'pendency.list.proof'" sort-by="'intitution'" order='searchParams.order' element="searchParams.sort" search-function="search()"></th-order-arrow>
+          </th>
+          <th class="text-right" ng-if="kind === 'USER_GROUP_INVITATION' || kind === 'USER_GROUP_JOIN_REQUEST'">
+            <th-order-arrow  label="'pendency.group'" sort-by="'group'" order='searchParams.order' element="searchParams.sort" search-function="search()"></th-order-arrow>
+          </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="pendency in pendencies">
+          <td ng-if="kind !== 'USER_GROUP_JOIN_REQUEST'">{{pendency.institution.name}}</td>
+          <td ng-if="kind === 'USER_GROUP_JOIN_REQUEST'">{{pendency.group.institution.name}}</td>
+          <td class="text-center">
+              <span ng-show="pendency.status === 'PENDING'">
+                  <button type="button" class="btn blue-button accept-size" ng-click="approveStatus(pendency)" translate>pendency.list.approve</button>
+                  <button type="button" class="btn blue-button reject-size" ng-click="rejectStatus(pendency)" translate>pendency.list.reject</button>
+              </span>
+              <span ng-if="pendency.status === 'APPROVED'">
+                  <button type="button" class="btn actived-blue-button accept-size" translate>pendency.list.accepted</button>
+                  <button type="button" class="btn blue-button reject-size" ng-click="rejectStatus(pendency)" translate>pendency.list.reject</button>
+              </span>
+              <span ng-if="pendency.status === 'REJECTED'">
+                  <button type="button" class="btn blue-button accept-size" ng-click="approveStatus(pendency)" translate>pendency.list.approve</button>
+                  <button type="button" class="btn actived-blue-button reject-size"  translate>pendency.list.rejected</button>
+              </span>
+          </td>
+          <td ng-if="kind === 'TEACHER_APPROVAL' || kind === 'INSTITUTION_APPROVAL'" class="text-right">{{pendency.user.name}}</td>
+          <td ng-if="kind !== 'TEACHER_APPROVAL' && kind !== 'INSTITUTION_APPROVAL'" class="text-center">{{pendency.user.name}}</td>
+          <td class="text-right" ng-if="kind === 'INSTITUTION_DOCUMENT' || kind === 'TEACHER_DOCUMENT'">
+            <span ng-show="!pendency.params.length" translate>pendency.list.pendency</span>
+            <span ng-hide="!pendency.params.length" translate>
+                <button type="button" class="clip"></button>
+            </span>
+          </td>
+          <td class="text-right" ng-if="kind === 'USER_GROUP_INVITATION' || kind === 'USER_GROUP_JOIN_REQUEST'">{{pendency.group.name}}</td>
+        </tr>
+        <tr ng-if="pendencies.length == 0 && kind !== 'TEACHER_APPROVAL'"><td translate>institution.resultNotFound</td></tr>
+        <tr ng-if="pendencies.length == 0 && kind === 'TEACHER_APPROVAL'"><td translate>admin.teacherNotFound</td></tr>
+        </tbody>
+      </table>
+    </th-loading>
+  </div>
+</div>
+
+<div class="pagination-container" ng-show="paginationData.totalItems > paginationData.max">
+  <pagination items-per-page="paginationData.max"
+              total-items="paginationData.totalItems"
+              ng-model="paginationData.currentPage"
+              ng-change="paginationChanged()"
+              max-size="paginationData.maxSize"
+              class="pagination-sm"
+              boundary-links="true"
+              direction-links="false"
+              rotate="false"
+              last-text="{{'pagination.last' | translate}}"
+              first-text="{{'pagination.first'| translate}}">
+  </pagination>
+</div>

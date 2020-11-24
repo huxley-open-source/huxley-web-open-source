@@ -1,0 +1,68 @@
+/*global module*/
+
+module.exports = {
+    'chat': {
+        'title': 'Caixa de mensagem',
+        'select': {
+            'label': 'Listar',
+            'all': 'Todos',
+            'teacher': 'Professor',
+            'student': 'Aluno',
+            'group': 'Turma'
+        },
+        'noMsg' : ' Você ainda não possui nenhuma mensagem.',
+        'send' : 'Enviar',
+        'sending': 'Enviando mensagem...',
+
+        'type': {
+            'type': 'Tipo',
+            'PROBLEM_QUESTION': 'Dúvida',
+            'PROBLEM_BAD_NAME': 'Nome ruim',
+            'BAD_DESCRIPTION': 'Descrição ruim',
+            'WRONG_TOPIC': 'Tópico errado',
+            'BAD_TEST_CASE': 'Caso de teste errado',
+            'MISSING_TEST_CASE': 'Falta caso de teste',
+            'DIRECT_MESSAGE': 'Mensagem direta'
+        },
+        'allMessages': 'Todas as mensagens',
+        'unresolved': 'Não resolvidas',
+        'sent': 'Enviadas',
+        'groups': 'Turmas',
+        'problems': 'Problemas',
+        'users': 'Usuários',
+        'noMessages': 'Nenhuma mensagem na sua caixa de entrada',
+        'messages': 'Mensagens',
+        'last': 'Última',
+        'fastAnswer': 'Resposta Rápida',
+        'seeChat': 'Ver conversa',
+        'group': 'Turma',
+        'problem': 'Problema',
+        'recipient': 'Destinatário',
+        'author': 'Autor',
+        'members': 'Participantes',
+        'submissions': 'Submissões',
+        'noSubmission': 'Nenhuma submissão',
+        'solved': 'Resolvido',
+        'backToInbox': 'Voltar para caixa de mensagens',
+        'problemType': 'Tipo de problema',
+        'recipients': 'Recipiente(s)',
+        'markAsSolved': 'Marcar como resolvido',
+        'markAsUnsolved': 'Marcar como não resolvido',
+        'messageSent': 'enviada',
+        'includeInMessage': 'Incluir na mensagem',
+        'backToMessage': 'Voltar para mensagem',
+        'archiveOld': 'Arquivar mensagens antigas',
+        'archived': 'Arquivada',
+        'noAnswer': 'Sem resposta',
+        'cancel': 'Cancelar',
+        'confirm': 'Confirmar',
+        'archiveHelp': 'Essa operação irá marcar como arquivadas as mensagens que não obtiveram respostas do autor original a mais tempo que o período informado.',
+        'archiveError': 'Aconteceu um erro inesperado ao tentar arquivar as mensagens.',
+        'archivedCount': 'mensagens arquivadas',
+        'zeroArchived': 'Nenhuma mensagem para arquivar',
+        'olderThan': 'Mais antigas que',
+        'oneWeek': 'Uma semana',
+        'twoWeeks': 'Duas semanas',
+        'oneMonth': 'Um mês'
+    }
+};

@@ -1,0 +1,59 @@
+.th-item-fade {
+  transition: opacity .25s ease-in-out;
+  -moz-transition: opacity .25s ease-in-out;
+  -webkit-transition: opacity .25s ease-in-out;
+  -o-transition: opacity .25s ease-in-out;
+}
+
+.th-fade-out {
+  animation-name: fadeOutAnimation;
+  animation-duration: 1s;
+  animation-timing-function: ease;
+  animation-fill-mode: forwards;
+  -webkit-animation-name: fadeOutAnimation;
+  -webkit-animation-duration: 1s;
+  -webkit-animation-timing-function: ease;
+  -webkit-animation-fill-mode: forwards;
+  -moz-animation-name: fadeOutAnimation;
+  -moz-animation-duration: 1s;
+  -moz-animation-timing-function: ease;
+  -moz-animation-fill-mode: forwards;
+  -o-animation-name: fadeOutAnimation;
+  -o-animation-duration: 1s;
+  -o-animation-timing-function: ease;
+  -o-animation-fill-mode: forwards;
+
+}
+.th-fade-in {
+  animation-name: fadeOutAnimation;
+  animation-duration: 1s;
+  animation-timing-function: ease;
+  animation-direction: reverse;
+  -webkit-animation-name: fadeOutAnimation;
+  -webkit-animation-duration: 1s;
+  -webkit-animation-timing-function: ease;
+  -webkit-animation-direction: reverse;
+  -moz-animation-name: fadeOutAnimation;
+  -moz-animation-duration: 1s;
+  -moz-animation-timing-function: ease;
+  -moz-animation-direction: reverse;
+  -o-animation-name: fadeOutAnimation;
+  -o-animation-duration: 1s;
+  -o-animation-timing-function: ease;
+  -o-animation-direction: reverse;
+}
+
+@keyframes fadeOutAnimation {
+  0%   {opacity: 1;}  25%  { opacity: 0.75; }  50%  { opacity: 0.50; }  75%  { opacity: 0.25; }  100% {opacity: 0; width: 0;}
+}
+@-webkit-keyframes fadeOutAnimation {
+  0%   {opacity: 1;}  25%  { opacity: 0.75; }  50%  { opacity: 0.50; }  75%  { opacity: 0.25; }  100% {opacity: 0; width: 0;}
+}
+@-moz-keyframes fadeOutAnimation {
+  0%   {opacity: 1;}  25%  { opacity: 0.75; }  50%  { opacity: 0.50; }  75%  { opacity: 0.25; }  100% {opacity: 0; width: 0;}
+}
+
+@-o-keyframes fadeOutAnimation {
+  0%   {opacity: 1;}  25%  { opacity: 0.75; }  50%  { opacity: 0.50; }  75%  { opacity: 0.25; }  100% {opacity: 0; width: 0;}
+}
+

@@ -1,0 +1,511 @@
+.box.home-box {
+  padding: 0;
+}
+
+.home-welcome-box {
+  padding: 5px 10px;
+  margin-bottom: 25px;
+  background-color: @default-color;
+  > div {
+    color: @white;
+  }
+}
+
+.home-panel {
+  .display-flex();
+   > div {
+     height: 200px;
+     display: inline-block;
+   }
+  .home-panel-left {
+    background-color: @blue-light;
+    width: 150px;
+  }
+  .home-panel-mid {
+    background-color: @blue-lighter;
+    .flex-grow(2);
+    .display-flex();
+    .align-items-flex(center);
+    > div {
+      display: inline-block;
+      width: 460px;
+    }
+    .home-panel-logo-container {
+      margin-left: -100px;
+      margin-right: 30px;
+      width: 200px;
+      > i {
+        background-color: @white;
+        width: 200px;
+        height: 200px;
+        text-align: center;
+        line-height: 37px;
+        vertical-align: middle;
+        > i {
+          vertical-align: text-top;
+          background-color: @orange;
+          &.blue {
+            background-color: @blue;
+          }
+        }
+      }
+    }
+  }
+  .home-panel-right {
+    width: 45px;
+    background-color: @blue;
+    position: relative;
+    .home-pointer {
+      .align-items-flex(center);
+      position: absolute;
+      left: -39px;
+      top: 13px;
+      display: none;
+      &.option-1 {
+        .display-flex();
+      }
+      &.option-2 {
+        top: 62px;
+        .display-flex();
+      }
+      &.option-3 {
+        top: 114px;
+        .display-flex();
+      }
+      &.option-4 {
+        top: 166px;
+        .display-flex();
+      }
+      > div:first-child {
+        width: 20px;
+        height: 10px;
+        background-color: @blue;
+      }
+
+    }
+    .home-panel-button-bar {
+      text-align: center;
+      button {
+        width: 98%;
+        height: 48px;
+        border: none;
+        background-color: transparent;
+        border-bottom: 1px solid @white;
+        &.img-short-create-group {
+          background-position: -41px -760px;
+        }
+        &.img-short-create-quiz {
+          background-position: -84px -760px;
+        }
+        &.img-short-create-license {
+          background-position: -133px -760px;
+        }
+      }
+    }
+  }
+}
+
+.scroll-home-size {
+  .ps-container {
+    max-height: 512px !important;
+  }
+}
+
+.home-box {
+  .home-info {
+    margin: 20px 20px;
+  }
+}
+
+.home-info {
+  margin: 25px 20px;
+  p {
+    text-transform: uppercase;
+    font-size: 0.8em;
+    margin: 0;
+  }
+  > div {
+    margin-bottom: 20px;
+  }
+  .home-multiple-info {
+    .display-flex();
+    &.large-info {
+      .show-case {
+        //min-height: 554px;
+      }
+    }
+    > div {
+      width: 50%;
+      display: inline-block;
+    }
+    .home-single-info {
+      margin: 1px;
+    }
+    .show-case {
+      min-height: 269px;
+      max-height: 554px;
+    }
+  }
+  .user-box {
+    padding: 0;
+    .user-box-img {
+      padding: 0;
+      padding-right: 5px;
+    }
+  }
+}
+
+//HOME UNAUTHENTICATED
+.bg-blue-dark {
+  background-color: #0e4c7d;
+}
+
+.about {
+  min-height: 250px;
+  color: #ffffff;
+  font-size: 1.4em;
+  margin-bottom: -10px;
+}
+
+.about h3 {
+  color: #05adef;
+  font-size: 25px;
+  text-transform: uppercase;
+  padding-top: 15px;
+  margin-top: 0;
+}
+
+.announcement {
+  margin-bottom: 96px;
+
+  @media screen and (max-width: 992px) {
+    text-align: center;
+  }
+}
+
+.announcement h3 {
+  font-size: 25px;
+  text-transform: uppercase;
+  color: #0e4c7d;
+}
+
+.customers {
+  background-color: @white;
+  .display-flex();
+  .justify-content-flex(space-between);
+}
+
+.bg-gray-lighter {
+  background-color: #f3f3f3;
+}
+
+.huxley-info {
+  color: @black;
+  margin-bottom: -11px;
+  > .bg-gray-lighter {
+    > div {
+      padding-top: 50px;
+    }
+    > div:last-of-type {
+      padding-bottom: 100px;
+    }
+  }
+  > div {
+    padding: 0 15px;
+  }
+
+  h3 {
+    margin-top: 0;
+  }
+}
+
+.institution-info .text {
+  margin-top: 90px;
+}
+
+.student-info .text {
+  margin-top: 75px;
+}
+
+.teacher-1 {
+  padding-top: 135px !important;
+}
+
+.teacher-2 {
+  margin-top: 50px;
+  .text {
+    margin-top: 50px;
+  }
+}
+
+.bg-gray-darker {
+  background-color: @gray-darker;
+  color: @white;
+}
+
+.bg-main {
+  width: 100%;
+  .justify-content-flex(center);
+  > .container {
+    > div {
+      .display-flex();
+      background-color: @white;
+    }
+
+    .head-content {
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      background-color: transparent;
+
+      h1 {
+        font-family: 'Open Sans', sans-serif;
+        color: #fff;
+        font-weight: 700;
+      }
+    }
+  }
+}
+
+.home-carousel {
+  width: 602px;
+  height: 330px;
+  padding: 0 16px;
+  border-bottom-right-radius: 9px;
+  border-top-right-radius: 9px;
+  background: url("/images/home/stripe-hero.png");
+  .carousel-control {
+    height: 246px;
+    &:last-of-type {
+      margin-right: 16px;
+    }
+    &:first-of-type {
+      margin-left: 16px;
+    }
+  }
+  .carousel-indicators {
+    margin-bottom: 65px;
+  }
+  .text-left {
+    //width: 80%;
+  }
+
+  .thumbs {
+    float: right;
+    margin-top: -45px;
+    > ul {
+      padding: 0;
+      margin: 3px 0;
+      list-style: none;
+      > li {
+        float: left;
+        margin-left: 2px;
+        border: 2px solid rgba(0, 0, 0, 0);
+        border-radius: 3px;
+        opacity: 0.4;
+        width: 56px;
+        height: 56px;
+        -webkit-transition: opacity linear 1s;
+        -o-transition: opacity linear 1s;
+        transition: opacity linear 1s;
+        &.active {
+          border: 2px solid #05adef;
+          opacity: 1;
+        }
+      }
+    }
+  }
+}
+
+.register-form {
+  width: 354px;
+  background-color: @white;
+  color: @gray;
+  padding: 18px;
+  margin-bottom: 11px;
+  .display-flex();
+  .flex-direction(column);
+  .row {
+    margin-top: 5px;
+  }
+  > h5 {
+    .text-uppercase;
+    color: @blue;
+  }
+  .col-xs-12 {
+    > input  {
+      width: 100% !important;
+    }
+  }
+  .col-xs-6:last-of-type {
+    padding-left: 0;
+  }
+  .alert-sm {
+    padding: 6px;
+    font-size: 11px;
+    line-height: 10px;
+    margin-bottom: 10px;
+    background: #fff799;
+    > p {
+      margin: 0;
+    }
+  }
+}
+
+
+.form-layout {
+  height: 22px !important;
+  background-color: transparent;
+  border-radius: 0;
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  border-color: @blue-light;
+  &:focus {
+    border-color: @blue;
+  }
+}
+
+.home-end-detail {
+  border-bottom-left-radius: 9px;
+  border-top-left-radius: 9px;
+  background: url("/images/home/stripe-hero.png");
+  height: inherit;
+  width: 14px;
+  content: " ";
+}
+
+.teacher-request-alert {
+  margin-top: 20px;
+}
+
+.teacher-request-container {
+  margin-top: 20px;
+  max-width: 600px;
+  margin-left: auto ;
+  margin-right: auto ;
+  .create-save-container {
+    padding-right: 15px;
+  }
+}
+
+.login-message-box {
+  font-size: 13px;
+  width: 100%;
+  height: 80px;
+  padding: 10px 20px;
+  margin: 40px auto 0px auto;
+  border-radius: @border-radius-base;
+  .display-flex();
+  .align-items-flex(center);
+  .justify-content-flex(center);
+}
+
+.login-error-box {
+  border: 1px @red solid;
+  color: @red;
+  .login-message-box();
+  margin-top: 20px !important;
+}
+
+.login-confirm-box {
+  border: 1px @green solid;
+  .login-message-box
+}
+
+.form-error {
+  position: relative;
+  top: 1px;
+  display: inline-block;
+  font-family: 'Glyphicons Halflings';
+  font-style: normal;
+  font-weight: normal;
+  text-align: center;
+  line-height: 21px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: @red;
+  border-radius: 2px;
+  margin-left: -22px;
+}
+
+.register-form {
+  .form-group {
+    .display-flex();
+  }
+  div.form-group > .col-xs-12 {
+    padding-right: 9px;
+  }
+  input {
+    padding-right: 14px;
+  }
+  > form > div.col-xs-12 {
+    padding-right: 9px;
+  }
+  .just-one-error {
+    > span {
+      display: none;
+      &:first-of-type {
+        display: inline-block !important;
+      }
+    }
+  }
+}
+
+.home-large-info {
+  max-height: 512px;
+}
+
+.home-normal-info {
+  max-height: 227px;
+}
+
+.universities-slick {
+  max-width: 940px;
+  .slick-prev:before {
+    color: @default-color;
+  }
+  .slick-next:before {
+    color: @default-color;
+  }
+  .slick-slider {
+    margin-bottom: 0;
+  }
+  .slick-track > div {
+    .display-flex();
+    .justify-content-flex(space-around);
+    .align-items-flex(center);
+    height: 100px;
+    width: 190px;
+    img {
+      max-height: 95px;
+      max-width: 190px;
+      min-width: 50px;
+    }
+  }
+
+}
+
+.xs-top-home {
+  > div {
+    .display-flex();
+    .flex-direction(column);
+    > div {
+      width: 100%;
+    }
+  }
+}
+
+.teacher-2.hidden-lg, .student-info.hidden-lg {
+  .display-flex();
+  .flex-direction(column-reverse);
+}
+
+.bg-dark-gradient {
+  background: -moz-linear-gradient(270deg, rgba(40,43,50,1) 0%, rgba(94,95,97,1) 100%); /* ff3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(40,43,50,1)), color-stop(100%, rgba(94,95,97,1))); /* safari4+,chrome */
+  background: -webkit-linear-gradient(270deg, rgba(40,43,50,1) 0%, rgba(94,95,97,1) 100%); /* safari5.1+,chrome10+ */
+  background: -o-linear-gradient(270deg, rgba(40,43,50,1) 0%, rgba(94,95,97,1) 100%); /* opera 11.10+ */
+  background: -ms-linear-gradient(270deg, rgba(40,43,50,1) 0%, rgba(94,95,97,1) 100%); /* ie10+ */
+  background: linear-gradient(180deg, rgba(40,43,50,1) 0%, rgba(94,95,97,1) 100%); /* w3c */
+}

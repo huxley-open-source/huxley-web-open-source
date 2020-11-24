@@ -1,0 +1,58 @@
+<div class="container content">
+  <div class="box home-box">
+    <div class="home-panel">
+      <div class="home-panel-left hidden-xs"></div>
+      <div class="home-panel-mid">
+        <div class="home-panel-logo-container hidden-xs"><i class="img-circle icon"><i class="background-img icon img-bigger img-circle img-bigger-white-huxley"></i></i></div>
+        <div>
+          <h5>{{'home.info.studentMsg' | translate}}</h5>
+          {{'home.info.studentMsgPt1' | translate}}
+          <a ui-sref="teacher-request">{{'home.info.studentMsgPt2' | translate}}</a>
+          {{'home.info.studentMsgPt3' | translate}}
+        </div>
+      </div>
+    </div>
+    <div class="home-info">
+      <p>{{'home.info.label' | translate}}</p>
+      <div class="home-multiple-info large-info">
+
+          <th-show-case info="'home.info.questPerformance'">
+            <th-show-case-body>
+              <table class="table">
+                <tbody>
+                <tr ng-repeat="quiz in info[1]">
+                  <td>
+                    <th-quiz-performance quiz="quiz"></th-quiz-performance>
+                  </td>
+                </tr>
+                <tr ng-if="!info[1].length">
+                  <td>{{'home.openQuiz' | translate}}</td>
+                </tr>
+                </tbody>
+              </table>
+            </th-show-case-body>
+          </th-show-case>
+
+          <th-show-case info="'home.info.notification'">
+            <th-show-case-body>
+              <perfect-scrollbar wheel-speed="50" refresh-on-change="info[1]" class="home-large-info">
+                <table class="table">
+                  <tbody>
+                  <tr ng-repeat="notification in notificationList track by $index">
+                    <td>
+                      <th-notification notification="notification"></th-notification>
+                    </td>
+                  </tr>
+                  <tr ng-if="!notificationList.length">
+                    <td>{{'Nenhuma notificação' | translate}}</td>
+                  </tr>
+                  </tbody>
+                </table>
+              </perfect-scrollbar>
+            </th-show-case-body>
+          </th-show-case>
+
+      </div>
+    </div>
+  </div>
+</div>

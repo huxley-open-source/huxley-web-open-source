@@ -1,0 +1,186 @@
+<div class="code-view-container">
+    <!--<div ng-if="info && submission.id !== undefined && submission.evaluation !== 'CORRECT' && submission.evaluation !== 'HUXLEY-ERROR' && submission.evaluation !== 'COMPILATION_ERROR'" class="code-content">-->
+      <!--<div class="home-info">-->
+        <!--<th-show-case ng-if="input">-->
+          <!--<th-show-case-header class="examples-copy">-->
+            <!--<i class="icon img-short img-short-input background-img"/>-->
+            <!--<span>{{'problem.usedInput' | translate}}</span>-->
+            <!--<th-copy class="copy-button" text="input"></th-copy>-->
+
+          <!--</th-show-case-header>-->
+          <!--<th-show-case-body>-->
+            <!--<perfect-scrollbar class="show-input-scrollbar" wheel-speed="50" refresh-on-change="input">-->
+              <!--<span id="tested-input" class="code-font">{{ input }}</span>-->
+            <!--</perfect-scrollbar>-->
+          <!--</th-show-case-body>-->
+        <!--</th-show-case>-->
+      <!--</div>-->
+    <!--</div>-->
+
+    <div ng-if="submission.testCaseEvaluations && !editable">
+      <th-progress test-case-evaluations="submission.testCaseEvaluations" language="submission.language.id" submission="submission"></th-progress>
+    </div>
+
+    <!--<div class="solution-help-box" ng-if="submission.mode === 'java' && editor">-->
+      <!--<div class="solution-box-left">-->
+        <!--<div class="th-circle-orange">-->
+          <!--<i class="img-big img-big-huxley background-img"/>-->
+        <!--</div>-->
+        <!--<span>-->
+          <!--{{ 'problem.java.msg1' | translate }}<span class="code-font">{{ 'problem.java.main' | translate }}</span>{{ 'problem.java.msg2' | translate }}<span class="code-font">{{ 'problem.java.huxleyCode' | translate }}</span>{{ 'problem.java.msg3' | translate }}-->
+        <!--</span>-->
+      <!--</div>-->
+
+      <!--<div class="solution-box-right">-->
+        <!--<button class="btn btn-orange" ng-click="closeJavaDropdown()">{{ 'problem.java.example' | translate }}</button>-->
+      <!--</div>-->
+    <!--</div>-->
+    <!--<div class="doubt-dropdowns" ng-show="javaDropdown">-->
+      <!--<button type="button" class="close" aria-label="Close" ng-click="closeJavaDropdown()"><span aria-hidden="true">&times;</span></button>-->
+      <!--<div class="java-dropdown">-->
+        <!--<div>-->
+        <!--</div>-->
+        <!--<div>-->
+          <!--<div>-->
+            <!--<span>-->
+              <!--<pre>-->
+<!--<span class="purple-code">public class</span> HuxleyCode {-->
+  <!--<span class="purple-code">public static void</span> main(<span class="blue-code">String</span> args[]) {-->
+    <!--<span class="green-code">//{{ 'problem.java.solution' | translate }}</span>-->
+  <!--}-->
+<!--}-->
+              <!--</pre>-->
+            <!--</span>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+
+
+    <div class="codeView code-content">
+      <div class="codeViewHead">
+        <div class="code-header">
+          <div>
+            <th-problem-status status="submission.evaluation" without-popover="true" ng-if="newCode === false"></th-problem-status>
+            <div ng-if="newCode === false">{{'quiz.review.codeTry' | translate}} #{{submission.tries}} {{submission.submissionDate | amDateFormat:'DD/MM/YYYY'}} {{'quiz.similarity.at' | translate}} {{submission.submissionDate | amDateFormat:'H:mm:ss'}} </div>
+            <div ng-if="newCode === true">{{'component.codeView.newCode' | translate}}</div>
+          </div>
+
+          <div>
+            <div class="upload-language" ng-class="{'has-error': languageError}" ng-show="editable">
+              <th-select-box element="selectedLanguage" class="th-select-striped" for="availableLanguages" on-change="updateModeById(selectedLanguage)"></th-select-box>
+            </div>
+
+            <span ng-if="editable">|</span>
+            <a type="input" value="Submit" ng-click="resetCode()" ng-if="editable" style="padding: 0px 11px;">
+              <i class="glyphicon glyphicon-repeat"></i>
+              {{'component.codeView.resetCode' | translate}}</a>
+            <span ng-if="editable">|</span>
+
+            <div  ng-if="!ie && (hasCode || editor)" style="padding: 0px 11px;">
+              <a download="{{submission.filename}}" ng-href="{{ url }}">
+                <i class="glyphicon glyphicon-download"></i>
+                <span>{{'component.codeView.download' | translate}}</span>
+              </a>
+            </div>
+            <span ng-if="!editable">|</span>
+            <div ng-if="!editable && !similarity && submission.id" style="padding: 0px 11px;">
+              <a ng-if="submission.problem.problemType === 'ALGORITHM'" ui-sref="problem-show.code-editor({id:submission.problem.id, submissionId:submission.id})">
+                <i class="glyphicon glyphicon-edit"/> <span>{{'component.codeView.edit' | translate}}</span>
+              </a>
+              <a ng-if="submission.problem.problemType === 'FILL_THE_CODE'" ui-sref="problem-show.insert-code({id:submission.problem.id, submissionId:submission.id})">
+                <i class="glyphicon glyphicon-edit"/> <span>{{'component.codeView.edit' | translate}}</span>
+              </a>
+            </div>
+            <div ng-if="!editable && !similarity && !submission.id">
+              <a ng-if="problem.problemType === 'ALGORITHM'" class="display-flex" ui-sref="problem-show.code-editor({id:problem.id})">
+                <span>{{'component.codeView.resetCode' | translate}}</span><button class="background-img icon img-small-edit background-color"></button>
+              </a>
+              <a ng-if="problem.problemType === 'FILL_THE_CODE'" class="display-flex" ui-sref="problem-show.insert-code({id:problem.id})">
+                <span>{{'component.codeView.resetCode' | translate}}</span><button class="background-img icon img-small-edit background-color"></button>
+              </a>
+            </div>
+            <div>
+              <a class="display-flex" ng-click="downloadCode()" ng-if="ie && (hasCode || editor)">
+                <span>{{'component.codeView.download' | translate}}</span>
+                <button class="background-img icon img-small-download background-color"></button>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="code-view-body">
+        <div class="code">
+          <th-loading loading="loading">
+            <div class="code-editor" ui-ace="{ mode: submission.mode, theme: 'eclipse',  rendererOptions: { fontSize: 14 }, onLoad: aceLoaded}" ng-model="submission.code" ng-readonly="editor === false"></div>
+          </th-loading>
+
+        </div>
+
+        <div class="right-side" ng-if="!submissionList">
+        </div>
+
+        <div class="otherSubimissions" ng-if="submissionList">
+          <perfect-scrollbar class="review-scrollbar">
+            <ul>
+              <li ng-repeat="sub in submissionList | orderBy:predicate" ng-click="changeSubmission(sub)">#{{sub.tries}} <th-problem-status status="sub.evaluation" without-popover="true"></th-problem-status> </li>
+            </ul>
+          </perfect-scrollbar>
+        </div>
+      </div>
+      <div class="codeViewFooter" ng-if="editor">
+        <form style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+          <div style="display: flex; flex-wrap: wrap;">
+          <div style="padding: 2px 11px">
+            <a href=""><i class="glyphicon glyphicon-upload"></i> Enviar arquivo de código</a>
+
+            <input type="file" class="input-hidden-upload" name="file"  onchange="angular.element(this).scope().suggestLanguage(this.files)" file-model="solutionFile"/>
+          </div>
+          <div class="upload-language" ng-show="editable">Entrada customizada <input type="checkbox" ng-model="run.customizedInput" /></div>
+          </div>
+          <div>
+            <div class="upload-button">
+              <button type="input" value="Submit" ng-click="runCode()" title="{{'problem.execute' | translate }}" class="btn btn-primary text-uppercase">{{'component.codeView.runCode' | translate}}</button>
+              <button type="input" value="Submit" ng-click="sendSolution()" is-loading="submission.evaluation === 'WAITING'" class="btn btn-green text-uppercase" ng-disabled="submission.evaluation === 'WAITING'">
+                <span ng-if="submission.evaluation !== 'WAITING'">{{'problem.sendAnswer' | translate}}</span>
+                <span ng-if="submission.evaluation === 'WAITING'">{{'problem.sendingAnswer' | translate}}</span>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="codeViewFooter" ng-show="false">
+        <textarea class="textarea-resize-disabled" cols="30" rows="10"></textarea>
+        <div>
+          <button class="btn btn-green text-uppercase">
+            {{'quiz.review.send' | translate}}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div ng-if="output || run.customizedInput" style="margin-bottom: 11px;">
+      <div>
+        <div class="box-multiple-columns input-output margin-after">
+          <div class="solution-input-box">
+            <p class="solution-title-default"><i class="icon img-short img-short-input background-img"/> {{'problem.input' | translate}}</p>
+            <textarea ng-disabled="!run.customizedInput" ng-model="run.input" class="form-control textarea-resize-disabled" rows="10"></textarea>
+          </div>
+          <div class="solution-input-box" ng-class="{ 'has-error': runError } ">
+            <p class="solution-title-blue-dark"><i class="icon img-short img-short-output background-img"/> {{'problem.output' | translate }}</p>
+            <th-loading loading="waitingAnswerRunCode" >
+              <textarea ng-model="output" class="form-control textarea-resize-disabled" rows="10"></textarea>
+            </th-loading>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  <div ng-if="submission.testCaseEvaluations && editable">
+    <th-progress test-case-evaluations="submission.testCaseEvaluations" language="submission.language.id"></th-progress>
+  </div>
+
+</div>
+

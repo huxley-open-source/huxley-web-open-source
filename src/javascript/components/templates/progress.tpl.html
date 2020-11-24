@@ -1,0 +1,78 @@
+<div class="output-box">
+  <span class="progress-title" translate>{{'component.progress' | translate}}</span>
+  <div class="progress-box">
+    <div class="solution-box-left">
+      <div class="th-progress">
+        <div class="progress-circle-container" ng-repeat="testCaseEvaluation in testCaseEvaluations track by $index">
+          <div>
+            <div class="progress-circle" ng-class="{'correct' : (testCaseEvaluation.evaluation === 'CORRECT'), 'wrong' : (testCaseEvaluation.evaluation !== 'CORRECT')}" ng-click="showTestCaseEvaluation(testCaseEvaluation.testCaseId);" popover="{{testCaseEvaluation.msg | translate}}" popover-trigger="mouseenter" popover-placement="right"></div>
+            <div class="progress-text text-bold">{{$index + 1}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div ng-repeat="testCaseEvaluation in testCaseEvaluations track by $index">
+      <div ng-if="testCaseEvaluation.show">
+        <th-evaluation-output ng-if="testCaseEvaluation.errorMsg" message="testCaseEvaluation.errorMsg" language="language"></th-evaluation-output>
+
+        <th-show-case ng-if="testCaseEvaluation.input || testCaseEvaluation.large">
+          <th-show-case-header class="examples-copy">
+            <i class="icon img-short img-short-input background-img"/>
+            <span>{{'problem.usedInput' | translate}}</span>
+            <th-copy class="copy-button" text="testCaseEvaluation.input"></th-copy>
+
+          </th-show-case-header>
+          <th-show-case-body>
+            <perfect-scrollbar ng-if="!testCaseEvaluation.large" class="show-input-scrollbar" wheel-speed="50" refresh-on-change="testCaseEvaluation.input">
+              <span id="tested-input" class="code-font">{{ testCaseEvaluation.input }}</span>
+            </perfect-scrollbar>
+
+            <div ng-if="testCaseEvaluation.large">
+              <span>O tamanho do caso de teste ultrapassa o tamanho suportado. É possível fazer o download clicando <a ng-click="downloadTestCase(testCaseEvaluation.testCaseId)">aqui</a>.</a><span>
+            </div>
+          </th-show-case-body>
+        </th-show-case>
+
+        <th-diff ng-if="testCaseEvaluation.diff" diff="testCaseEvaluation.diff"></th-diff>
+
+        <div ng-if="testCaseEvaluation.tip && testCaseEvaluation.evaluation === 'WRONG_ANSWER'">
+          <span class="black-title" translate>problem.stillInTrouble</span>
+          <a href="" ng-click="viewTip()">{{ 'problem.askTip' | translate}}</a>
+        </div>
+
+        <div ng-if="testCaseEvaluation && testCaseEvaluation.evaluation === 'WRONG_ANSWER' && !testCaseEvaluation.tip">
+          {{'problem.solution.noTip' | translate}}
+        </div>
+
+        <div class="code-content" ng-if="showTip">
+          <div class="doubt-dropdowns">
+            <button type="button" class="close" aria-label="Close" ng-click="viewTip()"><span aria-hidden="true">&times;</span></button>
+            <div class="tip-dropdown">
+              <div>{{'component.codeView.tip' | translate}}</div>
+              <div>
+                <div>
+                  <span>{{ testCaseEvaluation.tip }}</span>
+                </div>
+              </div>
+            </div>
+            <div ng-if="!hasVoted" class="rank-tips">
+          <span ng-if="!noVotes">
+            <span ng-if="total > 1">{{ 'component.codeView.votes' | translate: {count: upvotes, total: total} }}</span>
+            <span ng-if="total === 1">{{ 'component.codeView.vote' | translate: {count: upvotes, total: total} }}</span>
+          </span>
+              <span>
+            {{ 'component.codeView.usefulTip' | translate}}
+          </span>
+              <button ng-click="vote(testCaseEvaluation.testCaseId, true)" class="glyphicon glyphicon-thumbs-up btn btn-green"></button>
+              <button ng-click="vote(testCaseEvaluation.testCaseId, false)" class="glyphicon glyphicon-thumbs-down btn btn-red"></button>
+            </div>
+            <div ng-if="hasVoted" class="rank-tips">
+              {{ 'component.codeView.thanks' | translate}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

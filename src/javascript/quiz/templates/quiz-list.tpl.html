@@ -1,0 +1,109 @@
+<div class="container content">
+  <div class="box">
+
+    <th-head header-title="'quiz.title'" quiz="true"></th-head>
+
+    <div is-open="quizScreen.showAdvancedFilter">
+      <form>
+        <div class="search-container quiz">
+          <div>
+            <div class="col-lg-5">
+              <div class="input-search-container">
+                <i class="hidden-xs img-large img-large-create-questionnaire img-circle background-color background-img"></i>
+                <input type="text" ng-model="searchParams.q" class="form-control search-input" ui-keypress="{13:'search()'}" placeholder="{{'quiz.advancedSearch.namePlaceholder' | translate}}" />
+                <button type="button" class="btn btn-default advanced-search-button" ng-click="toggleAdvancedFilter();">
+                  <div class="arrow-down arrow-small"></div>
+                </button>
+                <div class="search-button-container">
+                  <button class="btn btn-blue" ng-click="search()" is-loading="loading">{{'search' | translate}}</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <div class="advanced-search quiz" ng-show="quizScreen.showAdvancedFilter">
+        <button type="button" class="close" aria-label="Close" ng-click="toggleAdvancedFilter()"><span aria-hidden="true">&times;</span></button>
+        <ng-form name="quizAdvancedSearch">
+          <th-datepicker class="vertical-form" date="searchParams.startPeriod"
+                         label="'quiz.advancedSearch.start' | translate"
+                         element-id="'quizStartDate'" custom-validation="true"
+                         validate-function="validateStartDate"
+                         validate-msg="'group.create.startDateGreater'" is-required="true" with-time="false"></th-datepicker>
+
+          <th-datepicker class="vertical-form" date="searchParams.endPeriod"
+                         label="'quiz.advancedSearch.end' | translate"
+                         element-id="'quizEndDate'" custom-validation="true" validate-function="validateEndDate"
+                         validate-msg="'group.create.startDateGreater'" is-required="true" with-time="false"></th-datepicker>
+
+          <div class="advanced-search-button-box text-right">
+            <button class="btn btn-blue" ng-click="search();" is-loading="loading">{{'search' | translate}}</button>
+          </div>
+        </ng-form>
+      </div>
+    </div>
+
+
+    <span us-spinner spinner-key="spinner"></span>
+    <th-loading loading="loading">
+      <table class="table quiz-table-size margin-top-table">
+        <thead>
+        <tr>
+          <th class="text-left">
+            <th-order-arrow label="'quiz.lists.quizTitle'" sort-by="'title'" order="searchParams.order" element="searchParams.sort" search-function="search()"></th-order-arrow>
+          </th>
+          <th ng-if="!currentUser.atLeastTeacherAssistant()" class="text-center">
+            <th-order-arrow label="'quiz.lists.quizScore'" sort-by="'score'" order="searchParams.order" element="searchParams.sort" search-function="search()"></th-order-arrow>
+          </th>
+          <th class="text-right">
+            <th-order-arrow label="'quiz.lists.quizTime'" sort-by="'endDate'" order="searchParams.order" element="searchParams.sort" search-function="search()"></th-order-arrow>
+          </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="quiz in quizzes">
+          <td>
+            <div><a ui-sref="quiz-show.reviews({'id': quiz.id})">{{quiz.title}}</a></div>
+            <div class="font-small"><em><a class="grey-link" ui-sref="group-show.quizzes({'id': quiz.group.url})">{{quiz.group.name}}</a></em></div>
+            <div class="font-small"><em><a class="grey-link" ui-sref="institution-show.groups({'id': quiz.group.institution.id})">{{quiz.group.institution.name}}</a></em></div>
+          </td>
+          <td ng-if="!currentUser.atLeastTeacherAssistant()" class="text-center score-text-align">{{quiz.currentUser.score}}/{{quiz.score}}</td>
+          <td class="text-right">
+            <div class="time-text-align">
+              <div>
+                <div class="font-small">
+                  <span ng-if="(quiz.serverTime < quiz.startDate)">{{'quiz.lists.start' | translate}} </span>
+                  <span ng-if="(quiz.serverTime < quiz.endDate) && (quiz.serverTime > quiz.startDate)">{{'quiz.lists.end' | translate}} </span>
+                  <span ng-if="quiz.serverTime > quiz.endDate">{{'quiz.lists.ended' | translate}} </span>
+                  <th-time-difference server-date="quiz.serverTime" date="quiz.startDate" ng-if="(quiz.serverTime < quiz.startDate)"></th-time-difference>
+                  <th-time-difference server-date="quiz.serverTime" date="quiz.endDate" ng-if="(quiz.serverTime > quiz.startDate)"></th-time-difference>
+                  <p>{{quiz.startDate | date:'dd/MM/yyyy HH:mm'}} à {{quiz.endDate | date:'dd/MM/yyyy HH:mm'}}</p>
+                </div>
+              </div>
+              <i ng-if="!(quiz.startDate <= quiz.serverTime && quiz.endDate > quiz.serverTime)" class="background-img icon img-short img-small-locked"></i>
+              <i ng-if="quiz.startDate <= quiz.serverTime && quiz.endDate > quiz.serverTime" class="background-img icon img-short img-small-unlocked"></i>
+            </div>
+          </td>
+        </tr>
+        <tr ng-if="quizzes.length == 0 && searched == true"><td translate>quiz.resultNotFound</td></tr>
+        </tbody>
+      </table>
+    </th-loading>
+  </div>
+
+  <div class="pagination-container" ng-show="paginationData.totalItems > paginationData.itemsPerPage && searched == true && !loading">
+    <pagination ng-show="paginationData.totalItems > paginationData.itemsPerPage" items-per-page="paginationData.itemsPerPage"
+                total-items="paginationData.totalItems"
+                ng-model="paginationData.currentPage"
+                ng-change="paginationChanged()"
+                max-size="paginationData.maxSize"
+                class="pagination-sm"
+                boundary-links="true"
+                direction-links="false"
+                rotate="false"
+                last-text="{{'pagination.last' | translate}}"
+                first-text="{{'pagination.first'| translate}}" />
+  </div>
+
+</div>

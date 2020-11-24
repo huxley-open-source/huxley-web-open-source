@@ -1,0 +1,213 @@
+<div class="multiview-bottom box">
+  <div class="dropdown" is-open="problemScreen.showFilter">
+    <form>
+      <div class="search-container">
+        <div>
+          <div class="col-lg-5">
+            <div class="input-search-container">
+              <i class="img-large img-large-search img-circle background-color background-img"></i>
+              <input type="text" ng-model="query" id="query" class="form-control search-input" placeholder="{{'problem.search' | translate}}"/>
+              <button type="button" class="btn btn-default advanced-search-button" dropdown-toggle>
+                <div class="arrow-down arrow-small"></div>
+              </button>
+              <div class="search-button-container">
+                <button class="btn btn-blue" ng-click="simpleSearch()" translate>search</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <!-- Div usada somenta para permitir que a div advanced search se posicione sobre as demais
+    quando ela aparecer -->
+
+    <div class="advanced-search dropdown-menu" ng-click="disableDropdown($event)">
+      <button type="button" class="close" aria-label="Close" ng-click="showHideFilter()"><span aria-hidden="true">&times;</span></button>
+      <div class="difficulty-level-filter">
+        <p translate>problem.search</p>
+        <input type="text" ng-model="filter.q" class="quiz-advanced-query-input form-control" placeholder="{{'problem.search' | translate}}"/>
+        <p translate>problem.difficultyLevelFilter</p>
+        <div>
+          <div ui-slider="{range:true}" min="1" max="5" ng-model="problemScreen.difficultyLevel"></div>
+          <span>=</span>
+          <input type="text" readonly
+                 placeholder="{{problemScreen.difficultyLevel[0]}} {{'problem.to' | translate}} {{problemScreen.difficultyLevel[1]}}"/>
+        </div>
+      </div>
+
+      <div class="problem-solved-filter">
+        <p translate>problem.solvedProblemsFilter</p>
+
+        <div class="box-white">
+          <i class="img-medium-notebook img-medium background-img"></i>
+          <span ng-class="{'selection-box' : true, 'selection-box-selected': !problemScreen.excludeCorrect}"
+                ng-click="problemScreen.excludeCorrect = false" translate>yes</span>
+          <span ng-class="{'selection-box' : true, 'selection-box-selected': problemScreen.excludeCorrect}"
+                ng-click="problemScreen.excludeCorrect = true" translate>no</span>
+        </div>
+
+      </div>
+
+      <div class="problem-solved-filter">
+        <p translate>problem.solvedGroupProblemsFilter</p>
+
+        <div class="box-white">
+          <i class="img-medium-notebook img-medium background-img"></i>
+          <span ng-class="{'selection-box' : true, 'selection-box-selected': !problemScreen.group}"
+                ng-click="problemScreen.group = null" translate>yes</span>
+          <span ng-class="{'selection-box' : true, 'selection-box-selected': problemScreen.group}"
+                ng-click="problemScreen.group = quiz.group.id" translate>no</span>
+        </div>
+
+      </div>
+
+      <p translate>quiz.quizOnly</p>
+
+      <div class="box-white">
+        <i class="img-medium-notebook img-medium background-img"></i>
+        <span ng-class="{'selection-box' : true, 'selection-box-selected': problemScreen.quizOnly === 'true'}"
+              ng-click="problemScreen.quizOnly = 'true'" translate>yes</span>
+        <span ng-class="{'selection-box' : true, 'selection-box-selected': problemScreen.quizOnly !== 'true'}"
+              ng-click="problemScreen.quizOnly = 'false'" translate>no</span>
+      </div>
+
+      <div class="topic-filter">
+        <div class="topic-filter-top">
+          <span translate>problem.topicFilter</span>
+
+          <div>
+            <span> {{problemScreen.selectedTopicsSize}} {{ 'problem.selectedTopics' | translate}} | </span>
+            <input type="checkbox" ng-model="problemScreen.selectAllTopics" ng-click="selectAllTopics()">
+            <span translate>selectAll</span>
+          </div>
+        </div>
+        <div class="topic-filter-bottom box-white">
+          <div ng-repeat="topic in allTopics | orderBy:'name'">
+            <span ng-class="{'selection-box' : true, 'selection-box-selected': problemScreen.selectedTopics[topic.id]}"
+                  ng-click="filterTopic(topic.id)">{{topic.name}}</span>
+          </div>
+        </div>
+      </div> <!-- END topic-filter -->
+
+      <div class="topic-filter">
+        <div class="topic-filter-top">
+          <span translate>problem.excludeFilter</span>
+
+          <div>
+            <span> {{problemScreen.excludedTopicsSize}} {{ 'problem.selectedTopics' | translate}}</span>
+          </div>
+        </div>
+        <div class="topic-filter-bottom box-white">
+          <div ng-repeat="topic in excludableTopics | orderBy:'name'">
+            <span ng-class="{'selection-box' : true, 'selection-box-excluded': problemScreen.excludedTopics[topic.id]}"
+                  ng-click="excludeTopic(topic.id)">{{topic.name}}</span>
+          </div>
+        </div>
+      </div> <!-- END topic-filter -->
+
+      <div class="advanced-search-button-box text-right">
+        <button class="btn btn-blue" ng-click="advancedSearch()" translate>search</button>
+      </div>
+
+    </div> <!-- END advanced search  -->
+  </div> <!-- END advanced-search container -->
+
+  <div th-alert closable="true" class="quiz-alert" ng-show="quiz.problemsCount === 0">
+    <div class="arrow-up arrow-yellow-light"></div>
+    {{'quiz.create.alert1' | translate}}
+  </div>
+
+    <div class="result-align">
+        <div class="quiz-edit-info">
+          <div class="text-uppercase" translate>group.results</div>
+          <div class="text-right" ng-show="saving">{{ 'quiz.create.saving' | translate }}</div>
+          <div class="text-right" ng-show="saved">{{ 'quiz.create.saved' | translate }} <i class="glyphicon glyphicon-ok"></i></div>
+        </div>
+        <div class="show-questionnaire">
+
+            <div class="questionnaire-table-search-results">
+              <div>
+                <span>{{'quiz.create.availableProblems' | translate}} ({{pagination.total}}):</span>
+              </div>
+
+              <ul class="problem-list">
+
+                <li class="problem quiz-problem-list"
+                    ng-repeat="problem in problemsResult"
+                    ng-class="{'quiz-lock': lock === problem.id}"
+                    style="height:53px">
+
+                  <th-problem-box problem="problem" show-topics="true"></th-problem-box>
+                  <div class="problem-text-align" ng-class="{'no-visibility': !(problem.studentsSolvedList.length > 0)}">
+                    <div class="blue-balloon" title="{{:: 'quiz.studentsSolved' | translate}}">
+                      <div class="bottom-half-arrow-left arrow-small"></div>
+                      <div>
+                        <i class="icon img-small background-img img-small-man"></i>
+                        <span>{{problem.studentsSolvedList.length}}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="quiz-problem-choose" ng-hide="problem.selected">
+                      <button ng-click="addProblem(problem)" class="btn btn-default btn-transparent" ng-disabled="lock !== -1">
+                        <i class="choose-problem background-img img-circle circle-size icon background-color"></i></button>
+                    </div>
+
+                  <div class="quiz-problem-choose" ng-show="problem.selected"><button ng-click="removeProblem(problem)" ng-disabled="lock !== -1" class="btn btn-default btn-transparent">
+                    <span class="remove-problem-button img-circle circle-size icon">×</span></button></div>
+                </li>
+
+                <li class="text-center" ng-show="isLoading">
+                  <i class="img-medium img-medium-submission-waiting background-img icon img-bottom"></i>
+                </li>
+              </ul>
+
+              <div class="pagination-container problem-pagination" ng-show="true">
+                <pagination items-per-page="pagination.max"
+                            total-items="pagination.total"
+                            boundary-links="true"
+                            ng-model="pagination.page"
+                            ng-change="fetchProblemsPage()"
+                            max-size="5"
+                            class="pagination-sm"
+                            previous-text="{{'pagination.previous' | translate}}"
+                            next-text="{{'pagination.next' | translate}}"
+                            last-text="{{'pagination.last' | translate}}"
+                            first-text="{{'pagination.first'| translate}}">
+                </pagination>
+                </div>
+
+              </div>
+            <div class="table-divisor"></div>
+            <div class="questionnaire-table-search-results">
+                <div>
+                    <span translate>quiz.create.chosenProblems</span>
+                    <span class="with-white-box" translate>quiz.score</span>
+                    <div class="white-box">{{quiz.score}}</div>
+                </div>
+                <th-loading loading="loading2">
+                  <div>
+                        <div th-alert closable="false" class="quiz-alert" ng-show="quiz.problemsCount === 0">
+                          {{'quiz.create.alert2' | translate}}
+                        </div>
+
+                            <ul class="quiz-problem-chosen problem-list">
+                              <perfect-scrollbar class="quiz-scrollbar" refresh-on-change="quiz.problemList">
+                                <li class="problem" ng-repeat="problem in quiz.problemList" ng-class="{'quiz-lock': lock === problem.id}">
+                                  <th-problem-box problem="problem" show-topics="true"></th-problem-box>
+                                    <div class="big-white-box-container">
+                                        <input type="text" class="big-white-box" ng-model="problem.score" ng-blur="updateScore(problem)" ng-disabled="lock !== -1" />
+                                    </div>
+                                    <div class="remove-button"><button ng-click="removeProblem(problem)" ng-disabled="lock !== -1" class="btn btn-default btn-transparent remove-problem-button">×</button></div>
+                                    <div class="edit-button"><button ng-click="addRestrictions(problem)" ng-disabled="lock !== -1" class="btn btn-default btn-transparent"><i class="glyphicon glyphicon-th-list" title="Editar restrições"></i></button></div>
+                                </li>
+                              </perfect-scrollbar>
+                            </ul>
+
+                    </div>
+                  </th-loading>
+            </div>
+        </div>
+    </div>
+
+</div>

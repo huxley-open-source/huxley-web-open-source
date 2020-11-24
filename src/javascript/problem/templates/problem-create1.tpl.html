@@ -1,0 +1,138 @@
+<div class="content container">
+  <div class="box">
+    <th-head header-title="'problem.create.title'"></th-head>
+    <div class="create-form">
+      <form ng-submit="formSubmit()" name="createProblem" novalidate>
+        <div class="form-group" ng-class="{'has-error': createProblem.problemName.$dirty && !createProblem.problemName.$valid}">
+          <label class="col-sm-2 control-label" for="problemName">{{'problem.create.name' | translate}}</label>
+          <div class="col-sm-10">
+            <div class="loading-blue" is-loading="loading.name">
+              <input class="form-control" type="text" id="problemName" name="problemName"
+                     ng-model="problem.name" ng-change="validateName()" placeholder="{{'problem.create.name' | translate}}" popover="{{'problem.create.namePopover' | translate}}"  popover-trigger="focus" popover-placement="bottom" ng-blur="checkName()" ng-maxlength="{{problemInfo.nameMaxSize}}" required>
+            </div>
+          </div>
+          <span class="help-block" ng-if="createProblem.problemName.$valid">{{'group.create.characterCount' | translate: {count: problemInfo.nameMaxSize - problem.name.length, total: problemInfo.nameMaxSize} }}</span>
+          <span class="help-block" ng-if="createProblem.problemName.$dirty && createProblem.problemName.$error.required">{{'group.create.nameRequired' | translate}}</span>
+          <span class="help-block" ng-if="createProblem.problemName.$error.maxlength">{{'group.create.characterCountError' | translate}}</span>
+          <span class="help-block" ng-if="createProblem.problemName.$error.name">{{'group.create.nameUniqueError' | translate }}</span>
+        </div>
+        <div class="form-group" ng-class="{'has-error': createProblem.problemSource.$dirty && !createProblem.problemSource.$valid}">
+          <label class="col-sm-2 control-label" for="problemSource" max="problem.nameMaxSize">{{'problem.create.source' | translate}}</label>
+          <div class="col-sm-10">
+            <input class="form-control" type="text" id="problemSource" name="problemSource" ng-model="problem.source"  placeholder="{{'problem.create.source' | translate}}" popover="{{'problem.create.sourcePopover' | translate}}"  popover-trigger="focus" popover-placement="bottom" ng-maxlength="{{problemInfo.sourceMaxSize}}">
+          </div>
+          <span class="help-block" ng-if="createProblem.problemSource.$valid">{{'group.create.characterCount' | translate: {count: problemInfo.sourceMaxSize - problem.source.length, total: problemInfo.sourceMaxSize} }}</span>
+          <span class="help-block" ng-if="createProblem.problemSource.$error.maxlength">{{'group.create.characterCountError' | translate}}</span>
+        </div>
+
+          <div class="form-inline-fields ">
+            <th-select-box label="'problem.create.problemType' | translate" element="problem.problemType" class="th-select-striped" for="problemTypes"></th-select-box>
+            <th-select-box label="'problem.create.quizProblem' | translate" element="problem.quizOnly" class="th-select-striped" for="quizOnlyOptions"></th-select-box>
+          </div>
+
+
+        <div class="form-inline-fields" ng-if="problem.problemType === 'ALGORITHM' || problem.problemType === 'FILL_THE_CODE'">
+          <th-select-box label="'problem.create.nd' | translate" element="problem.level" class="th-select-striped" for="ndList"></th-select-box>
+          <th-select-box label="'problem.create.timeLimit' | translate" element="problem.timeLimit" class="th-select-striped" for="timeList"></th-select-box>
+        </div>
+
+        <div class="topic-filter">
+          <div class="topic-filter-top">
+            <label translate>problem.create.topicFilter</label>
+          </div>
+          <div class="topic-filter-bottom box-white">
+            <div ng-repeat="topic in allTopics | orderBy:'name'">
+            <span ng-class="{'selection-box' : true, 'selection-box-selected': selectedTopics[topic.id]}"
+                  ng-click="filterTopic(topic.id)">{{topic.name}}</span>
+            </div>
+          </div>
+        </div> <!-- END topic-filter -->
+
+        <div class="row">
+          <div class="col-sm-12 create-align-fields">
+            <div>
+              <h3>{{'problem.editTab.description' | translate}}</h3>
+              <div text-angular ng-model="problem.description"></div>
+            </div>
+            <div ng-if="problem.problemType === 'ALGORITHM' || problem.problemType === 'FILL_THE_CODE'">
+              <h3>{{'problem.editTab.input' | translate}}</h3>
+              <div text-angular ng-model="problem.inputFormat"></div>
+            </div>
+            <div ng-if="problem.problemType === 'ALGORITHM' || problem.problemType === 'FILL_THE_CODE'">
+              <h3>{{'problem.editTab.output' | translate}}</h3>
+              <div text-angular ng-model="problem.outputFormat"></div>
+            </div>
+            <div ng-if="problem.problemType === 'MULTIPLE_CHOICE' || problem.problemType === 'SINGLE_CHOICE' || problem.problemType === 'TRUE_OR_FALSE'">
+              <h3>{{'problem.options.options' | translate}}</h3>
+              <div class="add-options-align">
+                <div text-angular ng-model="new.option"></div>
+                <button type="button" class="btn btn-blue" ng-click="addOption()">{{'problem.options.addOption' | translate}}</button>
+              </div>
+              <table class="table">
+                <thead>
+                <tr>
+                  <th>
+                    {{'problem.options.options' | translate}}
+                  </th>
+                  <th class="option-align">
+                    <span ng-if="problem.problemType === 'TRUE_OR_FALSE'">{{'problem.options.true' | translate}}</span>
+                    <span ng-if="problem.problemType === 'MULTIPLE_CHOICE' || problem.problemType === 'SINGLE_CHOICE'">{{'problem.options.correct' | translate}}</span>
+                  </th>
+                  <th class="option-align">
+                    {{'problem.options.delete' | translate}}
+                  </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="option in problem.choices track by $index">
+                  <th ng-bind-html="option.description">
+                  </th>
+                  <th class="option-align" ng-if="problem.problemType === 'SINGLE_CHOICE'">
+                    <input type="radio" ng-model="correct.option" value="{{$index}}">
+                  </th>
+                  <th class="option-align" ng-if="problem.problemType === 'MULTIPLE_CHOICE' || problem.problemType === 'TRUE_OR_FALSE'">
+                    <input type="checkbox" ng-model="option.correct" ng-true-value="true" ng-false-value="false">
+                  </th>
+                  <th class="option-align">
+                    <a ng-click="deleteOption($index)">
+                      <i class="img-small-remove" ></i>
+                    </a>
+                  </th>
+                </tr>
+                <tr ng-if="problem.choices.length === 0">
+                  <th>
+                    {{'problem.options.outOfOptions' | translate}}
+                  </th>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+            <div ng-if="problem.problemType === 'FILL_THE_CODE'">
+              <h3>{{'problem.create.baseCode' | translate}}</h3>
+              <th-complete-code problem="problem"></th-complete-code>
+            </div>
+          </div>
+        </div>
+
+
+        <th-image-uploader ng-if="activeTab !== 'choices' && activeTab !== 'completeTheCode'"></th-image-uploader>
+
+        <div class="problem-checklist">
+          <h5>Antes de salvar o problema, verifique o checklist abaixo:</h5>
+          <ul class="list-unstyled">
+            <li ng-repeat="(key,val) in checklist" ng-class="{'text-success': !val, 'text-danger': val }">
+              <i class="glyphicon" ng-class="{'glyphicon-check': !val, 'glyphicon-unchecked': val }"></i> {{'problem.checklist.' + key | translate}}
+            </li>
+          </ul>
+        </div>
+        <div class="create-save-container text-right">
+          <button class="btn btn-green" is-loading="loading.form" ng-disabled="hasProblems">{{'problem.create.save' | translate}}</button>
+        </div>
+      </form>
+
+    </div>
+
+
+  </div>
+
+</div>

@@ -1,0 +1,18 @@
+<div class="box multiview-bottom">
+  <div class="group-topcoder-box">
+    <div ng-repeat="topCoder in topcoders">
+      <div class="top-coder-user-box">
+        <div class="top-coder-position-box">{{$index+1}}º</div>
+        <div class="top-coder-img-box"><a ui-sref="profile-show.problems({'id': topCoder.user.id})"><img class="top-coder-img-size" src="{{topCoder.user.avatar}}?width=100"></a></div>
+        <div class="group-topcoder-user-information-box">
+          <div><a class="black-link" ui-sref="profile-show.problems({'id': topCoder.user.id})">{{user.name}}</a></div>
+          <div class="top-coder-user-information">
+            <div class="font-small">
+              <strong>{{topCoder.user.points}}</strong> - <a class="black-link" ui-sref="institution-show.groups({'id': topCoder.user.institution.id})">{{topCoder.user.institution.acronym || user.institution.name}}</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

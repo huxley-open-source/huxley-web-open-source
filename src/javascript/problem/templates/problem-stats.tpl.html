@@ -1,0 +1,56 @@
+<div class="multiview-bottom box">
+  <th-loading loading="$parent.loadingStats"  >
+    <div class="stats-box">
+      <div class="stats-box-item">
+        <p class="stats-box-title">{{'problem.stats.submissionsCount' | translate}}</p>
+        <p class="stats-big">{{stats.submissionCount}}</p>
+      </div>
+
+      <div class="stats-box-item">
+        <p class="stats-box-title">{{'problem.stats.submissionsCorrect' | translate}}</p>
+        <p class="stats-big">{{stats.correctSubmissionCount}}</p>
+      </div>
+
+      <div class="stats-box-item">
+        <p class="stats-box-title">{{'problem.stats.usersTried' | translate}}</p>
+        <p class="stats-big">{{stats.usersWhoTriedCount}}</p>
+      </div>
+
+      <div class="stats-box-item">
+        <p class="stats-box-title">{{'problem.stats.usersSolved' | translate}}</p>
+        <p class="stats-big">{{stats.usersWhoSolvedCount}}</p>
+      </div>
+
+      <div ng-if= "stats.submissionCount > 0" class="stats-box-item graph-box">
+        <nvd3 id="submissionsPerStatusId" options="statsOptions.submissionPieChart" data="stats.submissionByEvaluation"></nvd3>
+      </div>
+
+    <div ng-if= "stats.submissionCount > 0 && (problem.problemType === 'ALGORITHM' || problem.problemType === 'FILL_THE_CODE')" class="stats-box-item graph-box">
+      <nvd3 id="submissionsPerLanguageId" options="statsOptions.submissionPieChart" data="stats.submissionByLanguage"></nvd3>
+    </div>
+
+    <div ng-if= "stats.submissionCount > 0" class="stats-box-item">
+      <p class="stats-box-title">{{'problem.stats.lastSubmissions' | translate}}</p>
+      <ul class="problem-stats-submission-list">
+        <li ng-repeat="submission in stats.lastSubmissions">
+          <th-user-box user="submission.user" time="submission.submissionDate"></th-user-box>
+          <th-problem-status status="submission.evaluation" with-arrow-box="true" direction="'left'" without-popover="true"></th-problem-status>
+        </li>
+      </ul>
+
+
+    </div>
+
+    <div ng-if= "stats.submissionCount > 0 && (problem.problemType === 'ALGORITHM' || problem.problemType === 'FILL_THE_CODE')" class="stats-box-item">
+      <p class="stats-box-title">{{'problem.stats.mostEfficient' | translate}}</p>
+      <ul class="problem-stats-submission-list">
+        <li ng-repeat="submission in stats.fastestSubmissions">
+          <th-user-box user="submission.user" submission="submission"></th-user-box>
+          <th-problem-status status="submission.evaluation" with-arrow-box="true" direction="'left'" without-popover="true"></th-problem-status>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+  </th-loading>
+</div>

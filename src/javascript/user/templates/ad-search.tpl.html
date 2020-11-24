@@ -1,0 +1,23 @@
+<div>
+  <input  type="text" ng-model="searchParams.user" class="form-control" placeholder="usuario">
+  <div><input type="checkbox" aria-label="..." ng-change="searchMode()" ng-model="filter.institution">institution</div>
+  <div ng-show="filter.institution">
+    <span>buscar instituição</span>
+    <input  type="text" ng-model="searchParams.institution" ng-change="institutionSearch()"  placeholder="instituição">
+    <div ng-show="searchParams.institution !== ''"><span ng-click="changeInstitutionId(institution.id)" ng-repeat="institution in institutions">{{institution.name}}//{{institution.id}}</span></div>
+  </div>
+  <div ng-show="searchParams.institutionId != ''"><input type="checkbox" aria-label="..." ng-model="filter.group">group</div>
+  <div ng-show="filter.group">
+    <span>buscar instituição</span>
+    <input  type="text" ng-model="searchParams.group" ng-change="groupSearch()" placeholder="instituição">
+    <div ng-show="searchParams.group !== ''"><span ng-click="changeGroupId(group.id)" ng-repeat="group in groups">{{group.name}}//{{group.id}}</span></div>
+  </div>
+  <button ng-click="userSearch()">procurar</button>
+
+   <span>institution:{{filter.institution}} // institutionId: {{searchParams.institutionId}}</span>
+   <span>group:{{filter.group}}  // groupId: {{searchParams.groupId}}</span>
+
+</div>
+<div>
+  <span ng-repeat="user in users">{{user.name}}</span>
+</div>

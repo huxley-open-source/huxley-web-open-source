@@ -1,0 +1,36 @@
+root = true
+
+[*]
+end_of_line = lf
+charset = utf-8
+trim_trailing_whitespace = true
+
+[*.js]
+indent_style = space
+indent_size = 4
+
+[*.java]
+indent_style = tab
+
+[*.groovy]
+indent_style = tab
+
+[*.css]
+indent_style = space
+indent_size = 2
+
+[*.gsp]
+indent_style = space
+indent_size = 2
+
+[package.json]
+indent_style = space
+indent_size = 2
+
+[*.json]
+indent_style = space
+indent_size = 2
+
+[*.html]
+indent_style = space
+indent_size = 2

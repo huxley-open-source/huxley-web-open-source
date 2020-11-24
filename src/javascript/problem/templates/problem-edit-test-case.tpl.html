@@ -1,0 +1,63 @@
+<div class="multiview-bottom box">
+  <div>
+    <div>
+      <form name="createProblem" novalidate>
+        <table class="table">
+          <thead>
+          <tr>
+            <th>
+              <span class="text-uppercase" translate>problem.create.testCase</span>
+            </th>
+            <th class="text-right">
+              <button class="btn btn-green" ng-click="addTestCase()">{{'problem.create.addTestCase' | translate}}</button>
+            </th>
+          </tr>
+          <div th-alert class="stats-alert">{{'problem.alert-test-case' | translate}}</div>
+
+          </thead>
+          <tbody>
+          <tr id="testcase-{{testCase.id}}" ng-repeat="testCase in testCases track by $index"
+              ng-class="{ 'test-case-selected': selectedTestCase == testCase.id }" focus-if="selectedTestCase == testCase.id">
+            <td colspan="2">
+              <ng-form name="{{'testCase-' + $index}}" novalidate>
+                <div ng-show="testCase.large">
+                  <h5 ng-show="testCase.large">CASO DE TESTE {{$index + 1}}</h5>
+                  <span>O tamanho do caso de teste ultrapassa o tamanho suportado. É possível fazer o download clicando <a ng-click="downloadTestCase(testCase.id)">aqui</a>.</a><span>
+                </div>
+                <div ng-show="!testCase.large">
+                  <h5>{{'problem.create.input' | translate}}</h5>
+                  <textarea ng-model="testCase.input" class="input-test-case" name="{{'input.' + $index}}"></textarea>
+                </div>
+
+                <div ng-show="!testCase.large">
+                  <h5>{{'problem.create.output' | translate}}</h5>
+                  <textarea ng-model="testCase.output" class="input-test-case" name="{{'output.' + $index}}"></textarea>
+                </div>
+                <div ng-show="!testCase.large">
+                  <div>
+                    <h5>{{'problem.create.tip' | translate}}</h5>
+                  </div>
+                  <textarea focus-if="selectedTestCase == testCase.id" ng-model="testCase.tip" class="input-test-case" name="{{'tip.' + $index}}"></textarea>
+                </div>
+                <div class="problem-test-case-tool-bar">
+                  <div class="checkbox">
+                    <label>
+                      <input type="checkbox" ng-model="testCase.example" name="{{'example.' + $index}}"/>{{'problem.create.useAsExample' | translate }}
+                    </label>
+                  </div>
+                  <button class="btn btn-green" ng-click="saveTestCase($index)" ng-disabled="!createProblem['testCase-' + $index].$dirty">{{'problem.create.saveTestCase' | translate}}</button>
+                  <button class="btn btn-red" ng-click="deleteTestCase($index)" ng-disabled="deletingTestCase">{{'problem.create.deleteTestCase' | translate}}</button>
+                </div>
+              </ng-form>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </form>
+
+    </div>
+
+
+  </div>
+
+</div>

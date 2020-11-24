@@ -1,0 +1,306 @@
+<div id="fb-root"></div>
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '890507707661023',
+      xfbml      : true,
+      version    : 'v2.5'
+    });
+  };
+
+  (function(d, s, id){
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) {return;}
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+<div class="layout-container hidden-sm hidden-xs">
+  <div class="layout-header">
+    <div class="layout-header-size">
+      <div ng-hide="scrolled" class="layout-header-logo background-color">
+        <div class="img-medium">
+          <button ui-sref="home" class="background-img img-medium icon img-medium-logo background-color"></button>
+        </div>
+      </div>
+      <div ng-show="scrolled" class="layout-header-logo background-color">
+        <div class="img-medium" dropdown>
+          <button class="background-img img-medium icon img-medium-logo background-color" dropdown-toggle></button>
+          <ul class="dropdown-menu" role="menu">
+            <li>
+              <a ui-sref="home">
+                <i class="background-img icon img-medium img-medium-home"></i>
+                <div class="text-uppercase" translate>home</div>
+              </a>
+            </li>
+            <li>
+              <a ui-sref="problem-list">
+                <i class="background-img icon img-medium img-medium-problem-icon"></i>
+                <div class="text-uppercase" translate>problems</div>
+              </a>
+            </li>
+            <li>
+              <a ui-sref="submission-list">
+                <i class="background-img icon img-medium img-medium-submission-icon"></i>
+                <div class="text-uppercase" translate>submissions</div>
+              </a>
+            </li>
+            <li>
+              <a ui-sref="quiz-list">
+                <i class="background-img icon img-medium img-medium-quiz-icon"></i>
+                <div class="text-uppercase" translate>quizzes</div>
+              </a>
+            </li>
+            <li>
+              <a ui-sref="group-list">
+                <i class="background-img icon img-menu img-medium-group-icon"></i>
+                <div class="text-uppercase" translate>groups</div>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!--<select ng-model="selected.language" ng-options="language.key for language in languages" class="form-control top-coder-group-select" ng-change="changeLanguage(selected.language.key)"></select>-->
+      <div class="layout-header-search-bar" dropdown is-open="searchDropdown.isOpen1">
+        <div class="input-group input-group-sm">
+          <input  type="text" ng-model="searchParams.q" ng-change="search('isOpen1')" class="form-control" placeholder="{{'layoutHeader.siteSearch' | translate}}">
+          <span class="input-group-btn">
+            <button class="background-img background-color icon img-medium img-medium-white-search btn" type="button" ng-click="'isOpen1'"></button>
+          </span>
+        </div>
+        <ul class="dropdown-menu" is-open="searchDropdown.isOpen1" >
+          <li ng-show="problems.length" class="result-title"><strong>{{'problems'|translate}}</strong></li>
+          <li ng-repeat="problem in problems" class="search-hover">
+            <a ui-sref="problem-show.description({'id': problem.id})">{{problem.name}}</a>
+          </li>
+          <li ng-show="users.length" class="result-title"><strong>{{'users'|translate}}</strong></li>
+          <li ng-repeat="user in users" class="search-hover user-result">
+            <a ui-sref="profile-show.problems({'id': user.id})"><img class="header-search-img-size" src="{{user.avatar}}?width=32&height=32">{{user.name}}</a>
+          </li>
+          <li ng-show="groups.length" class="result-title"><strong>{{'groups'|translate}}</strong></li>
+          <li ng-repeat="group in groups" class="search-hover">
+            <a ui-sref="group-show.quizzes({'id': group.url})">{{group.name}}</a>
+          </li>
+          <li ng-show="institutions.length" class="result-title"><strong>{{'institutions'|translate}}</strong></li>
+          <li ng-repeat="institution in institutions" class="search-hover">
+            <a ui-sref="institution-show.groups({'id': institution.id})">{{institution.name}}</a>
+          </li>
+          <li ng-if="!groups.length && !users.length && !problems.length && !institutions.length" class="no-results"><span>{{'search.noResults'|translate}}</span></li>
+        </ul>
+      </div>
+
+      <div class="layout-header-shortcuts-wrapper">
+        <div class="layout-header-shortcuts-config world-align" dropdown ng-init="language = currentUser.locale.replace('_','')">
+          <button type="button" class="background-img icon img-shortcuts img-shortcuts-world" dropdown-toggle>
+            <span class="actual-language">{{'user.languages.' + language | translate}}</span>
+          </button>
+          <div class="arrow-up arrow-blue"></div>
+          <ul class="dropdown-menu" role="menu">
+            <li ng-repeat="(key,value) in languages" ng-if="key !== currentUser.locale"><a ng-click="saveChangedLanguage(key)" translate>{{value}}</a></li></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="layout-header-profile">
+        <div class="layout-header-profile-photo">
+          <a ui-sref="profile-show.problems({'id': currentUser.id})"><img class="img-medium icon" src="{{currentUser.avatar}}?width=32&height=32"></a>
+        </div>
+
+        <div class="layout-header-profile-info">
+          <span>{{'layoutHeader.welcome' | translate}} <a ui-sref="profile-show.problems({'id': currentUser.id})">{{ currentUser.name }}</a>! </span>
+        </div>
+
+      </div>
+
+      <div class="layout-header-shortcuts">
+
+
+
+        <a ui-sref="group-create" ng-if="currentUser.atLeastTeacher()"><i class="background-img icon img-large-shortcuts img-shortcuts-create-group"></i></a>
+
+
+        <div ng-if="false" class="background-img icon img-shortcuts img-shortcuts-notifications alert-messages">
+          <div>20</div>
+          <div class="bottom-half-arrow-right arrow-mini arrow-red"></div>
+        </div>
+
+        <div class="background-img icon img-shortcuts img-shortcuts-messages alert-messages" ui-sref="chat-list({filter: 'unresolved'})">
+          <div ng-if="unReadMessages > 0">{{unReadMessages}}</div>
+          <div ng-if="unReadMessages > 0" class="bottom-half-arrow-right arrow-mini arrow-red"></div>
+        </div>
+
+      <div class="layout-header-shortcuts-wrapper">
+        <div class="layout-header-shortcuts-config" dropdown>
+          <button type="button" class="background-img icon img-shortcuts img-shortcuts-config" dropdown-toggle></button>
+          <div class="arrow-up arrow-blue"></div>
+          <ul class="dropdown-menu" role="menu">
+
+            <li ng-if="currentUser.atLeastAdmin()"><a ui-sref="admin.reevaluate" translate>admin.control-panel</a></li>
+            <li ng-if="currentUser.atLeastTeacherAssistant()"><a ui-sref="problem-manage" translate>admin.problem-manage</a></li>
+            <li ng-if="currentUser.isAdminInst()"><a ui-sref="institution-list" translate>institution.manageInstitutions</a></li>
+            <li ng-if="currentUser.atLeastTeacher()" class="divider"></li>
+            <li><a ui-sref="profile-edit">{{'header.manageAccount' | translate}}</a></li>
+            <li><a ng-click="logout()">{{'header.logOut' | translate}}</a></li>
+            <li class="divider"></li>
+            <li ><a ui-sref="help">{{'header.help' | translate}}</a></li>
+            <li><a ui-sref="contact" translate>supportContact</a></li>
+          </ul>
+        </div>
+
+      </div>
+      </div>
+      <div class="layout-facebook">
+        <div class="fb-like">
+          <afb:like href="https://www.facebook.com/huxleyprogramming" layout="button" action="like" show-faces="true" share="false" on-edge-created="onEdgeCreated(url);" on-edge-removed="onEdgeRemoved(url);"></afb:like>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="layout-menu-container">
+    <div class="layout-menu">
+      <a ui-sref="problem-list">
+        <i class="background-img icon img-medium img-medium-problem-icon"></i>
+        <div class="text-uppercase" translate>problems</div>
+      </a>
+
+      <a ui-sref="submission-list">
+        <i class="background-img icon img-medium img-medium-submission-icon"></i>
+        <div class="text-uppercase" translate>submissions</div>
+      </a>
+
+      <a ui-sref="quiz-list">
+        <i class="background-img icon img-medium img-medium-quiz-icon"></i>
+        <div class="text-uppercase" translate>quizzes</div>
+      </a>
+
+      <a ui-sref="group-list">
+        <i class="background-img icon img-menu img-medium-group-icon"></i>
+        <div class="text-uppercase" translate>groups</div>
+      </a>
+
+      <a ui-sref="topcoder-show">
+        <i class="icon img-menu fa fa-star-o top-coder-icon"></i>
+        <div class="text-uppercase" translate>topcoder</div>
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<div class="layout-container hidden-md hidden-lg">
+  <div class="layout-header">
+    <div class="layout-header-logged">
+      <nav role="navigation">
+        <div id="menuToggle">
+          <input type="checkbox" />
+          <span></span>
+          <span></span>
+          <span></span>
+          <ul id="menu" class="layout-menu-dropdown">
+            <a ui-sref="problem-list">
+              <i class="background-img icon img-medium img-medium-problem-icon"></i>
+              <div class="text-uppercase" translate>problems</div>
+            </a>
+
+            <a ui-sref="submission-list">
+              <i class="background-img icon img-medium img-medium-submission-icon"></i>
+              <div class="text-uppercase" translate>submissions</div>
+            </a>
+
+            <a ui-sref="quiz-list">
+              <i class="background-img icon img-medium img-medium-quiz-icon"></i>
+              <div class="text-uppercase" translate>quizzes</div>
+            </a>
+
+            <a ui-sref="group-list">
+              <i class="background-img icon img-menu img-medium-group-icon"></i>
+              <div class="text-uppercase" translate>groups</div>
+            </a>
+
+            <a ui-sref="topcoder-show">
+              <i class="icon img-menu fa fa-star-o top-coder-icon"></i>
+              <div class="text-uppercase" translate>topcoder</div>
+            </a>
+          </ul>
+        </div>
+      </nav>
+      <div class="layout-header-logo">
+        <a ui-sref="home"><i class="background-img img-medium icon img-medium-logo"></i></a>
+      </div>
+      <div id="ss" class="layout-header-search-bar" dropdown is-open="searchDropdown.isOpen2">
+        <div class="input-group input-group-sm">
+          <input  type="text" ng-model="searchParams.q" ng-change="search('isOpen2')" class="form-control" placeholder="{{'layoutHeader.siteSearch' | translate}}">
+          <span class="input-group-btn">
+            <button class="background-img background-color icon img-medium img-medium-white-search btn" type="button" ng-click="search('isOpen2')"></button>
+          </span>
+        </div>
+        <ul class="dropdown-menu" is-open="searchDropdown.isOpen2" >
+          <li ng-show="problems.length" class="result-title"><strong>{{'problems'|translate}}</strong></li>
+          <li ng-repeat="problem in problems" class="search-hover">
+            <a ui-sref="problem-show.description({'id': problem.id})">{{problem.name}}</a>
+          </li>
+          <li ng-show="users.length" class="result-title"><strong>{{'users'|translate}}</strong></li>
+          <li ng-repeat="user in users" class="search-hover user-result">
+            <a ui-sref="profile-show.problems({'id': user.id})"><img class="header-search-img-size" src="{{user.avatar}}?width=32&height=32">{{user.name}}</a>
+          </li>
+          <li ng-show="groups.length" class="result-title"><strong>{{'groups'|translate}}</strong></li>
+          <li ng-repeat="group in groups" class="search-hover">
+            <a ui-sref="group-show.quizzes({'id': group.url})">{{group.name}}</a>
+          </li>
+          <li ng-show="institutions.length" class="result-title"><strong>{{'institutions'|translate}}</strong></li>
+          <li ng-repeat="institution in institutions" class="search-hover">
+            <a ui-sref="institution-show.groups({'id': institution.id})">{{institution.name}}</a>
+          </li>
+          <li ng-if="!groups.length && !users.length && !problems.length && !institutions.length" class="no-results"><span>{{'search.noResults'|translate}}</span></li>
+        </ul>
+      </div>
+
+      <div class="layout-header-shortcuts-wrapper">
+        <div class="layout-header-shortcuts-config world-align" dropdown ng-init="language = currentUser.getLocale().replace('_','')">
+          <button type="button" class="background-img icon img-shortcuts img-shortcuts-world" dropdown-toggle></button>
+          <div class="arrow-up arrow-blue"></div>
+          <ul class="dropdown-menu" role="menu">
+            <li ng-repeat="(key,value) in languages" ng-if="key !== currentUser.getLocale()"><a ng-click="saveChangedLanguage(key)" translate>{{value}}</a></li></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="layout-header-profile">
+        <div class="layout-header-profile-photo hidden-xs">
+          <a ui-sref="profile-show.problems({'id': currentUser.id})"><img class="img-medium icon" src="{{currentUser.avatar}}?width=32&height=32"></a>
+        </div>
+
+        <div class="layout-header-profile-info">
+          <span><span class="hidden-xs">{{'layoutHeader.welcome' | translate}}</span> <a ui-sref="profile-show.problems({'id': currentUser.id})">{{ currentUser.name }}</a>! </span>
+        </div>
+
+      </div>
+
+      <div class="layout-header-shortcuts">
+
+        <div class="layout-header-shortcuts-wrapper">
+          <div class="layout-header-shortcuts-config" dropdown>
+            <button type="button" class="background-img icon img-shortcuts img-shortcuts-config" dropdown-toggle></button>
+            <div class="arrow-up arrow-blue"></div>
+            <ul class="dropdown-menu" role="menu">
+              <li><a ui-sref="chat-list({filter: 'unresolved'})">Mensagens <span class="badge pull-right ng-binding">{{unReadMessages}}</span></a></li>
+              <li ng-if="currentUser.atLeastTeacher()"><a ui-sref="group-create" translate>group.create.button</a></li>
+              <li class="divider"></li>
+              <li ng-if="currentUser.atLeastAdmin()"><a ui-sref="admin.reevaluate" translate>admin.control-panel</a></li>
+              <li ng-if="currentUser.atLeastTeacherAssistant()"><a ui-sref="problem-manage" translate>admin.problem-manage</a></li>
+              <li ng-if="currentUser.isAdminInst()"><a ui-sref="institution-list" translate>institution.manageInstitutions</a></li>
+              <li ng-if="currentUser.atLeastTeacher()" class="divider"></li>
+              <li><a ui-sref="profile-edit">{{'header.manageAccount' | translate}}</a></li>
+              <li><a ng-click="logout()">{{'header.logOut' | translate}}</a></li>
+              <li class="divider"></li>
+              <li ><a ui-sref="help">{{'header.help' | translate}}</a></li>
+              <li><a ui-sref="contact" translate>supportContact</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

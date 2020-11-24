@@ -1,0 +1,27 @@
+<div class="form-group th-select-box" ng-class="{'has-error': element.$dirty && !element.$valid}">
+    <label class="col-sm-2 control-label">{{label}}</label>
+    <div class="col-sm-10" dropdown is-open="t.isopen">
+        <div class="form-control th-input-complete input-focus" ng-class="{'fixed-size': fixed}">
+                <li ng-repeat="element in chosenList" class="th-input-selected" ng-class="{'invalid': element.valid === false}" ng-if="onlyOne === undefined">
+                        {{element.name}} <a ng-click="t.remove(element);">&#10005;</a>
+                </li>
+            <div>
+                <input type="text" ng-model="t.element" ng-blur="chooseAndValidate()" ng-keyup="getList($event)"  placeholder="{{placeholder}}" name="{{elementId}}" ng-focus="inputOnFocus = true" autocomplete="off"/>
+            </div>
+
+        </div>
+        <span class="help-block" ng-if="element.$dirty && element.$error.empty">{{'component.inputUserComplete.required' | translate}}</span>
+        <span class="help-block" ng-if="element.$dirty && element.$error.custom">{{validateMsg | translate }}</span>
+        <ul class="dropdown-menu" role="menu" is-open="t.isopen">
+            <perfect-scrollbar wheel-speed="50" refresh-on-change="searchList" ng-click="disableDropdown($event)" selected-index="selectedIndex">
+                <li ng-repeat="element in searchList" ng-class="{'highlight': onFocus === element.id}">
+                    <a ng-click="t.choose(element);">
+                        <th-user-box user="element" no-links="true" ng-if="type === 'USER'"></th-user-box>
+                        <th-problem-box problem="element" nolink="true" ng-if="type === 'PROBLEM'" ></th-problem-box>
+                        <span ng-if="type !== 'PROBLEM' && type !== 'USER'">{{element.name}}</span>
+                    </a>
+                </li>
+            </perfect-scrollbar>
+         </ul>
+    </div>
+</div>

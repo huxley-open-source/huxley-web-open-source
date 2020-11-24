@@ -1,0 +1,31 @@
+<div class="header">
+    <div>
+        <div>
+            <h3 translate>{{title}}</h3>
+            <button class="btn btn-blue" ng-show="group && currentUser.atLeastTeacher()" ui-sref="group-create" translate>
+              group.create.button
+            </button>
+            <button class="btn btn-blue" ng-show="institution && currentUser.atLeastTeacher()" ui-sref="institution-create" translate>
+              institution.create-institution
+            </button>
+          <button class="btn btn-blue" ng-show="topic && currentUser.atLeastTeacher()" ui-sref="topics-create" translate>
+            admin.topics.create
+          </button>
+        </div>
+        <div class="group-head-menu" ng-show="group">
+            <div class="arrow-left"></div>
+            <div class="arrow-left"></div>
+            <button class="btn btn-small btn-icon btn-blue" ui-sref="group-list">
+              <i class="img-short img-small-search img-rounded icon background-img"></i>
+            </button>
+            <button class="btn btn-small btn-icon btn-blue" ng-show="currentUser.isAuthenticated()" ui-sref="group-key">
+              <i class="img-short img-small-key img-rounded icon background-img"></i>
+            </button>
+        </div>
+        <div class="group-head-menu" ng-if="quiz">
+            <button class="btn btn-small btn-icon btn-blue" ui-sref="quiz-import" ng-if="currentUser.atLeastTeacher()">
+              {{'quiz.quizImport' | translate}}
+            </button>
+        </div>
+    </div>
+</div>

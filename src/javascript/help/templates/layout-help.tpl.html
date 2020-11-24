@@ -1,0 +1,43 @@
+<div class="container help-container">
+
+  <div class="box">
+
+    <div class="header">
+      <h3 class="ng-scope ng-binding">{{'help.title' | translate}}
+        <small ng-if="vm.selectedPage">{{vm.selectedPage.label | translate}}</small>
+      </h3>
+    </div>
+
+    <ul class="help-menu">
+
+      <li ng-repeat="topic in vm.topics" ng-class="{active:topic === vm.selectedTopic}">
+        <a href ng-if="!topic.slug" ng-click="vm.selectTopic(topic)">{{topic.label | translate}}</a>
+        <a ui-sref="help.page({page:topic.slug})" ng-if="topic.slug">{{topic.label | translate}}</a>
+
+        <ul ng-if="topic.pages.length" class="help-menu-inner">
+          <li ng-repeat="page in topic.pages" ui-sref-active="active">
+            <a ui-sref="help.page({page:page.slug})">{{page.label | translate}}</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+
+    <div ui-view>
+      <div class="layout-h-spacing">
+        <p class="black-title">
+          {{'help.howCanweHelpMsg1'|translate}}</br>
+          {{'help.howCanweHelpMsg2'|translate}}</br>
+          {{'help.howCanweHelpMsg3'|translate}}</br>
+          {{'help.howCanweHelpMsg4'|translate}}</br>
+          <a href="{{'help.howCanweHelpMsg5'|translate}}">{{'help.howCanweHelpMsg5'|translate}}</a>
+        </p>
+        <p class="black-title">
+          {{'help.howCanweHelpMsg6'|translate}}</br>
+          {{'help.howCanweHelpMsg7'|translate}}
+        </p>
+      </div>
+    </div>
+  </div>
+
+
+</div>

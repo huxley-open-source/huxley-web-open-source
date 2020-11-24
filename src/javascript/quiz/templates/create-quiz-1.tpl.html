@@ -1,0 +1,55 @@
+<div class="box multiview-bottom">
+  <div class="quiz-edit-info">
+    <div class="text-right quiz-status" ng-if="saving">{{ 'quiz.create.saving' | translate }}</div>
+    <div class="text-right quiz-status" ng-if="saved">{{ 'quiz.create.saved' | translate }} <i class="glyphicon glyphicon-ok"></i></div>
+    <div class="text-right quiz-status error" ng-if="groupNotFound">{{ 'quiz.clone.error.groupOpenNotFound' | translate }}</div>
+  </div>
+    <div class="create-form">
+        <ng-form name="createQuiz" novalidate>
+          <div class="form-group" ng-class="{'has-error': createQuiz.quizName.$dirty && !createQuiz.quizName.$valid}">
+            <label class="col-sm-2 control-label" for="quizName" max="quizInfo.nameMaxSize">{{'quiz.create.title' | translate}}</label>
+            <div class="col-sm-10">
+              <input ng-change="checkChanges()" class="form-control" type="text" id="quizName" name="quizName" ng-model="quiz.title" placeholder="{{'quiz.create.titlePlaceholder' | translate}}" ng-maxlength="{{quizInfo.nameMaxSize}}" required>
+            </div>
+            <span class="help-block" ng-if="createQuiz.quizName.$valid">{{'group.create.characterCount' | translate: {count: quizInfo.nameMaxSize - quiz.title.length, total: quizInfo.nameMaxSize} }}</span>
+            <span class="help-block" ng-if="createQuiz.quizName.$dirty && createQuiz.quizName.$error.required">{{'quiz.create.error.titleRequired' | translate}}</span>
+            <span class="help-block" ng-if="createQuiz.quizName.$error.maxlength">{{'group.create.characterCountError' | translate}}</span>
+          </div>
+          <div class="form-group" ng-class="{'has-error': createQuiz.quizDescription.$dirty && !createQuiz.quizDescription.$valid}">
+            <label class="col-sm-2 control-label" for="quizDescription">{{'group.create.description' | translate}}</label>
+            <div class="col-sm-10">
+              <input ng-change="checkChanges()" class="form-control" type="text" id="quizDescription" name="quizDescription" ng-model="quiz.description" placeholder="{{'group.create.description' | translate}}" ng-maxlength="{{quizInfo.descriptionMaxSize}}">
+            </div>
+            <span class="help-block" ng-if="createQuiz.quizDescription.$valid">{{'group.create.characterCount' | translate: {count: quizInfo.descriptionMaxSize - quiz.description.length, total: quizInfo.descriptionMaxSize} }}</span>
+            <span class="help-block" ng-if="createQuiz.quizDescription.$error.maxlength">{{'group.create.characterCountError' | translate}}</span>
+          </div>
+
+          <div class="form-group date-group" ng-class="{'has-error': createQuiz.quizDate.$error.custom}">
+            <th-datepicker ng-model="quiz.startDate" date="quiz.startDate" label="'group.startDate' | translate" element-id="'quizStartDate'" is-required="true" with-time="true" hours="sHours" minutes="sMinutes"></th-datepicker>
+
+            <th-datepicker ng-model="quiz.endDate" date="quiz.endDate" label="'group.endDate' | translate" element-id="'quizEndDate'" is-required="true" with-time="true" hours="eHours" minutes="eMinutes"></th-datepicker>
+            <input type="hidden" name="quizDate" id="quizDate" ng-model="validateDate"/>
+            <span class="help-block" ng-if="createQuiz.quizDate.$error.custom">{{'group.create.startDateGreater' | translate}}</span>
+
+            <div class="row">
+            <div class="col-sm-10 col-sm-offset-2">
+              <label popover="{{'quiz.partialScore' | translate}}" popover-trigger="mouseenter" popover-placement="right">
+                <input type="checkbox" ng-model="quiz.partialScore" ng-change="checkChanges()"/> Cálcular notas parciais
+              </label>
+            </div>
+            </div>
+          </div>
+
+          <div class="form-group date-group" ng-class="{'has-error': createQuiz.group.$error.custom}" ng-if="clone">
+            <th-select-box label="'quiz.clone.chooseGroup' | translate" element="quizInfo.group" class="th-select-striped" for="groupList"></th-select-box>
+          </div>
+
+          <div class="create-save-container text-right">
+              <button class="btn btn-blue" ng-click="formSubmit()" ng-if="create && !saving">{{'quiz.create.next' | translate}}</button>
+              <button class="btn btn-blue" ng-click="formSubmit()" ng-if="!create && !saving" ng-disabled="groupNotFound || !enableConfirm">{{'quiz.save' | translate}}</button>
+              <button class="btn btn-blue" ng-disabled="true" is-loading="saving" ng-if="saving">{{ 'quiz.create.saving' | translate }}</button>
+          </div>
+        </ng-form>
+
+    </div>
+</div>

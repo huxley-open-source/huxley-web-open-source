@@ -1,0 +1,87 @@
+<div class="multiview-bottom box">
+  <th-loading loading="loadingUserReview">
+    <div class="user-review-container" ng-class="{'student-review': !currentUser.atLeastTeacher()}">
+      <div>
+        <button ui-sref="quiz-show.review-user({userid:quizReview.navigate.b})" ng-show="currentUser.atLeastTeacher()" ng-disabled="!(quizReview.navigate.b)" class="btn btn-blue-lighter arrow-back">
+          <i class="arrow-left arrow-blue icon"></i>
+          <i class="arrow-left arrow-blue-lighter icon arrow-small"></i>
+        </button>
+      </div>
+      <div class="user-reviewed">
+        <div>
+          <th-user-box user="quizReview.userReviewed"> </th-user-box>
+        </div>
+        <div>
+          <div ng-if="currentUser.atLeastTeacher(quiz.group)">
+            <button class="btn btn-blue text-uppercase" ng-click="failQuizz()">{{'quiz.review.resetScore' | translate}}</button>
+          </div>
+          <div class="user-reviewed-score">
+            <div>
+              {{'quiz.review.score' | translate}}:
+            </div>
+            <div>
+              <div class="score-box">{{totalUserScore | number:1}}/{{quiz.score}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <button ui-sref="quiz-show.review-user({userid:quizReview.navigate.a})"  ng-disabled="!(quizReview.navigate.a)" ng-show="currentUser.atLeastTeacher()" class="btn btn-blue-lighter arrow-next">
+          <i class="arrow-right arrow-blue icon"></i>
+          <i class="arrow-right arrow-blue-lighter icon arrow-small"></i>
+        </button>
+      </div>
+
+    </div>
+
+    <table class="table review-table">
+      <thead>
+      <tr>
+        <th>Problema</th>
+        <th>Status</th>
+        <th>Score</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody ng-repeat="prob in problemList">
+      <tr>
+        <td>
+          <th-problem-box problem="prob" show-topics="true" nolink="false" quiz-id="quiz.id"></th-problem-box>
+        </td>
+        <td>
+          <div class="review-status-box">
+            <div class="penalty-alert-box">
+              <th-problem-status status="prob.susbmissionStatus" direction="'bottom'"></th-problem-status>
+              <i ng-show="prob.userScore.penalty >= 0" class="penalty-alert icon img-small-alert img-short background-img" title="{{'quiz.scoreChanged' | translate }}"></i>
+              <i ng-show="prob.userScore.restriction_error_count > 0" class="penalty-alert glyphicon glyphicon-warning-sign" title="{{'quiz.restrictionPenalty' | translate }}"></i>
+            </div>
+          </div>
+        </td>
+        <td>
+          <div class="review-score">
+            <div class="score-box"><input ng-readonly="!currentUser.atLeastTeacher(quiz.group)" type="text" ng-model="prob.finalUserScore" ng-change="updateScore(prob)"/><div class="max-score">/{{prob.score}}</div></div>
+          </div>
+        </td>
+        <td>
+          <div>
+            <button class="btn btn-blue" ng-class="{disabled: prob.userScore.submission_count < 1}" ng-click="codeReviewUser(prob.id)">
+              {{'quiz.review.view' | translate}} ({{prob.userScore.submission_count}})
+            </button>
+          </div>
+        </td>
+        <td>
+          <a ui-sref="chat-new-question({'problem': prob.id, 'group': quiz.group.id})"><i class="glyphicon glyphicon-question-sign icon-doubt"></i></a>
+        </td>
+      </tr>
+      <!--<tr>-->
+        <!---->
+      <!--</tr>-->
+      <tr ng-show="quizScreen.matchVisible[prob.id]">
+        <td colspan="4">
+          <th-code-view submission="quizScreen.submission[prob.id]" submission-list="problemSubmissions[prob.id]" editor="false"/>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </th-loading>
+</div>

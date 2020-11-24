@@ -1,0 +1,15 @@
+<div class="rich-editor-actions clearfix form-inline">
+  <div class="pull-left">
+    <button ng-click="addSnippet()"
+            class="btn btn-default btn-sm">Adicionar snippet</button>
+  </div>
+  <div class="pull-right">
+    <!--<th-select-box element="currentLocale" class="th-select-striped" for="availableLocales"></th-select-box>-->
+    &nbsp;
+    <th-select-box element="currentLanguage" class="th-select-striped" for="availableLanguages"></th-select-box>
+  </div>
+</div>
+<div class="rich-editor-body">
+  <div contenteditable="true"
+       class="rich-editor-content form-control" ng-model="contentHtml"></div>
+</div>

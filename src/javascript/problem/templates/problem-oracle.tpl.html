@@ -1,0 +1,51 @@
+  <div class="multiview-bottom box">
+  <div class="oracle-box">
+    <div class="oracle-header">
+      <i class="icon img-large img-large-oracle background-img th-circle-blue"/>
+      <div id="oracle-description-box">
+        <span>{{'problem.oracleDescription' | translate}}</span>
+      </div>
+
+    </div>
+    <div th-alert class="stats-alert" closable="false" ng-if="!(oracle.type === 'INCONCLUSIVE' || oracle.type === 'NO_ANSWER') || oracle.status === 'PENDING'">
+      <span>{{'component.oracle.howItWorks' | translate}}</span>
+    </div>
+    <div th-alert class="stats-alert" closable="false" ng-if="(oracle.type === 'INCONCLUSIVE' || oracle.type === 'NO_ANSWER') && oracle.status === 'DONE'">
+      <span >{{'component.oracle.error.noResponse' | translate}}</span></br>
+      <span ng-if ="oracle.type === 'INCONCLUSIVE'"> {{'component.oracle.error.inconclusive' | translate}} </span>
+      <span ng-if ="oracle.type === 'NO_ANSWER'"> {{'component.oracle.error.fewSubmissions' | translate}} </span>
+    </div>
+    <div>
+      <div class="ask-oracle-button">
+        <button type="button" class="btn btn-blue" ng-click="sendToOracle();" ng-disabled="executing">{{'problem.oracleAsk' | translate}}</button>
+      </div>
+      <!--<div class="solution-answer answer-waiting margin-after" ng-show="executing">-->
+        <!--<div class="answer-circle ans-circle-waiting"><i class="img-loading"></i></div>-->
+        <!--<p class="answer-text" > {{'problem.oracleExecuting' | translate}} </p>-->
+
+      <!--</div>-->
+      <!-- Saída esperada e obtida -->
+      <div>
+        <div class="box-multiple-columns input-output margin-after">
+          <div class="solution-input-box">
+            <p class="solution-title-default"><i class="icon img-short img-short-input background-img"/> {{'problem.input' | translate}}</p>
+            <textarea ng-model="input" class="form-control textarea-resize-disabled" rows="10"></textarea>
+          </div>
+          <div class="solution-input-box">
+            <p class="solution-title-blue-dark"><i class="icon img-short img-short-output background-img"/> {{'problem.oracleOutput' | translate }}</p>
+            <th-loading loading="executing" >
+              <p class="problem-example-content" ng-bind-html="oracle.output" ng-if="(!(oracle.type === 'INCONCLUSIVE' || oracle.type === 'NO_ANSWER') || oracle.status === 'PENDING') && !error"></p>
+              <i class="img-medium img-medium-submission-wrong-answer background-img icon img-oracle" ng-if="(oracle.type === 'INCONCLUSIVE' || oracle.type === 'NO_ANSWER') && oracle.status === 'DONE' && !error"></i>
+              <p class="problem-example-content" ng-if="error">{{'problem.oracleError' | translate}}</p>
+            </th-loading>
+          </div>
+        </div>
+      </div>
+      <div ng-hide="!largeOutput">
+        <div class="stats-alert">
+          <span>A saída do Oráculo ultrapassa o tamanho suportado. É possível fazer o download clicando <a ng-click="downloadOutput();">aqui</a>.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

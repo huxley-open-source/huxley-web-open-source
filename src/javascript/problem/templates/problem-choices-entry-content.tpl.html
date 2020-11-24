@@ -1,0 +1,25 @@
+<div class="problem-description">
+  <div class="problem-description-header-container">
+    <p translate class="problem-section-head">problem.choices.descriptionTitle</p>
+    <div class="choice-description" bind-markdown="problem.description"></div>
+  </div>
+</div>
+
+<div class="problem-description">
+  <div class="problem-description-header-container">
+    <p class="problem-section-head">
+      {{(problem.kind === 'MULTIPLE_CHOICE'? 'problem.choices.answerMultiple': 'problem.choices.answerSingle') | translate}}
+    </p>
+
+    <div class="list-group choice-answers">
+
+      <a href class="list-group-item"
+         ng-class="{active:choice.$selected}"
+         ng-click="selectChoice(choice)"
+         ng-repeat="choice in problem.choices">
+        <span class="fa fa-check-circle choice-answer-check"></span>
+        <div class="choice-answer-content" bind-markdown="choice.description"></div>
+      </a>
+    </div>
+  </div>
+</div>

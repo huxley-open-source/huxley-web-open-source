@@ -1,0 +1,28 @@
+@left-margin: 20px;
+
+//Header
+.app-header {
+  border-bottom: 2px solid @blue;
+  padding-bottom: 5px;
+  margin-bottom: 20px;
+  max-height: 63px;
+  height: 63px;
+}
+
+.app-header > div {
+  .display-flex();
+}
+
+.app-header > div > div {
+  .flex-grow(1);
+}
+
+.app-header h3 {
+  display: inline-block;
+  color: black;
+  margin-left: @left-margin;
+}
+
+.separator {
+  border-top : 1px solid @blue;
+}

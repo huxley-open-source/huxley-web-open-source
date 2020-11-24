@@ -1,0 +1,52 @@
+.notification-small {
+  .img-notification-size {
+    width: 40px;
+    height: 40px;
+  }
+  .problem-status-container {
+    width: 25px !important;
+    height: 25px !important;
+  }
+  .th-notification-image-container {
+    width: 45px !important;
+  }
+  .th-notification-msg-container {
+    width: 190px !important;
+  }
+  .grade {
+    display: block !important;
+  }
+}
+.th-notification-container {
+  .display-flex();
+  height: 50px;
+  .align-items-flex(center);
+  color: @default-color;
+  font-size: @font-small;
+  .problem-data-right {
+    margin-bottom: 0;
+  }
+  .th-notification-image-container {
+    width: 60px;
+  }
+  .th-notification-msg-container {
+    .flex-grow(1);
+    > div {
+      line-height: 13px;
+    }
+    .th-notification-date {
+      color: @gray-light;
+    }
+    .notification-name, .notification-submission {
+      font-weight: bold;
+    }
+    .th-notification-msg-topics {
+      text-transform: uppercase;
+    }
+  }
+  .th-notification-result-container {
+    .problem-status {
+      margin-top: -2px;
+    }
+  }
+}

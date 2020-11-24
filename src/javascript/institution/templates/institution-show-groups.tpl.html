@@ -1,0 +1,44 @@
+  <div class="box multiview-bottom">
+    <table class="table margin-top-table">
+      <thead>
+      <tr>
+        <th>
+          <span ng-if="currentUser.isAuthenticated() && !searchParams.all" class="text-uppercase" translate>group.myGroups</span>
+          <span ng-if="searchParams.all || !currentUser.isAuthenticated()" class="text-uppercase" translate>group.results</span>
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="group in groups">
+        <td>
+          <div>
+            <a ng-href="/group/{{group.url}}">{{group.name}}</a></h5>
+          </div>
+          <div>
+                    <span class="font-small">
+                        <em>{{group.institution.name}}</em>,
+                         {{'created.by' | translate}} <em>{{group.teachers[0].name&&group.teachers[0].name || "Indefinido"}}</em>,
+                         {{'date.created.in'| translate}} {{group.dateCreated | date:'dd/MM/yyyy'}}
+                    </span>
+          </div>
+        </td>
+      </tr>
+      <tr ng-if="groups.length == 0"><td translate>admin.groupNotFound</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="pagination-container" ng-show="paginationData.totalItems > paginationData.max">
+  <pagination items-per-page="paginationData.max"
+              total-items="paginationData.totalItems"
+              ng-model="paginationData.currentPage"
+              ng-change="paginationChanged()"
+              max-size="paginationData.maxSize"
+              class="pagination-sm"
+              boundary-links="true"
+              direction-links="false"
+              rotate="false"
+              last-text="{{'pagination.last' | translate}}"
+              first-text="{{'pagination.first'| translate}}">
+  </pagination>
+</div>

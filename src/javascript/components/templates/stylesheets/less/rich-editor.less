@@ -1,0 +1,87 @@
+.rich-snippet {
+  background: @gray-lighter;
+  padding: 5px;
+
+  &.snippet-inline {
+    display: inline-block;
+    margin: 0 5px;
+  }
+
+  &.snippet-block {
+    display: block;
+    margin: 0 0 15px;
+  }
+
+  &.is-open {
+    display: block;
+    padding: 15px;
+    margin: 5px;
+  }
+}
+
+.rich-input-container {
+  margin-right: 175px;
+
+  textarea {
+    height: 55px;
+    border-radius: 0;
+    border: 0;
+  }
+
+  .codeeditor {
+    height: 120px
+  }
+}
+
+.rich-input-aside {
+  float: right;
+  width: 155px;
+  padding-left: 15px;
+  margin-top: 15px;
+
+  label {
+    padding: 0;
+  }
+}
+
+.rich-editor-actions {
+  margin-bottom: 5px;
+
+  .btn.btn-sm {
+    font-size: 12px;
+    font-weight: 500;
+    padding: @padding-small-vertical @padding-small-horizontal;
+  }
+
+  label.input-group-addon {
+    background: transparent;
+    font-weight: 500;
+    border: 0;
+  }
+}
+
+.rich-editor-content {
+  height: auto;
+}
+
+.rich-snippet-closed {
+
+  &:hover {
+    text-decoration: none;
+  }
+
+  > em {
+    color: #999;
+    font-family: monospace;
+    font-size: 13px;
+  }
+
+  .snippet-block > & > em {
+    display: block;
+    white-space: pre;
+    word-break: break-all;
+    word-wrap: break-word;
+    border-left: 3px solid #bbb;
+    padding-left: 15px;
+  }
+}

@@ -1,0 +1,20 @@
+<div class="form-group th-select-box">
+    <label class="col-sm-2 control-label text-capitalize" ng-show="label">
+      {{label}}
+      <a ng-if="helpLink" class="doubt-link-size glyphicon glyphicon-question-sign" ui-sref="help.page({page:helpLink})"></a>
+    </label>
+    <div ng-class="{ 'col-sm-10' : label}" dropdown is-open="isOpen">
+        <div class="dropdown-toggle th-select-box-toggle">
+                <div  class="form-control input-focus">
+                    {{selectedText | translate}}
+                </div>
+                <button type="button" class="btn btn-default btn-blue" ng-if="hideArrow === undefined || hideArrow === false"><i class="arrow-down arrow-white icon" ></i></button>
+
+        </div>
+        <ul class="dropdown-menu" role="menu">
+            <perfect-scrollbar wheel-speed="50" refresh-on-change="isOpen" ng-click="disableDropdown($event)">
+                <li ng-repeat="(key, value) in map"><a ng-click="choose(key,value);">{{value | translate}}</a></li>
+            </perfect-scrollbar>
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,161 @@
+<div class="container content">
+
+  <div class="box">
+
+    <th-head ng-if="!isNewMessage" header-title="'Mensagem'"></th-head>
+    <th-head ng-if="isNewMessage" header-title="'Nova Mensagem'"></th-head>
+
+    <div class="row chat-row">
+      <div class="col-sm-4">
+
+
+        <div ng-if="message.type !== 'PROBLEM_QUESTION' && !isNewMessage">
+          <h5 style="font-weight: bold">{{'chat.type.type' | translate}}</h5>
+          {{'chat.type.' + message.type | translate}}
+        </div>
+
+        <div>
+          <h5 style="font-weight: bold">{{'chat.author' | translate}}</h5>
+          <a ui-sref="profile-show.problems({id: author.id})">{{author.name}}</a>
+        </div>
+
+        <div ng-if="group">
+          <h5 style="font-weight: bold">{{'chat.group' | translate}}</h5>
+          <a ui-sref="group-show.quizzes({id: group.url})">{{group.name}}</a>
+        </div>
+
+        <div ng-if="problem">
+          <h5 style="font-weight: bold">{{'chat.problem' | translate}}</h5>
+          <a ui-sref="problem-show.description({ id: problem.id })">{{problem.name}}</a>
+        </div>
+
+        <div ng-if="!recipient && users.length">
+          <h5 style="font-weight: bold">{{'chat.members' | translate}}</h5>
+          <ul class="list-unstyled">
+            <li ng-repeat="user in users"><img src="{{user.avatar}}?width=40&height=40"/> {{user.name}}</li>
+          </ul>
+        </div>
+
+        <div ng-if="recipient">
+          <h5 style="font-weight: bold">{{'chat.recipient' | translate}}</h5>
+          <a ui-sref="profile-show.problems({id: recipient.id})">{{recipient.name}}</a>
+        </div>
+
+        <div ng-if="problemAuthor">
+          <h5 style="font-weight: bold">{{'chat.recipient' | translate}}</h5>
+          <a ui-sref="profile-show.problems({id: problemAuthor.id})">{{problemAuthor.name}}</a>
+        </div>
+
+        <div ng-if="problem">
+          <h5 style="font-weight: bold">{{'chat.submissions' | translate}}</h5>
+
+          <div ng-if="!submissions.length">
+            {{'chat.noSubmission' | translate}}
+          </div>
+
+          <table class="table table-condensed table-submissions" style="margin-bottom: 0px">
+            <tr ng-repeat="sub in submissions">
+              <td><a href="" ng-click="viewSubmission(sub)">#{{sub.tries}}</a></td>
+              <td>{{sub.submissionDate | amDateFormat:'DD/MM/YYYY H:mm:ss'}}</td>
+              <td>
+                <th-submission-status submission="sub" class="popover-gray"></th-submission-status>
+              </td>
+              <td>
+                <a href="#" popover="Adicionar à mensagem" popover-trigger="mouseenter" popover-placement="right" ng-click="addSubmission(sub.tries)">
+                  <i class="glyphicon glyphicon-plus-sign"></i></a>
+              </td>
+            </tr>
+          </table>
+          <div class="pagination-container" ng-show="paginationData.totalItems > paginationData.itemsPerPage">
+            <pagination ng-show="paginationData.totalItems > paginationData.itemsPerPage"
+                        items-per-page="paginationData.itemsPerPage"
+                        total-items="paginationData.totalItems"
+                        ng-model="paginationData.currentPage"
+                        ng-change="paginationChanged()"
+                        max-size="paginationData.maxSize"
+                        class="pagination-sm"
+                        boundary-links="true"
+                        direction-links="false"
+                        rotate="false"
+                        last-text="{{'pagination.last' | translate}}"
+                        first-text="{{'pagination.first'| translate}}" />
+          </div>
+        </div>
+      </div>
+
+
+      <div class="col-sm-8 message-container" ng-if="!submission">
+        <div class="row messages-header" ng-if="!isNewMessage">
+          <span ng-if="resolved" style="color: green"><i class="glyphicon glyphicon-check"></i> {{'chat.solved' | translate}}</span>
+          <span ng-if="!resolved" style="color: red"><i class="glyphicon glyphicon-ban-circle"></i> {{'chat.unresolved' | translate}}</span>
+          <a href="" class="pull-right" ui-sref="chat-list()">{{'chat.backToInbox' | translate}}</a>
+        </div>
+
+        <div class="row messages-header" ng-if="isNewMessage">
+          <form>
+            <div class="form-group" ng-if="isReport">
+              <label class="control-label">{{'chat.problemType' | translate}}</label>
+              <select class="form-control"
+                      ng-options="type as type.label for type in types track by type.value" ng-model="typeSelect.type"></select>
+            </div>
+
+            <div class="form-group" ng-if="!recipient && !isReport">
+              <label class="control-label">{{'chat.group' | translate}}</label>
+              <select class="form-control" ng-disable="isGroupSelected"
+                      ng-options="group as group.name for group in groups track by group.id" ng-change="changeGroup()" ng-model="groupSelect.group"></select>
+            </div>
+            <div class="form-group">
+              <label class="control-label">{{'chat.recipients' | translate}}:</label>
+              {{recipients}}
+            </div>
+          </form>
+        </div>
+
+        <div>
+          <div ng-repeat="msg in messages" class="message msg-light"
+               ng-class="{ outgoing: msg.senderId === currentUser.id, incoming: msg.senderId !== currentUser.id }">
+            <div>
+              <div class="msg-user">
+                <img class="user-avatar"  ng-src="{{msg.user.avatar}}?width=40&height=40"/>
+                <strong>{{msg.user.name}}</strong> | enviada {{msg.dateCreated | amDateFormat:'DD/MM/YYYY H:mm:ss'}}
+              </div>
+              <div class="msg-content">
+                <div class="msg-body" ng-bind-html-if-safe="msg.body"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br/>
+        <textarea class="form-control" rows="5" ng-model="message.body" autofocus></textarea>
+        <div class="create-save-container text-right" style="padding: 8px 0px">
+          <button class="btn btn-green" ng-click="changeStatus()" ng-if="!isNewMessage" ng-class="{ 'btn-red': resolved }">{{ !resolved ?
+            ('chat.markAsSolved' | translate) : ('chat.markAsUnsolved' | translate)}}
+          </button>
+          <button class="btn btn-blue" ng-click="send()" ng-if="!saving">{{'problem.report.send' |
+            translate}}
+          </button>
+          <button class="btn btn-blue" ng-disabled="true" ng-if="saving">{{ 'problem.report.sending'
+            | translate }}
+          </button>
+        </div>
+      </div>
+
+
+      <div class="col-sm-8 submission-panel" ng-if="submission">
+        <div class="row">
+          <div class="col-sm-12">
+            <a href="" class="btn btn-success" ng-click="addSubmission(submission.tries)">
+              <i class="glyphicon glyphicon-plus"></i> {{'chat.includeInMessage' | translate}}</a>
+            <a href="" class="btn btn-info" ng-click="viewSubmission(null)">
+              <i class="glyphicon glyphicon-chevron-left"></i> {{'chat.backToMessage' | translate}}
+            </a>
+          </div>
+        </div>
+
+        <hr style="margin: 11px 0px"/>
+
+        <th-code-view submission="submission" submission-list="submissions" editor="false"/>
+      </div>
+    </div>
+  </div>
+</div>

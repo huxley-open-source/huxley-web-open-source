@@ -1,0 +1,68 @@
+<div class="multiview-bottom box">
+  <div th-alert class="stats-alert" closable="false">
+    {{'group.statsList.alert' | translate}}
+  </div>
+
+  <th-loading loading="$parent.statsLoading" class="student-stats-list" >
+    <table class="table submission-list group-stats-list-table">
+      <thead>
+      <tr>
+
+        <th>
+          <th-order-arrow label="'group.statsList.name'" sort-by="'name'" order='statsList.order' element="statsList.sort" search-function="orderTopcoderList()"></th-order-arrow>
+        </th>
+
+        <th>
+          <th-order-arrow label="'group.statsList.points'" sort-by="'stats.ndCount'" order='statsList.order' element="statsList.sort" search-function="orderTopcoderList()"></th-order-arrow>
+        </th>
+
+        <th>
+          <th-order-arrow label="'group.statsList.problemsSolved'" sort-by="'stats.solvedProblemsCount'" order='statsList.order' element="statsList.sort" search-function="orderTopcoderList()"></th-order-arrow>
+        </th>
+
+        <th>
+          <th-order-arrow label="'group.statsList.problemsTried'" sort-by="'stats.triedProblemsCount'" order='statsList.order' element="statsList.sort" search-function="orderTopcoderList()"></th-order-arrow>
+        </th>
+
+        <th>
+          <th-order-arrow label="'group.statsList.submissions'" sort-by="'stats.submissionsCount'" order='statsList.order' element="statsList.sort" search-function="orderTopcoderList()"></th-order-arrow>
+        </th>
+        <th>
+          {{'group.submissions.visualize' | translate }}
+        </th>
+      </tr>
+
+      </thead>
+      <tbody>
+      <tr ng-repeat="user in group.students" >
+        <td>
+          <div class="img-warning-user-box" >
+            <!--<i ng-if="user.problemsSolved <= user.problemsTried * 0.75" class="icon img-small-question-sign img-short" popover="{{'group.statsList.poorHitRate' | translate}}" popover-trigger="mouseleave" popover-placement="right" ></i>-->
+            <i ng-if="user.problemsSolved <= user.problemsTried * 0.75" class="icon img-small-question-sign img-short" ></i>
+          </div>
+          <th-user-box user="user" no-institution="true"></th-user-box>
+        </td>
+         <td class="text-center vertical-align-middle">
+          {{user.stats.ndCount}}
+        </td>
+        <td class="text-center vertical-align-middle">
+          {{user.stats.solvedProblemsCount}}
+          <i ng-if="user.problemsSolved <= submissionAverage * 0.3" class="icon img-small-warning img-short background-img" popover="{{'group.statsList.poorPerformance' | translate}}" popover-trigger="mouseenter" popover-placement="right"></i>
+        </td>
+        <td class="text-center vertical-align-middle">
+          {{user.stats.triedProblemsCount}}
+          <i ng-if="user.problemsTried <= submissionAverage * 0.3" class="icon img-small-warning img-short background-img" popover="{{'group.statsList.poorPerformance' | translate}}" popover-trigger="mouseenter" popover-placement="right"></i>
+        </td>
+        <td class="text-center vertical-align-middle">
+          {{user.stats.submissionsCount}}
+          <i ng-if="user.submissions <= submissionAverage * 0.3" class="icon img-small-warning img-short background-img" popover="{{'group.statsList.poorPerformance' | translate}}" popover-trigger="mouseenter" popover-placement="right"></i>
+        </td>
+        <td class="text-center vertical-align-middle">
+          <a ui-sref="group-show.stats-student-individual({userId: user.id})" class="popover-gray"><i class="img-medium img-medium-blue-search icon img-bottom background-img" popover="{{'group.statsList.visualize' | translate}}" popover-trigger="mouseenter" popover-placement="right"></i></a>
+        </td>
+      </tr>
+      <tr ng-if="group.students.length === 0"><td>{{'group.statsList.empty' | translate}}</td></tr>
+      </tbody>
+    </table>
+  </th-loading>
+</div>

@@ -1,0 +1,67 @@
+<div class="box multiview-bottom">
+  <div class="create-form">
+    <ng-form>
+
+      <div class="pendency-radios">
+        <div>
+          <label class="checkbox-inline">
+            <input type="radio" name="toEditParams.pendencyKind" ng-model="toEditParams.pendencyKind" value="INSTITUTION_DOCUMENT" checked/>
+            <span>{{'pendency.type.1' | translate}}</span>
+          </label>
+
+          <label class="checkbox-inline">
+            <input type="radio" name="toEditParams.pendencyKind" ng-model="toEditParams.pendencyKind" value="INSTITUTION_APPROVAL"/>
+            <span>{{'pendency.type.2' | translate}} </span>
+          </label>
+        </div>
+        <div>
+          <label class="checkbox-inline">
+            <input type="radio" name="toEditParams.pendencyKind" ng-model="toEditParams.pendencyKind" value="TEACHER_DOCUMENT"/>
+            <span>{{'pendency.type.3' | translate}}</span>
+          </label>
+
+          <label class="checkbox-inline" ng-click="toEditParams.groupId = ''">
+            <input type="radio" name="toEditParams.pendencyKind" ng-model="toEditParams.pendencyKind" value="TEACHER_APPROVAL"/>
+            <span>{{'pendency.type.4' | translate}}</span>
+          </label>
+        </div>
+
+        <div>
+          <label class="checkbox-inline">
+            <input type="radio" name=toEditParams.pendencyKind" ng-model="toEditParams.pendencyKind" value="USER_GROUP_INVITATION"/>
+            <span>{{'pendency.type.5' | translate}}</span>
+          </label>
+
+          <label class="checkbox-inline">
+            <input type="radio" name="toEditParams.pendencyKind" ng-model="toEditParams.pendencyKind" value="USER_GROUP_JOIN_REQUEST"/>
+            <span>{{'pendency.type.6' | translate}}</span>
+          </label>
+        </div>
+      </div>
+
+
+      <div class="form-group">
+        <div class="col-sm-10">
+          <th-input-complete-box type="'USER'" only-one="true" fixed-size="true" label="'pendency.user' | translate" placeholder="'pendency.user' | translate" chosen-list="toEditParams.user" element-id="'user-name'"></th-input-complete-box>
+        </div>
+      </div>
+
+      <div ng-show="checkKind() === 'INSTITUTION'" class="form-group">
+        <div class="col-sm-10">
+          <th-input-complete-box type="'INSTITUTION'" only-one="true" fixed-size="true" label="'pendency.institution' | translate" placeholder="'pendency.institution' | translate" chosen-list="toEditParams.institution" element-id="'institution-name'"></th-input-complete-box>
+        </div>
+      </div>
+
+      <div ng-show="checkKind() === 'GROUP'" class="form-group">
+        <div class="col-sm-10">
+          <th-input-complete-box type="'GROUP'" only-one="true" fixed-size="true" label="'pendency.group' | translate" placeholder="'pendency.group' | translate" chosen-list="toEditParams.group" element-id="'group-name'"></th-input-complete-box>
+        </div>
+      </div>
+
+      <div class="create-save-container text-right">
+        <button ui-sref="admin.pendency" ng-click="sendPendency()" type="button" class="btn btn-green">{{'pendency.save' | translate}}</button>
+      </div>
+    </ng-form>
+  </div>
+
+</div>

@@ -1,0 +1,92 @@
+.suggestion-box-container-vertical {
+  border: 1px solid @blue;
+  padding: 1px;
+  width: 253px !important;
+  position: relative !important;
+  input {
+    width: 100%;
+    padding: 4px;
+    border: none;
+    border-bottom: 1px solid @gray-light;
+    border-radius: 0px;
+    &:active{
+      border: none;
+      border-bottom: 1px solid @gray-light;
+    }
+  }
+  &.dropdown-menu {
+    margin: -1px;
+    position: absolute !important;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    top: 22px;
+    li {
+      .suggestion-box-close {
+        cursor: pointer;
+      }
+      &:hover {
+        background: #e7f1f6;
+      }
+    }
+  }
+}
+
+ul .dropdown-menu.ng-isolate-scope {
+  top: 32px !important;
+  left: 0px !important;
+  border-top: none;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+}
+
+.suggestion-box-loading {
+  position: absolute;
+  right: 0px;
+  top: 10px;
+}
+
+.suggestion-box {
+  padding: 4px;
+  margin: 1px;
+  width: 236px;
+  .display-flex();
+  .align-items-flex(center);
+}
+
+.suggestion-box > div {
+  display: inline-block;
+}
+
+.suggestion-box-name {
+  width: 90%;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.suggestion-box-close {
+  text-align: right;
+  font-size: 11px;
+  text-decoration: none;
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+@media (max-width: @screen-sm) {
+  .suggestion-box-container-vertical {
+    width: 100% !important;
+    margin-left: -4px !important;
+    ul {
+      height: 183px;
+      overflow-y: hidden;
+      width: 100%;
+    }
+  }
+  .suggestion-box {
+    width: 100%;
+  }
+
+}

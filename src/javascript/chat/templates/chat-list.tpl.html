@@ -1,0 +1,184 @@
+<div class="container content">
+  <div class="box row">
+
+    <div class="header">
+      <div>
+      <div><h3 translate>chat.title</h3>
+      <button ng-show="currentUser.atLeastTeacher()"  class="btn btn-blue" ng-click="archiveOld()" translate>
+        chat.archiveOld
+      </button>
+      </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <ul class="nav nav-pills nav-stacked chat-scrollbar">
+        <li ng-class="{'active': filterParams.filter === 'unresolved'}"><a href=""
+                                                                           ng-click="filter({ filter: 'unresolved' })">{{'chat.unresolved' | translate}}
+          <span class="badge pull-right">{{stats.unresolved}}</span></a></li>
+        <li ng-class="{'active': !filterParams.filter}"><a href="" ng-click="filter({})">{{'chat.allMessages' | translate}} <span
+          class="badge pull-right">{{stats.total}}</span></a></li>
+
+        <!--<li ng-class="{'active': filterParams.filter === 'unanswered'}"><a href=""-->
+                                                                           <!--ng-click="filter({ filter: 'unanswered' })">Não-->
+          <!--respondidas <span class="badge pull-right">{{stats.total - stats.responded}}</span></a></li>-->
+        <li ng-class="{'active': filterParams.filter === 'sent'}"><a href="" ng-click="filter({ filter: 'sent' })">{{'chat.sent' | translate}}
+          <span class="badge pull-right">{{stats.sent}}</span></a></li>
+        <li ng-class="{'active': filterParams.filter === 'unarchived'}">
+          <a href="" ng-click="filter({ filter: 'unarchived' })">{{'chat.noAnswer' | translate}}</a></li>
+      </ul>
+      <hr/>
+
+      <div ng-if="stats.groups.length">
+        <h5>{{'chat.groups' | translate}}</h5>
+        <ul class="nav nav-pills nav-stacked small-pills chat-scrollbar">
+          <li ng-repeat="group in stats.groups"
+              ng-class="{'active': filterParams.filter === 'group' && filterParams.id === group.id}">
+            <a href="" ng-click="filter({ filter: 'group', id: group.id })"><span
+              class="pill-name">{{group.name}}</span>
+              <span class="badge pull-right">{{group.count}}</span></a>
+          </li>
+        </ul>
+      </div>
+
+      <div ng-if="stats.problems.length">
+        <h5>{{'chat.problems' | translate}}</h5>
+        <ul class="nav nav-pills nav-stacked small-pills chat-scrollbar">
+          <li ng-repeat="problem in stats.problems"
+              ng-class="{'active': filterParams.filter === 'problem' && filterParams.id === problem.id}">
+            <a href="" ng-click="filter({ filter: 'problem', id: problem.id })"><span
+              class="pill-name">{{problem.name}}</span> <span class="badge pull-right">{{problem.count}}</span></a>
+          </li>
+        </ul>
+      </div>
+
+      <div ng-if="stats.users.length">
+        <h5>{{'chat.users' | translate}}</h5>
+        <ul class="nav nav-pills nav-stacked small-pills chat-scrollbar">
+          <li ng-repeat="user in stats.users"
+              ng-class="{'active': filterParams.filter === 'user' && filterParams.id === user.id}">
+            <a href="" ng-click="filter({ filter: 'user', id: user.id })"><span class="pill-name">{{user.name}}</span>
+              <span class="badge pull-right">{{user.count}}</span></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="col-md-9">
+
+      <div ng-if="!messages.length" class="alert alert-info">
+        {{'chat.noMessages' | translate}}
+      </div>
+      <div ng-repeat="msg in messages" class="message"
+           ng-class="{ outgoing: msg.senderId === currentUser.id, incoming: msg.senderId !== currentUser.id, 'msg-unread': msg.unread }">
+
+        <div style="display: flex">
+          <div class="msg-status"
+               ng-class="{ 'msg-unresolved': msg.message_status === 0, 'msg-resolved': msg.message_status === 1, 'msg-archived': msg.message_status === 3 }">
+          </div>
+          <div class="msg-user">
+            <img ng-src="{{msg.user.avatar}}?width=40&height=40"/>
+          </div>
+          <div>
+            <div class="msg-content">
+              <strong>{{msg.originalUser.name}}</strong>
+              <span class="small">{{msg.first_message_date | date:'dd/MM/yyyy HH:mm:ss'}}</span>
+
+              <div class="small">
+                <strong>{{'chat.messages' | translate}}:</strong> <span>{{msg.total_msg_count}}</span>
+                <strong>{{'chat.sent' | translate}}:</strong> <span>{{msg.user_msg_count}}</span>
+              </div>
+              <div class="small">
+                <strong>{{'chat.last' | translate}}:</strong> <span>{{msg.user.name}}</span> <strong>Em:</strong> <span>{{msg.datecreated  | date:'dd/MM/yyyy HH:mm:ss'}}</span>
+              </div>
+              <div class="small" style="margin-top: 6px">
+                <span><a ng-click="msg.truncated = !msg.truncated" href="">{{'chat.fastAnswer' | translate}}</a></span>
+                | <span><a ui-sref="chat-message({ messageGroup: msg.id })">{{'chat.seeChat' | translate}}</a></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="msg-info text-right small">
+          <span class="badge"
+                ng-class="{'alert-success': msg.category === 'DIRECT', 'alert-info': msg.category === 'QUESTION', 'alert-danger': msg.category === 'REPORT' }">
+            {{'chat.type.' + msg.type | translate}}
+          </span>
+            <div ng-if="msg.group">
+              <strong>{{'chat.group' | translate}}:</strong> {{msg.group.name}}
+            </div>
+            <div ng-if="msg.problem">
+              <strong>{{'chat.problem' | translate}}:</strong> {{msg.problem.name}}
+            </div>
+            <div ng-if="msg.recipient">
+              <strong>{{'chat.recipient' | translate}}:</strong> {{msg.recipient.name}}
+            </div>
+          </div>
+        </div>
+
+        <div ng-if="!msg.truncated" style="margin-top: 10px">
+          <div style="white-space: pre-wrap">{{msg.body}}</div>
+          <textarea class="form-control" rows="3" ng-model="msg.reply"></textarea>
+          <div class="create-save-container text-right" style="padding: 8px 0px">
+            <button class="btn btn-blue" ng-click="send(msg)" ng-if="!saving">{{'problem.report.send' |
+              translate}}
+            </button>
+            <button class="btn btn-blue" ng-disabled="true" is-loading="saving" ng-if="saving">{{
+              'problem.report.sending'
+              | translate }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pagination-container" ng-show="paginationData.totalItems > paginationData.max">
+      <pagination items-per-page="paginationData.max"
+                  total-items="paginationData.totalItems"
+                  ng-model="paginationData.currentPage"
+                  ng-change="changePage()"
+                  max-size="paginationData.maxSize"
+                  class="pagination-sm"
+                  boundary-links="true"
+                  direction-links="false"
+                  rotate="false"
+                  last-text="{{'pagination.last' | translate}}"
+                  first-text="{{'pagination.first'| translate}}">
+      </pagination>
+    </div>
+  </div>
+</div>
+
+<script type="text/ng-template" id="archiveModal.html">
+  <div class="modal-header">
+    <h3 class="modal-title" translate>chat.archiveOld</h3>
+    <button type="button" class="close" aria-label="Close" ng-click="$dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p translate>
+      chat.archiveHelp
+    </p>
+    <form action="">
+      <div class="form-group">
+      <label class="control-label" translate>chat.olderThan</label>
+      <select class="form-control">
+        <option value="7" translate>chat.oneWeek</option>
+        <option value="15" translate>chat.twoWeeks</option>
+        <option value="30" translate>chat.oneMonth</option>
+      </select>
+      </div>
+      <div class="alert alert-success text-success" ng-if="archiveSuccess">
+        <span ng-if="archivedCount > 0">{{archivedCount}} <span translate>chat.archivedCount</span></span>
+        <span ng-if="archivedCount == 0" translate>chat.zeroArchived</span>
+      </div>
+      <div class="alert alert-danger text-danger" ng-if="archiveError" translate>
+        chat.archiveError
+      </div>
+
+      <div class="modal-button-align">
+        <button class="btn btn-default btn-gray" type="button" ng-click="$dismiss()" style="margin-right: 11px" translate>chat.cancel</button>
+        <button class="btn btn-default btn-green" type="button" ng-click="confirm()" translate>chat.confirm</button>
+      </div>
+    </form>
+  </div>
+</script>

@@ -1,0 +1,86 @@
+  <div class="box multiview-bottom">
+    <form>
+      <div class="search-container">
+        <div>
+          <div class="col-lg-5">
+            <div class="input-search-container">
+              <i class="img-large img-large-search img-circle background-color background-img"></i>
+              <input type="text" ng-model="searchParams.q" id="query" class="form-control search-input" ng-change="doSearch()" placeholder="{{'admin.topics.search' | translate}}"/>
+              <div class="search-button-container">
+                <button class="btn btn-blue" ng-click="doSearch()" translate>search</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+    <th-loading loading="loading">
+    <table class="table margin-top-table">
+      <thead>
+        <tr>
+          <th>
+            <th-order-arrow label="'admin.topics.title'" sort-by="'name'" order='searchParams.order' element="searchParams.sort" search-function="search()"></th-order-arrow>
+          </th>
+        <th class="text-right">
+          <span >{{'admin.topics.edit' | translate}}/{{ 'admin.topics.delete' | translate}}</span>
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="topic in topics">
+          <td>
+            <span >{{topic.name}}</span>
+          </td>
+          <td class="text-right">
+            <div>
+              <a ui-sref="admin.topics-edit({'topicId': topic.id})">
+                <i class="img-short img-small-pen icon background-img"></i>
+              </a>
+              <span class="dropdown quiz-box-menu">
+              <a   dropdown-toggle>
+                <i class="img-small-remove" ></i>
+              </a>
+              <span class="dropdown-menu" role="menu">
+                <div class="popover right">
+                  <div class="arrow"></div>
+                  <div class="popover-inner">
+                    <div class="popover-content background-alert">
+                      {{'admin.topics.confirmRemove' | translate}}
+                      <div class="group-exclude-user-container">
+                        <div>
+                          <span>{{topic.name}}</span>
+                        </div>
+                      </div>
+                      <div class="group-exclude-user-menu">
+                        <button class="btn btn-blue" ng-click="deleteTopic(topic.id)">{{'group.users.yes' | translate}}</button>
+                        <button class="btn btn-gray">{{'group.users.cancel' | translate}}</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </span>
+            </span>
+            </div>
+          </td>
+        </tr>
+        <tr ng-if="topics.length == 0 && searched"><td translate>admin.topics.resultNotFound</td></tr>
+      </tbody>
+    </table>
+      </th-loading>
+  </div>
+  <div class="pagination-container" ng-show="paginationData.totalItems > paginationData.max">
+    <pagination items-per-page="paginationData.max"
+                total-items="paginationData.totalItems"
+                ng-model="paginationData.currentPage"
+                ng-change="paginationChanged()"
+                max-size="paginationData.maxSize"
+                class="pagination-sm"
+                boundary-links="true"
+                direction-links="false"
+                rotate="false"
+                last-text="{{'pagination.last' | translate}}"
+                first-text="{{'pagination.first'| translate}}">
+    </pagination>
+  </div>
+
+

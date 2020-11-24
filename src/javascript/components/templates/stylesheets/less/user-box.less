@@ -1,0 +1,58 @@
+.user-box-container {
+  display: inline-block;
+  position: relative;
+}
+
+.user-box {
+  padding: 5px;
+}
+
+.user-box:hover {
+  background: @blue-lighter;
+}
+
+.user-box > div {
+  display: inline-block;
+}
+
+.user-box-img {
+  padding: 5px;
+}
+
+.user-box-img > img {
+  width: 40px;
+  height: 40px;
+}
+
+.user-box-info {
+  vertical-align: middle;
+  width: 70%;
+  color: @default-color;
+  .user-box-name {
+    font-weight: bold;
+  }
+  .user-box-institution {
+    font-size: @font-small;
+  }
+}
+
+.user-box-info&.user-box-info-extended {
+  width: 80% !important;
+  > span {
+    width: 100%;
+  }
+}
+
+.user-box-info > span {
+  display: block;
+  width: 90%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.user-box-revert-container {
+  position: absolute;
+  top: 23px;
+  right: 35px;
+}

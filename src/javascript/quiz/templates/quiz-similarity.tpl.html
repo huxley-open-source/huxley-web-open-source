@@ -1,0 +1,66 @@
+<div class="multiview-bottom box">
+
+  <th-loading loading="loading">
+    <div class="similarity-box" ng-repeat="problem in problemList">
+      <div  class="similarity-head">
+        <th-problem-box problem="problem" show-status="false"/>
+      </div>
+      <table class="table similarity-table">
+        <thead>
+        <tr>
+          <th class="width30">
+            {{'quiz.similarity.suspect' | translate}}
+          </th>
+          <th class="width30">
+            {{'quiz.similarity.firstToSubmit' | translate}}
+          </th>
+          <th class="width20 text-center">
+            {{'status' | translate}}
+          </th>
+          <th class="width20">
+
+          </th>
+        </tr>
+        </thead>
+
+        <tbody ng-repeat="similarity in smilaritiesSortedByProblem[problem.id]">
+        <tr >
+          <td>
+            <th-user-box user="similarity.suspiciousSubmission.user" similarity-decorator="true" time="similarity.suspiciousSubmission.submissionDate"/>
+          </td>
+          <td>
+            <th-user-box user="similarity.plagiarizedSubmission.user" time="similarity.plagiarizedSubmission.submissionDate"/>
+          </td>
+          <td class="text-center">
+            <span ng-if="similarity.status==='WAITING'">{{'quiz.similarity.waiting' | translate}}</span>
+            <span ng-if="similarity.status==='CONFIRMED'">{{'quiz.similarity.confirmed' | translate}}</span>
+            <span ng-if="similarity.status==='DISCARDED'">{{'quiz.similarity.discarded' | translate}}</span>
+          </td>
+          <td class="fixed-size-large">
+            <button type="button" class="btn btn-red" ng-click="open(similarity)">{{'quiz.similarity.view' | translate}}</button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <table class="table margin-top-table" ng-if="smilaritiesSortedByProblem.length === 0 && searched">
+      <tbody>
+      <tr><td translate>quiz.similarity.notFound</td></tr>
+      </tbody>
+    </table>
+  </th-loading>
+</div>
+
+<div class="pagination-container" ng-show="paginationData.totalItems > paginationData.itemsPerPage && !loading">
+  <pagination ng-show="paginationData.totalItems > paginationData.itemsPerPage" items-per-page="paginationData.itemsPerPage"
+    total-items="paginationData.totalItems"
+    ng-model="paginationData.currentPage"
+    ng-change="paginationChanged()"
+    max-size="paginationData.maxSize"
+    class="pagination-sm"
+    boundary-links="true"
+    direction-links="false"
+    rotate="false"
+    last-text="{{'pagination.last' | translate}}"
+    first-text="{{'pagination.first'| translate}}" />
+</div>

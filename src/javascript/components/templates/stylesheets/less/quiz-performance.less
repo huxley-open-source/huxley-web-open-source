@@ -1,0 +1,68 @@
+@quiz-performance-max-size: 160px;
+.quiz-performance-container {
+  > div {
+    width: @quiz-performance-max-size;
+    max-width: @quiz-performance-max-size;
+    display: inline-block;
+    line-height: 20px;
+    background-color: @blue-light;
+    color: @default-color;
+    .quiz-performance-total {
+      float: right;
+      margin-right: 4px;
+    }
+  }
+  text-align: right;
+
+  &.performance-10 {
+    div {
+      border-left: (@quiz-performance-max-size * 0.1) solid @red;
+    }
+  }
+  &.performance-20 {
+    div {
+      border-left: (@quiz-performance-max-size * 0.2) solid @red;
+    }
+  }
+  &.performance-30 {
+    div {
+      border-left: (@quiz-performance-max-size * 0.3) solid @red;
+    }
+  }
+  &.performance-40 {
+    div {
+      border-left: (@quiz-performance-max-size * 0.4) solid @orange;
+    }
+  }
+  &.performance-50 {
+    div {
+      border-left: (@quiz-performance-max-size * 0.5) solid @orange;
+    }
+  }
+  &.performance-60 {
+    div {
+      border-left: (@quiz-performance-max-size * 0.6) solid @orange;
+    }
+  }
+  &.performance-70 {
+    div {
+      border-left: (@quiz-performance-max-size * 0.7) solid @orange-light;
+    }
+  }
+  &.performance-80 {
+    div {
+      border-left: (@quiz-performance-max-size * 0.8) solid @orange-light;
+    }
+  }
+  &.performance-90 {
+    div {
+      border-left: (@quiz-performance-max-size * 0.9) solid @orange-light;
+    }
+  }
+  &.performance-100 {
+    div {
+      border-left: @quiz-performance-max-size solid @green;
+      color: @white;
+    }
+  }
+}

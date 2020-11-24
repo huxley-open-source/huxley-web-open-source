@@ -1,0 +1,5 @@
+<div class="complete-code">
+  <th-select-box label="'problem.create.language' | translate" element="selectedLanguage" class="th-select-striped" for="availableLanguages" on-change="updateModeById(selectedLanguage)"></th-select-box>
+  <div id="editor" ui-codemirror="options" ui-refresh="changed()" ng-model="problem.baseCode"></div>
+  <button ng-click="selectLine()" type="button" class="btn btn-blue">{{'problem.create.selectLine' | translate}}</button>
+</div>

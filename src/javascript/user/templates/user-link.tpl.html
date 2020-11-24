@@ -1,0 +1,8 @@
+<div class="user-link-container">
+    <div class="user-link-name">
+        <a ui-sref="profile-show.problems({'id': user.id})">{{user.name}}</a>
+    </div>
+    <div class="user-link-msg-container" aria-haspopup="true" aria-expanded="false" ui-sref="chat-direct({recipient: user.id})">
+        <i class="icon img-small-msg img-short background-img"></i>
+    </div>
+</div>

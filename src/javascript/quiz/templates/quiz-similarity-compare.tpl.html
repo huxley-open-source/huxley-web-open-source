@@ -1,0 +1,48 @@
+<div class="modal-header">
+  <h3 class="modal-title">{{'quiz.codeCompare' | translate}}</h3>
+  <button type="button" class="close" aria-label="Close" ng-click="close()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="box-multiple-columns input-output">
+    <div class="solution-input-box">
+      <div class="blue-lighter-background">
+        <th-user-box user="similarity.suspiciousSubmission.user" similarity-decorator="true" time="similarity.suspiciousSubmission.submissionDate"/>
+      </div>
+      <th-code-view submission="similarity.suspiciousSubmission" editor="false"/>
+    </div>
+    <div class="solution-input-box">
+      <div class="blue-lighter-background">
+        <th-user-box user="similarity.plagiarizedSubmission.user" time="similarity.plagiarizedSubmission.submissionDate"/>
+      </div>
+      <th-code-view submission="similarity.plagiarizedSubmission" editor="false"/>
+    </div>
+  </div>
+  <br />
+  <div class="alert alert-warning">
+    <strong>O que deseja fazer:</strong>
+    <span ng-show="!suspiciousSubmissionUserAlreadyPunished">
+      <input type="radio" ng-model="similarity.option" value="2" /> Zerar a nota de {{similarity.suspiciousSubmission.user.name}}
+    </span>
+    <span ng-show="suspiciousSubmissionUserAlreadyPunished">
+      {{similarity.suspiciousSubmission.user.name}} já foi punido.
+    </span>
+    <span ng-show="!plagiarizedSubmissionUserAlreadyPunished">
+      <input type="radio" ng-model="similarity.option" value="1" /> Zerar a nota de {{similarity.plagiarizedSubmission.user.name}}
+    </span>
+    <span ng-show="plagiarizedSubmissionUserAlreadyPunished">
+      {{similarity.plagiarizedSubmission.user.name}} já foi punido.
+    </span>
+    <span ng-show="!suspiciousSubmissionUserAlreadyPunished || !plagiarizedSubmissionUserAlreadyPunished">
+      <input type="radio" ng-model="similarity.option" value="3" /> Zerar a nota de ambos
+    </span>
+    <span>
+      <input type="radio" ng-model="similarity.option" value="0" /> Descartar similaridade
+    </span>
+  </div>
+</div>
+<div class="modal-footer">
+      <button type="button" ng-disabled="!similarity.option" class="btn btn-blue" ng-click="confirmar()">{{'quiz.confirmSimilarity' | translate}}</button>
+      <button type="button" class="btn btn-blue small-margin-right" ng-click="cancelar()">{{'quiz.similarity.drop' | translate}}</button>
+</div>

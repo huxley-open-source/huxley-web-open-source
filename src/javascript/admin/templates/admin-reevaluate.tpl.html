@@ -1,0 +1,23 @@
+<div class="multiview-bottom box">
+  <div class="submission-filter-search">
+    <form style="display: flex" class="dual-column-form">
+      <div>
+        <th-input-complete-box type="'PROBLEM'" only-one="true" fixed-size="true" label="'group.problemName' | translate" placeholder="'group.problemName' | translate" chosen-list="problem" element-id="'problem-name'"></th-input-complete-box>
+        <th-select-box label="'group.submissions.evaluation' | translate" element="evaluation" class="th-select-striped" for="evaluationList"></th-select-box>
+      </div>
+      <div>
+        <th-datepicker date="searchParams.submissionDateGe" label="'group.startDate' | translate" elementid="'start-date'"></th-datepicker>
+
+        <th-datepicker date="searchParams.submissionDateLe" label="'group.endDate' | translate" elementid="'end-date'"></th-datepicker>
+
+        <div class="col-sm-12 button-container">
+          <button class="btn btn-blue ng-scope text-uppercase" ng-click="runReevaluate()" type="button">{{'header.reevaluateSubmissions' | translate }}</button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div  ng-if="showReevaluations" th-alert class="stats-alert reevaluations-result" closable="false">
+    <span >{{evaluationsCount}} {{'admin.evaluations.count' | translate}}<br/></span>
+    <span >{{evaluationsErrors}} {{'admin.evaluations.errors' | translate}}</span>
+  </div>
+</div>

@@ -1,0 +1,163 @@
+<div class="container content">
+  <div class="box home-box">
+
+    <div class="home-info">
+      <p>{{'home.info.label' | translate}}</p>
+      <div class="home-multiple-info">
+
+        <th-show-case>
+          <th-show-case-header>
+            <div>
+              {{'home.info.worstReport' | translate}}
+              <a class="doubt-link-size glyphicon glyphicon-question-sign" ui-sref="help.page({page:'poor-performance-students'})"></a>
+            </div>
+          </th-show-case-header>
+          <th-show-case-body>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>{{'group.userName' | translate}}</th>
+                  <th>{{'group' | translate}}</th>
+                  <th><i class="glyphicon glyphicon-check" title="{{'home.studentPerformance.correct' | translate}}"></i></th>
+                  <th title="{{'home.studentPerformance.total' | translate}}">#</th>
+                  <th title="{{'home.studentPerformance.percentage' | translate}}">%</th>
+                </tr>
+              </thead>
+              <tbody>
+              <tr ng-repeat="failing in info[0]">
+                <td>
+                  <a ui-sref="profile-show.problems({'id': failing.userId})">{{failing.userName}}</a>
+                </td>
+                <td>
+                  <a ui-sref="group-show.quizzes({id: failing.groupUrl})">{{failing.groupName}}</a>
+                </td>
+                <td>
+                  {{failing.correctSubmissionsCount}}
+                </td>
+                <td>
+                  {{failing.submissionsCount}}
+                </td>
+                <td>
+                  {{(failing.submissionsCount > 0 ? ((failing.correctSubmissionsCount / failing.submissionsCount) * 100) : 0) | number:0 }}%
+                </td>
+              </tr>
+              <tr ng-if="!info[0].length">
+                <td>{{'group.noActiveGroup' | translate}}</td>
+              </tr>
+              </tbody>
+            </table>
+          </th-show-case-body>
+        </th-show-case>
+
+        <th-show-case>
+          <th-show-case-header>
+            <div>
+              {{'home.info.classThermometer' | translate}}
+              <a class="doubt-link-size glyphicon glyphicon-question-sign" ui-sref="help.page({page:'thermometer'})"></a>
+            </div>
+          </th-show-case-header>
+          <th-show-case-body>
+            <perfect-scrollbar wheel-speed="50" refresh-on-change="info[1]" class="home-normal-info">
+              <table class="table">
+                <tbody>
+                <tr ng-repeat="group in info[1]">
+                  <td>
+                    <th-group-thermometer group="group"></th-group-thermometer>
+                  </td>
+                </tr>
+                <tr ng-if="!info[1].length">
+                  <td>{{'group.noActiveGroup' | translate}}</td>
+                </tr>
+                </tbody>
+              </table>
+            </perfect-scrollbar>
+          </th-show-case-body>
+        </th-show-case>
+
+      </div>
+      <div>
+        <div class="home-multiple-info">
+          <th-show-case ng-if="badTestCases.length">
+            <th-show-case-header>
+              <div translate>
+                home.info.problemsNeedingTip
+              </div>
+            </th-show-case-header>
+            <th-show-case-body>
+              <table class="table table-condensed">
+                <thead>
+                  <tr>
+                    <th translate>home.problem</th>
+                    <th translate>home.fails</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="testCase in badTestCases | limitTo: 10">
+                    <td><a href="" ui-sref="problem-show.description({ id: testCase.problem_id })">{{testCase.name}}</a></td>
+                    <td>{{testCase.failures}}</td>
+                    <td><a href="" ui-sref="problem-show.problem-edit-test-case({ id: testCase.problem_id, '#': 'testcase-' + testCase.test_case_id })" translate>home.viewTestCase</a></td>
+                  </tr>
+                </tbody>
+              </table>
+            </th-show-case-body>
+          </th-show-case>
+          <th-show-case ng-if="badTestCases.length">
+            <th-show-case-header>
+              <div translate>
+                home.info.badTips
+              </div>
+            </th-show-case-header>
+            <th-show-case-body>
+              <table class="table table-condensed">
+                <thead>
+                <tr>
+                  <th translate>home.problem</th>
+                  <th translate>home.negativeVotes</th>
+                  <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="badTip in badTips | limitTo: 10">
+                  <td><a href="" ui-sref="problem-show.description({ id: badTip.problem_id })">{{badTip.name}}</a></td>
+                  <td>{{badTip.not_useful}} de {{badTip.not_useful + badTip.useful}} ({{(badTip.not_useful / (badTip.not_useful + badTip.useful)) * 100 | number:0}}%)</td>
+                  <td><a href="" ui-sref="problem-show.problem-edit-test-case({ id: badTip.problem_id, '#': 'testcase-' + badTip.test_case_id })">Ver caso de teste</a></td>
+                </tr>
+                <tr ng-if="!badTips.length">
+                  <td colspan="3">Nenhuma dica mal avaliada encontrada</td>
+                </tr>
+                </tbody>
+              </table>
+            </th-show-case-body>
+          </th-show-case>
+        </div>
+      </div>
+      <div class="home-single-info">
+        <th-show-case info="'home.info.notification'">
+          <th-show-case-body>
+            <perfect-scrollbar wheel-speed="50" refresh-on-change="info[1]" class="home-large-info">
+
+              <ul ng-if="pending > 0" style="margin-top: 11px">
+                 <li><a href="" ui-sref="problem-list({ filter: 'suggested', status: 'PENDING' })">{{'problem.list.pendingProblems' | translate: { count: pending } }}</a></li>
+              </ul>
+
+              <table class="table">
+                <tbody>
+                <tr ng-repeat="notification in notificationList track by $index">
+                  <td>
+                    <th-notification notification="notification"></th-notification>
+                  </td>
+                </tr>
+                <tr ng-if="!notificationList.length && !pending">
+                  <td>{{'Nenhuma notificação encontrada' | translate }}</td>
+                </tr>
+                </tbody>
+              </table>
+            </perfect-scrollbar>
+          </th-show-case-body>
+        </th-show-case>
+    </div>
+
+    </div>
+  </div>
+</div>

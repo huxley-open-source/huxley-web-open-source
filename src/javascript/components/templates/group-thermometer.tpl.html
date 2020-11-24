@@ -1,0 +1,50 @@
+<div class="th-group-thermometer-container">
+  <div class="th-group-thermometer-info">
+    <span class="th-group-thermometer-name"><a class="black-link" ui-sref="group-show.quizzes({'id': group.url})">{{group.name}}</a></span>
+    <span class="th-group-thermometer-institution"><a class="black-link" ui-sref="institution-show.groups({'id': group.institution.id})">{{group.institution.name}}</a></span>
+  </div>
+  <div class="th-group-thermometer-wrapper">
+    <div class="th-group-thermometer-box">
+      <div class="th-group-thermometer" ng-class="{'building': thermometer.loading !== false}">
+        <div class="th-group-thermometer-bar" ng-class="{'low-activity': activityList[0] === 'LOW', 'medium-activity': activityList[0] === 'MEDIUM', 'high-activity': activityList[0] === 'HIGH'}"></div>
+        <div class="th-group-thermometer-bar" ng-class="{'low-activity': activityList[1] === 'LOW', 'medium-activity': activityList[1] === 'MEDIUM', 'high-activity': activityList[1] === 'HIGH'}"></div>
+        <div class="th-group-thermometer-bar" ng-class="{'low-activity': activityList[2] === 'LOW', 'medium-activity': activityList[2] === 'MEDIUM', 'high-activity': activityList[2] === 'HIGH'}"></div>
+        <div class="th-group-thermometer-bar" ng-class="{'low-activity': activityList[3] === 'LOW', 'medium-activity': activityList[3] === 'MEDIUM', 'high-activity': activityList[3] === 'HIGH'}"></div>
+        <div class="th-group-thermometer-bar" ng-class="{'low-activity': activityList[4] === 'LOW', 'medium-activity': activityList[4] === 'MEDIUM', 'high-activity': activityList[4] === 'HIGH'}"></div>
+        <div class="th-group-thermometer-bar" ng-class="{'low-activity': activityList[5] === 'LOW', 'medium-activity': activityList[5] === 'MEDIUM', 'high-activity': activityList[5] === 'HIGH'}"></div>
+        <div class="th-group-thermometer-bar" ng-class="{'low-activity': activityList[6] === 'LOW', 'medium-activity': activityList[6] === 'MEDIUM', 'high-activity': activityList[6] === 'HIGH'}"></div>
+
+      </div>
+    </div>
+    <div class="th-group-thermometer-icon-box">
+      <i ng-if="thermometer.loading !== false" ng-class="{
+    'img-medium-submission-waiting': thermometer.loading ==='building' || thermometer.loading === true,
+     'img-medium-submission-wrong-answer': thermometer.loading ==='fail'}" class="th-group-thermometer-status img-medium background-img icon img-bottom"></i>
+
+    </div>
+
+    <div class="th-group-thermometer-legend-box">
+      <span ng-if="activity === 'INACTIVE' && thermometer.loading === false">
+        {{'component.thermometer.inactive' | translate}}
+      </span>
+      <span ng-if="activity === 'LOW'  && thermometer.loading === false">
+        {{'component.thermometer.low' | translate}}
+      </span>
+      <span ng-if="activity === 'MEDIUM' && thermometer.loading === false">
+        {{'component.thermometer.medium' | translate}}
+      </span>
+      <span ng-if="activity === 'HIGH'  && thermometer.loading === false">
+        {{'component.thermometer.high' | translate}}
+      </span>
+      <span ng-if="thermometer.loading === true">
+        {{'component.thermometer.loading' | translate}}
+      </span>
+      <span ng-if="thermometer.loading === 'building'">
+        {{'component.thermometer.building' | translate}}
+      </span>
+      <span ng-if="thermometer.loading === 'fail'">
+        {{'component.thermometer.fail' | translate}}
+      </span>
+    </div>
+  </div>
+</div>

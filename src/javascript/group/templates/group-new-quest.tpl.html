@@ -1,0 +1,14 @@
+<div class="box multiview-bottom">
+  <div th-alert class="yellow-box" closable="false">
+    <div>
+      {{'group.newQuest.msg1' | translate}}<br/>
+      {{'group.newQuest.msg2' | translate}}
+      <a ui-sref="group-show.create-quiz">{{'group.newQuest.createQuest' | translate}}.</a>
+    </div>
+    <div class="yellow-box-buttons">
+      <i class="img-add-member1-size img-large-add-member1 background-img icon add-member1"></i>
+      <i class="img-large img-large-add-member2 img-circle background-color background-img icon img-large-create-questionnaire"></i>
+      <a class="blue-box" ui-sref="group-show.create-quiz" is-loading="saving">{{'group.newGroup.createQuest2' | translate}}</a>
+    </div>
+  </div>
+</div>

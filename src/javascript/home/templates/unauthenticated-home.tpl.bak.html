@@ -1,0 +1,366 @@
+<div class="bg-gray-darker bg-main">
+  <div class="container hidden-xs">
+    <div>
+      <carousel class="home-carousel" interval="myInterval">
+        <slide ng-repeat="slide in slides" active="slide.active">
+          <img ng-src="{{slide.image}}" style="">
+          <div class="carousel-caption"></div>
+          <div class="text-left">
+            <p>{{slide.text}} <a href="{{slide.link}}" ng-hide="slide.link == undefined" target="_blank">{{slide.linkText}}</a></p>
+          </div>
+        </slide>
+      </carousel>
+
+      <div class="register-form">
+        <h5>{{'home.register' | translate}}!</h5>
+
+        <form ng-submit="formSubmit()" name="registerForm" novalidate>
+
+          <div class="form-group" ng-class="{'has-error': registerForm.name.$dirty && !registerForm.name.$valid}">
+            <div class="col-xs-12">
+              <input class="form-control input-sm form-layout" type="text" id="name" ng-maxlength="form.maxLength" name="name" ng-model="form.name" placeholder="{{'home.registerForm.name' | translate}}" required>
+            </div>
+            <div class="just-one-error">
+              <span class="form-error glyphicon glyphicon-remove" ng-if="registerForm.name.$dirty && registerForm.name.$error.required" popover="{{ 'user.edit.required' | translate}}"  popover-trigger="mouseenter" popover-placement="right"></span>
+              <span class="form-error glyphicon glyphicon-remove" ng-if="registerForm.name.$dirty && registerForm.name.$error.maxlength" popover="{{ 'user.edit.longName' | translate}}"  popover-trigger="mouseenter" popover-placement="right"></span>
+            </div>
+          </div>
+
+          <div class="form-group" ng-class="{'has-error': registerForm.username.$dirty && !registerForm.username.$valid}">
+            <div class="col-xs-12">
+              <input class="form-control input-sm form-layout" type="text" id="username" ng-maxlength="form.maxLength" name="username" ng-model="form.username" ng-change="userValidate()" placeholder="{{'home.registerForm.login' | translate}}" required>
+            </div>
+            <div class="just-one-error">
+              <span class="form-error glyphicon glyphicon-remove" ng-if="registerForm.username.$dirty && registerForm.username.$error.used" popover="{{ 'user.edit.usedUser' | translate}}"  popover-trigger="mouseenter" popover-placement="right"></span>
+              <span class="form-error glyphicon glyphicon-remove" ng-if="registerForm.username.$dirty && registerForm.username.$error.required" popover="{{ 'user.edit.required' | translate}}"  popover-trigger="mouseenter" popover-placement="right"></span>
+              <span class="form-error glyphicon glyphicon-remove" ng-if="registerForm.username.$dirty && registerForm.username.$error.maxlength" popover="{{ 'user.edit.longUsername' | translate}}"  popover-trigger="mouseenter" popover-placement="right"></span>
+              <span class="form-error glyphicon glyphicon-remove" ng-if="registerForm.username.$dirty && registerForm.username.$error.pattern" popover="{{ 'user.edit.invalidUsername' | translate}}"  popover-trigger="mouseenter" popover-placement="right"></span>
+            </div>
+          </div>
+
+          <div class="form-group" ng-class="{'has-error': registerForm.email.$dirty && !registerForm.email.$valid}">
+            <div class="col-xs-12">
+              <input class="form-control input-sm form-layout" type="email" id="email" ng-pattern="/^[a-zA-Z0-9][a-zA-Z0-9\._-]*@([a-zA-Z0-9\._-]+\.)[a-zA-Z-0-9]{2}/" ng-maxlength="form.maxLength" name="email" ng-model="form.email" ng-change="emailValidate()" placeholder="{{'home.registerForm.email' | translate}}" required>
+            </div>
+            <div class="just-one-error">
+              <span class="form-error glyphicon glyphicon-remove" ng-if="registerForm.email.$dirty && registerForm.email.$error.used" popover="{{ 'user.edit.emailError1' | translate}}"  popover-trigger="mouseenter" popover-placement="right"></span>
+              <span class="form-error glyphicon glyphicon-remove" ng-if="registerForm.email.$dirty && registerForm.email.$error.pattern" popover="{{ 'user.edit.emailError2' | translate}}"  popover-trigger="mouseenter" popover-placement="right"></span>
+              <span class="form-error glyphicon glyphicon-remove" ng-if="registerForm.email.$dirty && registerForm.email.$error.required" popover="{{ 'user.edit.required' | translate}}"  popover-trigger="mouseenter" popover-placement="right"></span>
+              <span class="form-error glyphicon glyphicon-remove" ng-if="registerForm.email.$dirty && registerForm.email.$error.maxlength" popover="{{ 'user.edit.longEmail' | translate}}"  popover-trigger="mouseenter" popover-placement="right"></span>
+            </div>
+          </div>
+
+          <div class="form-group" ng-class="{'has-error': registerForm.repeatEmail.$dirty && !registerForm.repeatEmail.$valid}">
+            <div class="col-xs-12">
+              <input class="form-control input-sm form-layout" type="email" id="repeatEmail" ng-maxlength="form.maxLength" name="repeatEmail" ng-model="form.confirmEmail" ng-change="matchEmails()" placeholder="{{'home.registerForm.confirmEmail' | translate}}" required>
+            </div>
+            <div class="just-one-error">
+              <span class="form-error glyphicon glyphicon-remove" ng-if="registerForm.repeatEmail.$dirty && registerForm.repeatEmail.$error.match" popover="{{ 'user.edit.emailDontMatch' | translate}}"  popover-trigger="mouseenter" popover-placement="right"></span>
+              <span class="form-error glyphicon glyphicon-remove" ng-if="registerForm.repeatEmail.$dirty && registerForm.repeatEmail.$error.required" popover="{{ 'user.edit.required' | translate}}"  popover-trigger="mouseenter" popover-placement="right"></span>
+            </div>
+          </div>
+
+          <div class="form-group" ng-class="{'has-error': registerForm.password.$dirty && !registerForm.password.$valid}">
+            <div class="col-xs-12">
+              <input class="form-control input-sm form-layout" type="password" id="password" ng-maxlength="form.maxLength" ng-minlength="form.minLength" name="password" ng-model="form.password" placeholder="{{'home.registerForm.password' | translate}}" required>
+            </div>
+            <div class="just-one-error">
+              <span class="form-error glyphicon glyphicon-remove" ng-if="registerForm.password.$dirty && registerForm.password.$error.minlength" popover="{{ 'user.edit.shortPassword' | translate}}"  popover-trigger="mouseenter" popover-placement="right"></span>
+              <span class="form-error glyphicon glyphicon-remove" ng-if="registerForm.password.$dirty && registerForm.password.$error.maxlength" popover="{{ 'user.edit.longPassword' | translate}}"  popover-trigger="mouseenter" popover-placement="right"></span>
+              <span class="form-error glyphicon glyphicon-remove" ng-if="registerForm.password.$dirty && registerForm.password.$error.required" popover="{{ 'user.edit.required' | translate}}"  popover-trigger="mouseenter" popover-placement="right"></span>
+            </div>
+          </div>
+
+          <div class="form-group" ng-class="{'has-error': registerForm.repeatPassword.$dirty && !registerForm.repeatPassword.$valid}">
+            <div class="col-xs-12">
+              <input class="form-control input-sm form-layout" type="password" id="repeatPassword" ng-maxlength="form.maxLength" name="repeatPassword" ng-change="matchPassword()" ng-model="form.confirmPassword" placeholder="{{'home.registerForm.confirmPassword' | translate}}" required>
+            </div>
+            <div class="just-one-error">
+              <span class="form-error glyphicon glyphicon-remove" ng-if="registerForm.repeatPassword.$dirty && registerForm.repeatPassword.$error.match" popover="{{ 'user.edit.passwordDontMatch' | translate}}"  popover-trigger="mouseenter" popover-placement="right"></span>
+              <span class="form-error glyphicon glyphicon-remove" ng-if="registerForm.repeatPassword.$dirty && registerForm.repeatPassword.$error.required" popover="{{ 'user.edit.required' | translate}}"  popover-trigger="mouseenter" popover-placement="right"></span>
+            </div>
+          </div>
+
+          <div class="col-xs-12">
+            <button class="btn btn-blue btn-sm btn-block">{{'home.registerForm.confirm' | translate}}</button>
+          </div>
+
+        </form>
+      </div>
+      <div class="home-end-detail"></div>
+    </div>
+  </div>
+  <div class="container hidden-lg hidden-md hidden-sm xs-top-home">
+    <div>
+      <carousel class="home-carousel" interval="myInterval">
+        <slide ng-repeat="slide in slides" active="slide.active">
+          <img ng-src="{{slide.image}}" style="">
+          <div class="carousel-caption"></div>
+          <div class="text-left">
+            <p>{{slide.text}} <a href="{{slide.link}}" ng-hide="slide.link == undefined" target="_blank">{{slide.linkText}}</a></p>
+          </div>
+        </slide>
+      </carousel>
+
+      <div class="register-form">
+        <h5>{{'home.register' | translate}}!</h5>
+
+        <form ng-submit="formSubmit()" name="registerForm" novalidate>
+
+          <div class="form-group" ng-class="{'has-error': registerForm.name.$dirty && !registerForm.name.$valid}">
+            <div class="col-xs-12">
+              <input class="form-control input-sm form-layout" type="text" id="name" ng-maxlength="form.maxLength" name="name" ng-model="form.name" placeholder="{{'home.registerForm.name' | translate}}" required>
+            </div>
+            <div class="just-one-error">
+              <span class="form-error glyphicon glyphicon-remove" ng-if="registerForm.name.$dirty && registerForm.name.$error.required" popover="{{ 'user.edit.required' | translate}}"  popover-trigger="mouseenter" popover-placement="right"></span>
+              <span class="form-error glyphicon glyphicon-remove" ng-if="registerForm.name.$dirty && registerForm.name.$error.maxlength" popover="{{ 'user.edit.longName' | translate}}"  popover-trigger="mouseenter" popover-placement="right"></span>
+            </div>
+          </div>
+
+          <div class="form-group" ng-class="{'has-error': registerForm.username.$dirty && !registerForm.username.$valid}">
+            <div class="col-xs-12">
+              <input class="form-control input-sm form-layout" type="text" id="username" ng-maxlength="form.maxLength" name="username" ng-model="form.username" ng-change="userValidate()" placeholder="{{'home.registerForm.login' | translate}}" required>
+            </div>
+            <div class="just-one-error">
+              <span class="form-error glyphicon glyphicon-remove" ng-if="registerForm.username.$dirty && registerForm.username.$error.used" popover="{{ 'user.edit.usedUser' | translate}}"  popover-trigger="mouseenter" popover-placement="right"></span>
+              <span class="form-error glyphicon glyphicon-remove" ng-if="registerForm.username.$dirty && registerForm.username.$error.required" popover="{{ 'user.edit.required' | translate}}"  popover-trigger="mouseenter" popover-placement="right"></span>
+              <span class="form-error glyphicon glyphicon-remove" ng-if="registerForm.username.$dirty && registerForm.username.$error.maxlength" popover="{{ 'user.edit.longUsername' | translate}}"  popover-trigger="mouseenter" popover-placement="right"></span>
+              <span class="form-error glyphicon glyphicon-remove" ng-if="registerForm.username.$dirty && registerForm.username.$error.pattern" popover="{{ 'user.edit.invalidUsername' | translate}}"  popover-trigger="mouseenter" popover-placement="right"></span>
+            </div>
+          </div>
+
+          <div class="form-group" ng-class="{'has-error': registerForm.email.$dirty && !registerForm.email.$valid}">
+            <div class="col-xs-12">
+              <input class="form-control input-sm form-layout" type="email" id="email" ng-pattern="/^[a-zA-Z0-9][a-zA-Z0-9\._-]*@([a-zA-Z0-9\._-]+\.)[a-zA-Z-0-9]{2}/" ng-maxlength="form.maxLength" name="email" ng-model="form.email" ng-change="emailValidate()" placeholder="{{'home.registerForm.email' | translate}}" required>
+            </div>
+            <div class="just-one-error">
+              <span class="form-error glyphicon glyphicon-remove" ng-if="registerForm.email.$dirty && registerForm.email.$error.used" popover="{{ 'user.edit.emailError1' | translate}}"  popover-trigger="mouseenter" popover-placement="right"></span>
+              <span class="form-error glyphicon glyphicon-remove" ng-if="registerForm.email.$dirty && registerForm.email.$error.pattern" popover="{{ 'user.edit.emailError2' | translate}}"  popover-trigger="mouseenter" popover-placement="right"></span>
+              <span class="form-error glyphicon glyphicon-remove" ng-if="registerForm.email.$dirty && registerForm.email.$error.required" popover="{{ 'user.edit.required' | translate}}"  popover-trigger="mouseenter" popover-placement="right"></span>
+              <span class="form-error glyphicon glyphicon-remove" ng-if="registerForm.email.$dirty && registerForm.email.$error.maxlength" popover="{{ 'user.edit.longEmail' | translate}}"  popover-trigger="mouseenter" popover-placement="right"></span>
+            </div>
+          </div>
+
+          <div class="form-group" ng-class="{'has-error': registerForm.repeatEmail.$dirty && !registerForm.repeatEmail.$valid}">
+            <div class="col-xs-12">
+              <input class="form-control input-sm form-layout" type="email" id="repeatEmail" ng-maxlength="form.maxLength" name="repeatEmail" ng-model="form.confirmEmail" ng-change="matchEmails()" placeholder="{{'home.registerForm.confirmEmail' | translate}}" required>
+            </div>
+            <div class="just-one-error">
+              <span class="form-error glyphicon glyphicon-remove" ng-if="registerForm.repeatEmail.$dirty && registerForm.repeatEmail.$error.match" popover="{{ 'user.edit.emailDontMatch' | translate}}"  popover-trigger="mouseenter" popover-placement="right"></span>
+              <span class="form-error glyphicon glyphicon-remove" ng-if="registerForm.repeatEmail.$dirty && registerForm.repeatEmail.$error.required" popover="{{ 'user.edit.required' | translate}}"  popover-trigger="mouseenter" popover-placement="right"></span>
+            </div>
+          </div>
+
+          <div class="form-group" ng-class="{'has-error': registerForm.password.$dirty && !registerForm.password.$valid}">
+            <div class="col-xs-12">
+              <input class="form-control input-sm form-layout" type="password" id="password" ng-maxlength="form.maxLength" ng-minlength="form.minLength" name="password" ng-model="form.password" placeholder="{{'home.registerForm.password' | translate}}" required>
+            </div>
+            <div class="just-one-error">
+              <span class="form-error glyphicon glyphicon-remove" ng-if="registerForm.password.$dirty && registerForm.password.$error.minlength" popover="{{ 'user.edit.shortPassword' | translate}}"  popover-trigger="mouseenter" popover-placement="right"></span>
+              <span class="form-error glyphicon glyphicon-remove" ng-if="registerForm.password.$dirty && registerForm.password.$error.maxlength" popover="{{ 'user.edit.longPassword' | translate}}"  popover-trigger="mouseenter" popover-placement="right"></span>
+              <span class="form-error glyphicon glyphicon-remove" ng-if="registerForm.password.$dirty && registerForm.password.$error.required" popover="{{ 'user.edit.required' | translate}}"  popover-trigger="mouseenter" popover-placement="right"></span>
+            </div>
+          </div>
+
+          <div class="form-group" ng-class="{'has-error': registerForm.repeatPassword.$dirty && !registerForm.repeatPassword.$valid}">
+            <div class="col-xs-12">
+              <input class="form-control input-sm form-layout" type="password" id="repeatPassword" ng-maxlength="form.maxLength" name="repeatPassword" ng-change="matchPassword()" ng-model="form.confirmPassword" placeholder="{{'home.registerForm.confirmPassword' | translate}}" required>
+            </div>
+            <div class="just-one-error">
+              <span class="form-error glyphicon glyphicon-remove" ng-if="registerForm.repeatPassword.$dirty && registerForm.repeatPassword.$error.match" popover="{{ 'user.edit.passwordDontMatch' | translate}}"  popover-trigger="mouseenter" popover-placement="right"></span>
+              <span class="form-error glyphicon glyphicon-remove" ng-if="registerForm.repeatPassword.$dirty && registerForm.repeatPassword.$error.required" popover="{{ 'user.edit.required' | translate}}"  popover-trigger="mouseenter" popover-placement="right"></span>
+            </div>
+          </div>
+
+          <div class="col-xs-12">
+            <button class="btn btn-blue btn-sm btn-block">{{'home.registerForm.confirm' | translate}}</button>
+          </div>
+
+        </form>
+      </div>
+      <div class="home-end-detail"></div>
+    </div>
+  </div>
+</div>
+
+<div>
+  <div class="customers">
+        <div class="container content universities-slick">
+          <div class="row">
+            <div class="col-md-12 hidden-xs hidden-sm">
+              <slick dots="false" infinite="true" speed="300" slides-to-show="4" touch-move="false" slides-to-scroll="1" autoplay="true" autoplay-speed="1500">
+                <div>
+                  <img src="/images/home/logo-ufal.png" alt="UFAL">
+                </div>
+                <div>
+                  <img src="/images/home/logo-fat.png" alt="FAT">
+                </div>
+                <div>
+                  <img src="/images/home/logo-ifal.png" alt="IFAL">
+                </div>
+                <div>
+                  <img src="/images/home/logo-estacio.png" alt="Estácio/FAL">
+                </div>
+                <div>
+                  <img src="/images/home/logo-cesmac.png" alt="CESMAC">
+                </div>
+                <div>
+                  <img src="/images/home/logo-FNC.png" alt="FNC">
+                </div>
+                <div>
+                  <img src="/images/home/logo-ifpb.png" alt="IFPB">
+                </div>
+                <div>
+                  <img src="/images/home/logo-objetivo.png" alt="Objetivo">
+                </div>
+                <div>
+                  <img src="/images/home/logo-puc.png" alt="PUC-SP">
+                </div>
+                <div>
+                  <img src="/images/home/logo-ufabc.png" alt="UFABC">
+                </div>
+                <div>
+                  <img src="/images/home/logo-ufpb.png" alt="IFPB">
+                </div>
+                <div>
+                  <img src="/images/home/logo-ufpe.png" alt="UFPE">
+                </div>
+                <div>
+                  <img src="/images/home/logo-ufrpe.png" alt="UFRPE">
+                </div>
+                <div>
+                  <img src="/images/home/logo-UFS.png" alt="UFS">
+                </div>
+                <div>
+                  <img src="/images/home/logo-unb.png" alt="UNB">
+                </div>
+                <div>
+                  <img src="/images/home/logo-unit.png" alt="UNIT">
+                </div>
+              </slick>
+            </div>
+            <div class="col-md-12 hidden-lg hidden-md">
+              <slick dots="false" arrows="false" infinite="true" speed="300" slides-to-show="4" touch-move="true" slides-to-scroll="1" autoplay="true" autoplay-speed="1500">
+                <div>
+                  <img src="/images/home/logo-ufal.png" alt="UFAL">
+                </div>
+                <div>
+                  <img src="/images/home/logo-fat.png" alt="FAT">
+                </div>
+                <div>
+                  <img src="/images/home/logo-ifal.png" alt="IFAL">
+                </div>
+                <div>
+                  <img src="/images/home/logo-estacio.png" alt="Estácio/FAL">
+                </div>
+                <div>
+                  <img src="/images/home/logo-cesmac.png" alt="CESMAC">
+                </div>
+                <div>
+                  <img src="/images/home/logo-FNC.png" alt="FNC">
+                </div>
+                <div>
+                  <img src="/images/home/logo-ifpb.png" alt="IFPB">
+                </div>
+                <div>
+                  <img src="/images/home/logo-objetivo.png" alt="Objetivo">
+                </div>
+                <div>
+                  <img src="/images/home/logo-puc.png" alt="PUC-SP">
+                </div>
+                <div>
+                  <img src="/images/home/logo-ufabc.png" alt="UFABC">
+                </div>
+                <div>
+                  <img src="/images/home/logo-ufpb.png" alt="IFPB">
+                </div>
+                <div>
+                  <img src="/images/home/logo-ufpe.png" alt="UFPE">
+                </div>
+                <div>
+                  <img src="/images/home/logo-ufrpe.png" alt="UFRPE">
+                </div>
+                <div>
+                  <img src="/images/home/logo-UFS.png" alt="UFS">
+                </div>
+                <div>
+                  <img src="/images/home/logo-unb.png" alt="UNB">
+                </div>
+                <div>
+                  <img src="/images/home/logo-unit.png" alt="UNIT">
+                </div>
+              </slick>
+            </div>
+          </div>
+        </div>
+  </div>
+</div>
+
+<div class="container content">
+  <div class="huxley-info">
+    <div class="bg-gray-lighter">
+
+      <div class="row announcement teacher-1">
+        <div class="col-md-6 text">
+          <h3>{{'home.homeInfo.teacher' | translate}}</h3>
+          <p>{{'home.homeInfo.teacherMsg1' | translate}}</p>
+        </div>
+        <div class="col-md-6 text-right">
+          <img src="/images/home/teacher-1.png">
+        </div>
+      </div>
+
+      <div class="row announcement teacher-2 hidden-xs">
+        <div class="col-md-6">
+          <img src="/images/home/teacher-2.png">
+        </div>
+        <div class="col-md-6 text">
+          <p>{{'home.homeInfo.teacherMsg2' | translate}}</p>
+        </div>
+      </div>
+      <div class="row announcement teacher-2 hidden-lg hidden-md hidden-sm">
+        <div class="col-md-6">
+          <img src="/images/home/teacher-2.png">
+        </div>
+        <div class="col-md-6 text">
+          <p>{{'home.homeInfo.teacherMsg2' | translate}}</p>
+        </div>
+      </div>
+      <div class="row announcement institution-info">
+        <div class="col-md-6 text">
+          <h3>{{'home.homeInfo.institution' | translate}}</h3>
+          <p>{{'home.homeInfo.institutionMsg' | translate}}</p>
+        </div>
+        <div class="col-md-6 announcement-image announcement-image-right">
+          <img src="/images/home/institution.png">
+        </div>
+      </div>
+
+      <div class="row announcement student-info hidden-xs">
+        <div class="col-md-6">
+          <img src="/images/home/student.png">
+        </div>
+        <div class="col-md-6 text">
+          <h3>{{'home.homeInfo.student' | translate}}</h3>
+          <p>{{'home.homeInfo.studentMsg' | translate}}</p>
+        </div>
+      </div>
+      <div class="row announcement student-info hidden-lg hidden-md hidden-">
+        <div class="col-md-6">
+          <img src="/images/home/student.png">
+        </div>
+        <div class="col-md-6 text">
+          <h3>{{'home.homeInfo.student' | translate}}</h3>
+          <p>{{'home.homeInfo.studentMsg' | translate}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="bg-blue-dark">
+  <div class="container content about">
+    <h3>{{'home.homeInfo.theHuxley' | translate}}</h3>
+    <p>{{'home.homeInfo.theHuxleyMsg1' | translate}}</p>
+  </div>
+</div>

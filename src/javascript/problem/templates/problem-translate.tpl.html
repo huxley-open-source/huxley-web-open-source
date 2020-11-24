@@ -1,0 +1,58 @@
+<div class="multiview-bottom box">
+  <div>
+
+    <div class="create-form">
+      <form ng-submit="translate()" name="translateProblem" novalidate>
+
+        <th-select-box label="'user.edit.language' | translate" element="problemi18n.locale" class="th-select-striped" for="languages" on-change="languageSelected()"></th-select-box>
+
+        <div class="form-group" ng-class="{'has-error': createProblem.problemName.$dirty && !createProblem.problemName.$valid}">
+          <label class="col-sm-2 control-label" for="problemName">{{'problem.create.name' | translate}}</label>
+          <div class="col-sm-10">
+            <div class="loading-blue" is-loading="loading.name">
+              <input class="form-control" type="text" id="problemName" name="problemName"
+                     ng-model="problemi18n.name" ng-change="validateName()" placeholder="{{problem.name}}" popover="{{'problem.create.namePopover' | translate}}"  popover-trigger="focus" popover-placement="bottom" ng-blur="checkName()" ng-maxlength="{{problemInfo.nameMaxSize}}" required>
+            </div>
+          </div>
+          <span class="help-block" ng-if="createProblem.problemName.$valid">{{'group.create.characterCount' | translate: {count: problemInfo.nameMaxSize - problem.name.length, total: problemInfo.nameMaxSize} }}</span>
+          <span class="help-block" ng-if="createProblem.problemName.$dirty && createProblem.problemName.$error.required">{{'group.create.nameRequired' | translate}}</span>
+          <span class="help-block" ng-if="createProblem.problemName.$error.maxlength">{{'group.create.characterCountError' | translate}}</span>
+          <span class="help-block" ng-if="createProblem.problemName.$error.name">{{'group.create.nameUniqueError' | translate }}</span>
+        </div>
+
+        <p translate class="problem-section-head">problem.description</p>
+
+        <div class="display-flex">
+          <div ng-bind-html="problem.description" style="flex: 1; font-size: 12px; padding:12px; color: #000; background-color: #efefef"/>
+          <div text-angular ng-model="problemi18n.description" style="flex: 1; font-size: 12px; padding:12px;"></div>
+        </div>
+
+        <p translate class="problem-section-head">problem.inputFormat</p>
+
+        <div class="display-flex">
+          <div ng-bind-html="problem.inputFormat" style="flex: 1; font-size: 12px; padding:12px; color: #000; background-color: #efefef"/>
+          <div text-angular ng-model="problemi18n.inputFormat" style="flex: 1; font-size: 12px; padding:12px;"></div>
+        </div>
+
+        <p translate class="problem-section-head">problem.outputFormat</p>
+
+        <div class="display-flex">
+          <div ng-bind-html="problem.outputFormat" style="flex: 1; font-size: 12px; padding:12px; color: #000; background-color: #efefef"/>
+          <div text-angular ng-model="problemi18n.outputFormat" style="flex: 1; font-size: 12px; padding:12px;"></div>
+        </div>
+
+        <th-image-uploader></th-image-uploader>
+
+        <div class="create-save-container text-right">
+          <span ng-if="saved">{{'problem.saved' | translate}}</span>
+          <span ng-if="error">{{'problem.error' | translate}}</span>
+          <button is-loading="loading.form" class="btn btn-green">{{'problem.translate' | translate}}</button>
+        </div>
+      </form>
+
+    </div>
+
+
+  </div>
+
+</div>

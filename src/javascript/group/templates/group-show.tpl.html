@@ -1,0 +1,276 @@
+<div class="container content">
+  <div class="box multiview-top group-show-small">
+    <th-head header-title="'group.title'" group="true"></th-head>
+    <th-loading loading="loading">
+      <div class="group-info-container">
+        <div class="group-general-info">
+          <div class="group-name-key-info">
+            <div class="group-header-name-container">
+              <div class="dropdown info-editable-container edit-inline" is-open="edit.name">
+                <div ng-class="{'info-edit-container': false}">
+                  <div class="info-edit-img dropdown-toggle">
+                    <i class="icon img-small-edit-highlight img-short background-img"></i>
+                  </div>
+                  <div class="info-edit-label">
+                    <h5>{{'group.create.name' | translate}}:</h5>
+                  </div>
+                </div>
+                <div id="name" role="textbox" class="info-edit-input" contenteditable="{{edit.name}}" ng-blur="updateName()" ng-class="{'editable': edit.name}" ng-click="disableDropdown($event)">
+                  {{group.name}}
+                </div>
+              </div>
+              <div class="text-capitalize group-header-sub-name">
+                {{'date.created.in'| translate}} {{group.dateCreated | amDateFormat:'DD/MM/YYYY'}} / {{'date.end.in'| translate}} {{group.endDate | amDateFormat:'DD/MM/YYYY'}}
+              </div>
+            </div>
+            <div class="group-header-key-container" ng-if="currentUser.atLeastTeacherAssistant(group)">
+              <div class=" info-editable-container edit-inline">
+                <div class="key-img-container">
+                  <i class="icon img-small-blue-key img-short background-img"></i>
+                </div>
+                <div class="info-edit-label">
+                  <h5>{{'group.configs.key' | translate}}:</h5>
+                  <span> {{ key }} </span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div class="dropdown info-editable-container" is-open="edit.description" ng-show="false">
+            <div ng-class="{'info-edit-container': false}">
+              <div class="info-edit-img dropdown-toggle">
+                <i class="icon img-small-edit-highlight img-short background-img"></i>
+              </div>
+              <div class="info-edit-label">
+                <h5>{{'group.description' | translate}}:</h5>
+              </div>
+            </div>
+            <div id="description" role="textbox" class="group-description info-edit-input info-default" contenteditable="{{edit.description}}" ng-blur="updateDescription()" ng-class="{'editable': edit.description}" ng-click="disableDropdown($event)">
+              {{group.description}}
+            </div>
+          </div>
+          <div class="group-info">
+            <div class="dropdown info-editable-container" is-open="edit.teacher">
+              <div ng-class="{'info-edit-container': false}">
+                <div class="info-edit-img dropdown-toggle">
+                  <i class="icon img-small-edit-highlight img-short background-img"></i>
+                </div>
+                <div class="info-edit-label">
+                  <i class="description-icon teacher">{{'group.teacher.icon' | translate}}</i>
+                  <h5>{{'group.teacher' | translate}}:</h5>
+                </div>
+              </div>
+              <ul class="info-default">
+                <li ng-repeat="teacher in group.teachers  | orderBy:'name'">
+                  <span ng-if="$index < 2"><a class="grey-link" ui-sref="profile-show.problems({id: teacher.id})">{{teacher.name}}</a></span>
+                  <a  ng-if="$last && $index > 1" ng-click="info.expand=true" ng-show="!info.expand" class="group-info-expand">...</a>
+                  <span ng-if="$index > 1" ng-show="info.expand"><a class="grey-link" ui-sref="profile-show.problems({id: teacher.id})">{{teacher.name}}</a></span>
+                </li>
+                <li ng-show="info.expand">
+                  <a ng-click="info.expand=false" class="group-info-expand">{{'group.hide' | translate}}</a>
+                </li>
+              </ul>
+              <ul class="suggestion-box-container-vertical dropdown-menu"  ng-click="disableDropdown($event)">
+                <li><input type="text" ng-model="userSelected.teacher" placeholder="{{'search.tip.nameOrEmail' | translate}}" typeahead-template-url="user/templates/user-suggest.tpl.html" typeahead="user for users in getInstitutionUsers($viewValue)" typeahead-loading="loadingLocations" class="form-control" typeahead-on-select="onSelect($item, 'TEACHER')" typeahead-input-formatter="''">
+                  <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh suggestion-box-loading"></i>
+                </li>
+                <perfect-scrollbar class="select-box" refresh-on-change="edit.teacher">
+                  <li ng-repeat="teacher in group.teachers | orderBy:'name'">
+                    <div class="suggestion-box">
+                      <div class="suggestion-box-name">
+                        <a class="grey-link" ui-sref="profile-show.problems({id: teacher.id})">{{teacher.name}}</a>
+                      </div>
+                      <a class="suggestion-box-close" ng-click="removeItem(teacher.id)">
+                        &#10005;
+                      </a>
+                    </div>
+                  </li>
+                </perfect-scrollbar>
+              </ul>
+            </div>
+            <div class="dropdown info-editable-container"  is-open="edit.assistant">
+              <div ng-class="{'info-edit-container': false}">
+                <div class="info-edit-img dropdown-toggle">
+                  <i class="icon img-small-edit-highlight img-short background-img"></i>
+                </div>
+                <div class="info-edit-label">
+                  <i class="description-icon teacher-assistant">{{'group.teacher.assistant.icon' | translate}}</i>
+                  <h5>{{'group.teacher.assistant' | translate}}:</h5>
+                </div>
+              </div>
+              <ul class="info-default">
+                <li ng-repeat="teacher in group.teacherAssistants  | orderBy:'name'">
+                  <span ng-if="$index < 2">{{teacher.name}}</span>
+                  <a ng-if="$last && $index > 1" ng-click="info.expand2=true" ng-show="!info.expand2" class="group-info-expand">...</a>
+                  <span ng-if="$index > 1" ng-show="info.expand2">{{teacher.name}}</span>
+                </li>
+                <li ng-show="info.expand2">
+                  <a ng-click="info.expand2=false" class="group-info-expand">{{'group.hide' | translate}}</a>
+                </li>
+              </ul>
+              <ul class="suggestion-box-container-vertical dropdown-menu" ng-click="disableDropdown($event)">
+                <li><input type="text" ng-model="userSelected.teacher" placeholder="{{'search.tip.nameOrEmail' | translate}}" typeahead-template-url="user/templates/user-suggest.tpl.html" typeahead="user for users in getInstitutionUsers($viewValue)" typeahead-loading="loadingLocations" class="form-control" typeahead-on-select="onSelect($item, 'TEACHER_ASSISTANT')" typeahead-input-formatter="''">
+                  <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh suggestion-box-loading"></i>
+                </li>
+                <perfect-scrollbar class="select-box" refresh-on-change="edit.assistant" >
+                  <li ng-repeat="teacher in group.teacherAssistants | orderBy:'name'">
+                    <div class="suggestion-box">
+                      <div class="suggestion-box-name">
+                        {{teacher.name}}
+                      </div>
+                      <a class="suggestion-box-close" ng-click="removeItem(teacher.id)">
+                        &#10005;
+                      </a>
+                    </div>
+                  </li>
+                </perfect-scrollbar>
+              </ul>
+            </div>
+            <div class="dropdown info-editable-container" is-open="edit.institution">
+              <div ng-class="{'info-edit-container': false}">
+                <div class="info-edit-img dropdown-toggle">
+                  <i class="icon img-small-edit-highlight img-short background-img"></i>
+                </div>
+                <div class="info-edit-label">
+                  <i class="description-icon institution">{{'group.institution.icon' | translate}}</i>
+                  <h5>{{'group.institution' | translate}}:</h5>
+                </div>
+              </div>
+              <div ng-show="!group.institution.acronym" class="info-default no-hidden"><a class="grey-link" ui-sref="institution-show.groups({'id': group.institution.id})">{{group.institution.name}}</a></div>
+              <div ng-show="group.institution.acronym" class="info-default no-hidden">{{group.institution.acronym}} - <a class="grey-link" ui-sref="institution-show.groups({'id': group.institution.id})">{{group.institution.name}}</a></div>
+              <ul class="suggestion-box-container-vertical dropdown-menu" ng-click="disableDropdown($event)">
+                <perfect-scrollbar class="select-box" refresh-on-change="edit.institution">
+                  <li ng-repeat="institution in institutionList | orderBy:'name'" ng-click="chooseInstitution(institution.id)">
+                    {{institution.name}}
+                  </li>
+                </perfect-scrollbar>
+              </ul>
+            </div>
+            <div ng-show="false" class="group-license-container">
+              <span class="group-license-info"> {{'group.license.reportPt1' | translate}} <span class="strong">{{33}}</span> {{'group.license.reportPt2' | translate}} <span class="strong">{{120}}</span> </span>
+              <button class="btn btn-orange">{{'group.license.button' | translate}}</button>
+            </div>
+            <div ng-show="false" class="group-participation-container">
+              <span class="group-license-info"> {{'group.participation.request' | translate}}</span>
+              <button class="btn btn-orange">{{'group.participation.button' | translate}}</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </th-loading>
+    <div class="th-group-nav-bar" ng-hide="urlInfo.action=='new-group'">
+      <div class="th-group-tab-header">
+        <ul class="th-nav-tabs">
+          <li ng-class="{'active' : $state.is('group-show.quizzes') || $state.is('group-show.group-quest-empty') || $state.is('group-show.quizzes-charts') || $state.is('group-show.create-quiz') }" >
+            <a ui-sref="group-show.quizzes">
+              {{'group.questionnaire' | translate }}
+            </a>
+          </li>
+          <li ng-class="{'active' : $state.is('group-show.members') || $state.is('group-show.group-student-empty') || $state.is('group-show.add-members') || $state.is('group-show.add-teacher-assistant') || $state.is('group-show.add-teacher') || $state.is('group-show.pendencies') }">
+            <a ui-sref="group-show.members">
+              {{'group.members' | translate }}
+            </a>
+          </li>
+          <li ng-class="{'active' : $state.is('group-show.submissions') || $state.is('group-show.submissions-charts') || $state.is('group-show.submission-show')}" ng-if="currentUser.atLeastTeacherAssistant(group)">
+            <a ui-sref="group-show.submissions">
+              {{'group.submission' | translate }}</a>
+          </li>
+          <li ng-class="{'active' : $state.is('group-show.stats-general') || $state.is('group-show.stats-student-list') || $state.is('group-show.stats-student-individual')}" ng-if="currentUser.atLeastTeacherAssistant(group)">
+            <a ui-sref="group-show.stats-general">
+              {{'group.stats.label' | translate }}</a>
+          </li>
+          <li ng-class="{'active' : $state.is('group-show.edit') || $state.is('group-show.configs-key')}" ng-if="currentUser.atLeastTeacher(group)">
+            <a ui-sref="group-show.configs-key">
+              {{'group.config' | translate }}
+            </a>
+          </li>
+          <li ng-if="false" ng-class="{'active' : $state.is('group-show.topcoder-student')}" ng-if="currentUser.atLeastStudent(group)">
+            <a ui-sref="group-show.topcoder-student">
+              {{'group.topcoder' | translate }}
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div>
+      </div>
+      <div>
+        <div class="th-tab-pane" ng-class="{'active' : $state.is('group-show.quizzes') || $state.is('group-show.group-quest-empty') || $state.is('group-show.quizzes-charts') || $state.is('group-show.create-quiz') }">
+          <ul>
+            <li ui-sref="group-show.quizzes" ng-class="{'active' : $state.is('group-show.quizzes') || $state.is('group-show.group-quest-empty')}">
+              <a ui-sref="group-show.quizzes" ui-sref-active="active">{{'group.quest.list' | translate}}</a>
+            </li>
+            <li ui-sref="group-show.create-quiz" ui-sref-active="active" ng-show="currentUser.atLeastTeacherAssistant(group)">
+              <a ui-sref="group-show.create-quiz" ui-sref-active="active">{{'quiz.create.tab' | translate}}</a>
+            </li>
+            <li ui-sref="quiz-import" ui-sref-active="active" ng-show="currentUser.atLeastTeacherAssistant(group)">
+              <a ui-sref="quiz-import" ui-sref-active="active">{{'group.quiz.import' | translate}}</a>
+            </li>
+          </ul>
+        </div>
+        <div class="th-tab-pane" ng-class="{'active' : $state.is('group-show.members') || $state.is('group-show.group-student-empty') || $state.is('group-show.add-members') || $state.is('group-show.add-teacher-assistant') || $state.is('group-show.add-teacher') || $state.is('group-show.pendencies') }" >
+          <ul>
+            <li ui-sref="group-show.members" ng-class="{'active' : $state.is('group-show.members') || $state.is('group-show.group-student-empty')}">
+              <a ui-sref="group-show.members" ui-sref-active="active">{{'group.quest.list' | translate}}</a>
+            </li>
+            <li ui-sref="group-show.pendencies" ui-sref-active="active" ng-show="false">
+              <a ui-sref="group-show.pendencies" ui-sref-active="active">{{'group.pendencies.index' | translate}}</a>
+            </li>
+            <li ui-sref="group-show.add-members" ui-sref-active="active" ng-show="currentUser.atLeastTeacher(group)">
+              <a ui-sref="group-show.add-members" ui-sref-active="active">{{'group.users.addStudent' | translate}}</a>
+            </li>
+            <li ui-sref="group-show.add-teacher-assistant" ui-sref-active="active" ng-show="currentUser.atLeastTeacher(group)">
+              <a ui-sref="group-show.add-teacher-assistant" ui-sref-active="active">{{'group.users.addTeacherAssistant' | translate}}</a>
+            </li>
+            <li ui-sref="group-show.add-teacher" ui-sref-active="active" ng-show="currentUser.atLeastTeacher(group)">
+              <a ui-sref="group-show.add-teacher" ui-sref-active="active">{{'group.users.addTeacher' | translate}}</a>
+            </li>
+          </ul>
+        </div>
+        <div class="th-tab-pane" ng-class="{'active' : $state.is('group-show.submissions') || $state.is('group-show.submissions-charts') || $state.is('group-show.submission-show')}" ng-show="currentUser.atLeastTeacherAssistant(group)">
+          <ul>
+            <li ui-sref="group-show.submissions" ui-sref-active="active">
+              <a ui-sref="group-show.submissions" ui-sref-active="active">{{'group.quest.list' | translate}}</a>
+            </li>
+            <li ui-sref="group-show.submissions-charts" ui-sref-active="active">
+              <a ui-sref="group-show.submissions-charts" ui-sref-active="active">{{'group.chart' | translate}}</a>
+            </li>
+            <li ui-sref="group-show.submission-show" ui-sref-active="active">
+              <a ui-sref="group-show.submission-show" ui-sref-active="active">{{'group.visualize' | translate}}</a>
+            </li>
+          </ul>
+        </div>
+        <div class="th-tab-pane" ng-class="{'active' : $state.is('group-show.stats-general') || $state.is('group-show.stats-student-list') || $state.is('group-show.stats-student-individual')}" ng-show="currentUser.atLeastTeacherAssistant(group)">
+          <ul>
+            <li ui-sref="group-show.stats-general" ui-sref-active="active">
+              <a ui-sref="group-show.stats-general" ui-sref-active="active">{{'group.statsList.general' | translate}}</a>
+            </li>
+            <li ui-sref="group-show.stats-student-list" ui-sref-active="active">
+              <a ui-sref="group-show.stats-student-list" ui-sref-active="active">{{'group.statsList.list' | translate}}</a>
+            </li>
+            <li ui-sref="group-show.stats-student-individual" ui-sref-active="active">
+              <a ui-sref="group-show.stats-student-individual" ui-sref-active="active">{{'group.statsList.visualize' | translate}}</a>
+            </li>
+          </ul>
+        </div>
+        <div class="th-tab-pane" ng-class="{'active' : $state.is('group-show.edit') || $state.is('group-show.configs-key')}" ng-show="currentUser.atLeastTeacher(group)">
+          <ul>
+            <li ui-sref="group-show.configs-key" ui-sref-active="active">
+              <a ui-sref="group-show.configs-key" ui-sref-active="active">{{'group.configs.key' | translate}}</a>
+            </li>
+            <li ui-sref="group-show.edit" ui-sref-active="active">
+              <a ui-sref="group-show.edit" ui-sref-active="active">{{'group.configs.edit' | translate}}</a>
+            </li>
+          </ul>
+        </div>
+        <div class="th-tab-pane" ng-class="{'active' : $state.is('group-show.topcoder-student')}">
+          <ul>
+            <li>&nbsp;</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div ui-view></div>
+</div>

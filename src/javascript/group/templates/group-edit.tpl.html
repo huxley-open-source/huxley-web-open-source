@@ -1,0 +1,53 @@
+<div class="box multiview-bottom">
+    <div class="create-form">
+      <ng-form name="createGroup" novalidate>
+        <div class="form-group" ng-class="{'has-error': createGroup.groupName.$dirty && !createGroup.groupName.$valid}">
+          <label class="col-sm-2 control-label" for="groupName">{{'group.create.name' | translate}}</label>
+          <div class="col-sm-10">
+            <input class="form-control" type="text" id="groupName" name="groupName" ng-model="groupInfo.name" ng-change="validateName()" placeholder="{{'group.create.name' | translate}}" popover="{{'group.create.namePopover' | translate}}"  popover-trigger="focus" popover-placement="bottom" ng-blur="checkName()" ng-maxlength="{{groupInfo.nameMaxSize}}" required>
+          </div>
+          <span class="help-block" ng-if="createGroup.groupName.$valid">{{'group.create.characterCount' | translate: {count: groupInfo.nameMaxSize - groupInfo.name.length, total: groupInfo.nameMaxSize} }}</span>
+          <span class="help-block" ng-if="createGroup.groupName.$dirty && createGroup.groupName.$error.required">{{'group.create.nameRequired' | translate}}</span>
+          <span class="help-block" ng-if="createGroup.groupName.$error.maxlength">{{'group.create.characterCountError' | translate}}</span>
+          <span class="help-block" ng-if="createGroup.groupName.$error.name">{{'group.create.nameUniqueError' | translate }}</span>
+        </div>
+        <div class="form-group form-url" ng-class="{'has-error': createGroup.groupUrl.$dirty && !createGroup.groupUrl.$valid}">
+          <label class="col-sm-2 control-label" for="groupUrl" max="groupInfo.nameMaxSize">{{'group.create.url' | translate}}</label>
+          <div class="col-sm-10">
+            <span class="create-link">{{'group.create.urlRoot' | translate }}</span><input class="form-control" type="text" id="groupUrl" ng-model="groupInfo.url" ng-change="validateUrl()" placeholder="{{'group.create.url' | translate}}" name="groupUrl" popover="{{'group.create.urlPopover' | translate}}"  popover-trigger="focus" popover-placement="bottom" ng-blur="checkName()" required>
+          </div>
+          <span class="help-block" ng-if="createGroup.groupUrl.$dirty && createGroup.groupUrl.$error.uniqueUrl">{{'group.create.urlUniqueError' | translate }}</span>
+          <span class="help-block" ng-if="createGroup.groupUrl.$dirty && createGroup.groupUrl.$error.validUrl">{{'group.create.urlInvalidError' | translate }}</span>
+          <span class="help-block" ng-if="createGroup.groupUrl.$dirty && createGroup.groupUrl.$error.required">{{'group.create.urlRequired' | translate}}</span>
+        </div>
+
+        <th-input-user-box label="'group.create.teacher' | translate" user-chosen="groupInfo.teacherList" element-id="'groupTeacher'" is-required="true"></th-input-user-box>
+
+        <th-input-user-box label="'group.create.teacherAssistant' | translate" user-chosen="groupInfo.teacherAssistantList"  element-id="'groupTeacherAssistant'"></th-input-user-box>
+
+        <div class="form-group" ng-class="{'has-error': createGroup.groupDescription.$dirty && !createGroup.groupDescription.$valid}">
+          <label class="col-sm-2 control-label" for="groupDescription">{{'group.create.description' | translate}}</label>
+          <div class="col-sm-10">
+            <input class="form-control" type="text" id="groupDescription" name="groupDescription" ng-model="groupInfo.description" ng-change="checkChanges()" placeholder="{{'group.create.description' | translate}}" ng-maxlength="{{groupInfo.descriptionMaxSize}}" popover="{{'group.create.descriptionPopover' | translate}}"  popover-trigger="focus" popover-placement="bottom">
+          </div>
+          <span class="help-block" ng-if="createGroup.groupDescription.$valid">{{'group.create.characterCount' | translate: {count: groupInfo.descriptionMaxSize - groupInfo.description.length, total: groupInfo.descriptionMaxSize} }}</span>
+          <span class="help-block" ng-if="createGroup.groupDescription.$error.maxlength">{{'group.create.characterCountError' | translate}}</span>
+        </div>
+        <div class="create-date-container">
+          <th-datepicker date="groupInfo.startDate" label="'group.startDate' | translate" element-id="'groupStartDate'" custom-validation="true" validate-function="validateStartDate" validate-msg="'group.create.startDateGreater'" is-required="true"></th-datepicker>
+
+          <th-datepicker date="groupInfo.endDate" label="'group.endDate' | translate" element-id="'groupEndDate'" custom-validation="true" validate-function="validateEndDate" validate-msg="'group.create.startDateGreater'" is-required="true"></th-datepicker>
+        </div>
+        <div class="create-save-container text-right">
+          <span ng-if="saved">{{'group.create.saved' | translate}}</span>
+          <span ng-if="error">{{'group.create.error' | translate}}</span>
+          <button class="btn btn-green" ng-click="formSubmit()" ng-disabled="!enableConfirm" is-loading="$loadingButton">{{'group.create.save' | translate}}</button>
+        </div>
+      </ng-form>
+
+    </div>
+
+
+  </div>
+
+</div>

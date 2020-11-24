@@ -1,0 +1,8 @@
+<div class="box multiview-bottom">
+  <th-loading loading="loadingStats">
+    <nvd3 ng-if="haveData" options="submissionsCount.options" data="submissionsCount.data"></nvd3>
+    <div ng-if="!haveData"th-alert class="yellow-box" closable="false">
+      {{'group.alertMsgs.msg3' | translate}}
+    </div>
+  </th-loading>
+</div>

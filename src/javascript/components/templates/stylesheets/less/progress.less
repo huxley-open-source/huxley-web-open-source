@@ -1,0 +1,78 @@
+.progress-scrollbar {
+  overflow-x: hidden;
+  max-width: 300px;
+  position: relative;
+}
+
+.output-box {
+  border: 1px @blue-light solid;
+  margin: 11px 0px;
+}
+.progress-box {
+  padding: 11px;
+}
+
+.progress-title {
+  display: block;
+  color: black;
+  font-weight: bold;
+  background-color: @blue-lighter;
+  padding: 5px;
+  border-bottom: 1px @blue-light solid;
+}
+
+.th-progress {
+  .display-flex;
+
+  flex-wrap: wrap;
+  .progress-dots {
+    color: #bbd6e7;
+    font-weight: bold;
+    line-height: 30px;
+    &:first-of-type {
+      margin-right: 3px;
+    }
+    &:last-of-type {
+      margin-left: 3px;
+    }
+  }
+  .progress-line {
+    background-color: #bbd6e7;
+    height: 2px;
+    width: 5px;
+    margin-top: 15px !important;
+  }
+  .progress-circle-container {
+    margin-left: 10px;
+    .display-flex;
+    .progress-circle {
+      cursor: pointer;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background-color: #bbd6e7;
+      &.correct {
+        background-color: #accf09;
+        color: @white;
+        .display-flex !important;
+        .align-items-flex(center);
+        .justify-content-flex(center);
+        .glyphicon;
+        .glyphicon-ok;
+      }
+      &.wrong {
+        background-color: #cc7b5e;
+        color: @white;
+        .display-flex !important;
+        .align-items-flex(center);
+        .justify-content-flex(center);
+        .glyphicon;
+        .glyphicon-remove;
+      }
+    }
+    .progress-text {
+      font-size: 10px;
+      text-align: center;
+    }
+  }
+}

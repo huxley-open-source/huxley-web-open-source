@@ -1,0 +1,26 @@
+<a href class="rich-snippet-closed" ng-hide="isOpen" ng-click="toggleSnippet()">
+  {{snippet.codes[language].beforeComment.locales[locale]}}
+  <em>{{snippet.codes[language].code || ('SNIPPET_' + index) }}</em>
+  {{snippet.codes[language].afterComment.locales[locale]}}
+  <span class="caret"></span>
+</a>
+<div class="rich-snippet-open" ng-show="isOpen">
+  <span class="close"  ng-click="toggleSnippet()">&times;</span><br>
+  <div class="clearfix">
+    <div class="rich-input-aside">
+      <div class="form-group">
+        <select id="display" class="form-control" ng-model="snippet.display">
+          <option value="BLOCK">Em bloco</option>
+          <option value="INLINE">Em linha</option>
+        </select>
+      </div>
+    </div>
+    <div class="rich-input-container">
+      <textarea class="form-control" placeholder="Comentário prefixo na linguagem selecionada..."
+                ng-model="snippet.codes[language].beforeComment.locales[locale]"></textarea>
+      <div ui-ace ng-model="snippet.codes[language].code" class="codeeditor"></div>
+      <textarea class="form-control" placeholder="comentário posfixo"
+                ng-model="snippet.codes[language].afterComment.locales[locale]"></textarea>
+    </div>
+  </div>
+</div>

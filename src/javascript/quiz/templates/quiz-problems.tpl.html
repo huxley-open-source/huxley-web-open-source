@@ -1,0 +1,14 @@
+<div class="multiview-bottom box">
+  <p class="black-right-small font-small">{{'quiz.numberOfProblems' | translate: { 'number' : quiz.problemList.length} }}</p>
+  <th-loading loading="loadingProblems">
+    <table class="table">
+      <tbody>
+      <tr ng-repeat="prob in quiz.problemList">
+        <td>
+          <th-problem-box  problem="prob" show-status="true" show-score="true" show-topics="true" on-quiz="true" quiz-id="quiz.id"></th-problem-box>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </th-loading>
+</div>

@@ -1,0 +1,12 @@
+<div class="multiview-bottom box">
+  <div class="edit-box">
+
+    <h3>{{'problem.create.baseCode' | translate}}</h3>
+
+    <th-complete-code problem="problem"></th-complete-code>
+
+    <div class="text-right">
+      <button ng-disabled="!enableConfirm" class="btn btn-green" ng-click="formSubmit(true)" is-loading="loading.form">{{'problem.create.save' | translate}}</button>
+    </div>
+  </div>
+</div>

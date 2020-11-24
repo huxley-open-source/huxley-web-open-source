@@ -1,0 +1,10 @@
+<div class="box multiview-bottom group-users">
+  <th-loading loading="!searched">
+    <div class="group-user-list">
+      <th-group-user-box user="user" ng-repeat="user in userList" is-checked="userSelected" all="searchParams.checkSelectAll" user-removed="userRemoved" update-institution="institution" ng-show="currentUser.atLeastAdminInst(institution)", hide-check-box="true"></th-group-user-box>
+      <th-group-user-box user="user" ng-repeat="user in userList" ng-show="!currentUser.atLeastAdminInst(institution)"></th-group-user-box>
+      <div class="marginNotFoundMsg" ng-if="userList.length == 0">{{'user.resultNotFoundMembers' | translate}}</div>
+    </div>
+  </th-loading>
+</div>
+<div class="pagination-container" ng-if="paginationData.totalItems > paginationData.itemsPerPage && searched"><pagination items-per-page="paginationData.itemsPerPage" total-items="paginationData.totalItems" ng-model="paginationData.currentPage" ng-change="pageChanged()" max-size="paginationData.maxSize" class="pagination-sm" boundary-links="true" direction-links="false" rotate="false" last-text="{{'pagination.last' | translate}}" first-text="{{'pagination.first'| translate}}"></pagination></div>

@@ -1,0 +1,23 @@
+<div class="container content">
+  <div class="box home-box">
+
+    <div class="home-panel">
+      <div class="home-panel-left">
+
+      </div>
+      <div class="home-panel-mid">
+        <div class="home-panel-logo-container"><i class="img-circle icon"><i class="background-img icon img-bigger img-circle img-bigger-white-huxley blue"></i></i></div>
+        <div>
+          <p><span translate>problem.seeOtherLanguage1</span> <span>{{ 'user.languages.' + currentLocale.replace('_','') | translate}}</span>. <span translate>problem.seeOtherLanguage2</span>
+          <ul>
+            <li ng-repeat="lang in availableLanguages">
+              <a ui-sref="problem-show.description({ id: problemId, locale: lang })">{{ 'user.languages.' + lang.replace('_','') | translate}}</a>
+            </li>
+          </ul>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

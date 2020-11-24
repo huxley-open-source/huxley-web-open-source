@@ -1,0 +1,48 @@
+<div class="container content">
+  <div class="box multiview-top">
+    <th-head header-title="'institution.title'"></th-head>
+    <div class="profile-header">
+      <div>
+        <img src="{{institution.logo}}?width=200">
+      </div>
+      <div class="profile-information"><span ng-show="!institution.acronym" class="profile-user-name institution-title">{{institution.name}}</span>
+        <span ng-show="institution.acronym" class="profile-user-name institution-title">{{institution.acronym}} - {{institution.name}}</span></div>
+      <div ng-if="currentUser.atLeastAdminInst(institution)" class="profile-edit-button">
+        <a ui-sref="institution-edit({ id: institution.id })"><i class="icon background-img img-short img-small-pen"></i></a>
+      </div>
+    </div>
+    <div class="th-group-nav-bar">
+      <div class="th-group-tab-header">
+        <ul class="th-nav-tabs">
+          <li ui-sref=".groups" ui-sref-active="active"><a ui-sref=".groups"> {{'institution.groups' | translate }}</a></li>
+          <li ng-class="{'active' : $state.is('institution-show.teachers') || $state.is('institution-show.students') || $state.is('institution-show.teacher-assistants') || $state.is('institution-show.admins-inst') || $state.is('institution-show.add-members') }"><a ui-sref="institution-show.teachers"> {{'institution.members' | translate }}</a></li>
+          <li ng-show="currentUser.atLeastAdminInst(institution)" ui-sref=".pendency" ui-sref-active="active"><a ui-sref=".pendency">{{'pendency.type.4' | translate}}</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="th-tab-pane" ui-sref=".groups" ui-sref-active="active">
+          <!-- submenu -->
+          <ul>
+            <li>&nbsp;</li>
+          </ul>
+        </div>
+        <div class="th-tab-pane" ng-class="{'active' : $state.is('institution-show.teachers') || $state.is('institution-show.students') || $state.is('institution-show.teacher-assistants') || $state.is('institution-show.admins-inst') || $state.is('institution-show.add-members') }">
+          <!-- submenu -->
+          <ul>
+            <li ui-sref=".teachers" ui-sref-active="active"><a ui-sref=".teachers">{{'institution.teacher' | translate}}</a></li>
+            <li ui-sref=".students" ui-sref-active="active"><a ui-sref=".students"> {{'institution.students' | translate}}</a></li>
+            <li ui-sref=".teacher-assistants" ui-sref-active="active"><a ui-sref=".teacher-assistants"> {{'institution.teacherAssistants' | translate}}</a></li>
+            <li ui-sref=".admins-inst" ui-sref-active="active"><a ui-sref=".admins-inst"> {{'institution.adminInst' | translate}}</a></li>
+            <li ng-show="currentUser.atLeastTeacher(institution)" ui-sref=".add-members" ui-sref-active="active"><a ui-sref=".add-members"> {{'institution.invite' | translate}}</a></li>
+          </ul>
+        </div>
+        <div class="th-tab-pane" ui-sref=".pendency" ui-sref-active="active">
+          <ul>
+              <li>&nbsp;</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div ui-view></div>
+</div>

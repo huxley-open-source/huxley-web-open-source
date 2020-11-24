@@ -1,0 +1,14 @@
+<div class="multiview-bottom box">
+  <div class="edit-box">
+
+    <h4 class="black-title">{{ message | translate}}</h4>
+
+    <div ng-change="checkChanges()" text-angular ng-model="problem[key]"></div>
+
+    <th-image-uploader></th-image-uploader>
+
+    <div class="text-right">
+      <button ng-disabled="!enableConfirm" class="btn btn-green" ng-click="formSubmit(true)" is-loading="loading.form">{{'problem.create.save' | translate}}</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,19 @@
+<div class="multiview-bottom box">
+
+  <div style="padding: 11px">
+
+    <div style="display: flex; justify-content: space-between; padding: 11px; background-color: #e7f1f6">
+      <div class="user-box-img" style="margin-right: 11px"><img ng-src="{{submission.user.avatar}}?width=40&height=40">
+        <strong style="margin-left: 11px"><a ui-sref="profile-show.problems({ id: submission.user.id })">{{submission.user.name}}</a></strong></div>
+      <div style="display: flex; align-items: center">
+        <div style="margin-right: 11px"><a ui-sref="problem-show.description({ id: problem.id })">{{problem.name}}</a></div> <div class="grade _{{problem.nd}}">{{problem.nd}}</div>
+      </div>
+    </div>
+
+
+    <th-code-view submission="submission" info="true" submission-list="submissionList" problem="problem"></th-code-view>
+
+
+
+  </div>
+</div>

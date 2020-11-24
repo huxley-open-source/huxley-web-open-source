@@ -1,0 +1,216 @@
+// SELECTION BOX são usados no filtro de problemas: https://drive.google.com/drive/u/0/#folders/0B311rTSGOxuYeEFjYVc4TWlMQjQ
+.no-select() {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.selection-box {
+  color: black;
+  border-radius: 5px;
+  padding: 2px;
+  margin: 4px;
+  .no-select;
+}
+
+.selection-box-selected {
+  background-color: @blue-darker;
+  color:white;
+  &:hover {
+    background-color: @blue-light !important;
+  }
+}
+
+.selection-box-excluded {
+  background-color: @red;
+  color:white;
+}
+
+.selection-box:hover {
+  color:black;
+  background-color: @blue-lighter;
+  cursor: pointer;
+}
+// FIM do selection box
+
+// Box de fundo branco com borda azul, utilizado também no filtro de problema.
+.box-white{
+  .display-flex();
+  background-color: white;
+  border: 1px solid @blue;
+  width: 100%;
+  border-radius: 2px;
+  padding: 4px;
+}
+
+
+.select-box {
+  max-height: 60px;
+  overflow-y: hidden;
+  position: relative;
+   li{
+     cursor: pointer;
+     width: 100%;
+   }
+}
+
+.ps-active-y {
+  > div {
+    width: 100%;
+  }
+  &.ps-scrollbar-y-rail {
+    width: 4%;
+  }
+}
+
+.th-select-box {
+  .grade {
+    min-width: 40px;
+    min-height: 40px;
+  }
+  > div {
+    position: relative;
+  }
+  .th-select-box-toggle {
+    .display-flex();
+    .align-items-flex(stretch);
+    .btn {
+      width: 50px;
+      margin-left: -1px;
+      border-bottom-left-radius: 0;
+      border-top-left-radius: 0;
+      &.btn.btn-blue:focus, &.btn.btn-blue:active, &.btn.btn-blue:hover {
+        color: #ffffff;
+        background-color: #05adef;
+        outline: 0;
+      }
+      i {
+        vertical-align: middle;
+      }
+    }
+  }
+  a {
+    width: 100%;
+    display: inline-block;
+    color: @default-color;
+    cursor: pointer;
+    &.doubt-link-size {
+      width: 11px;
+    }
+    &:hover {
+      text-decoration: none;
+    }
+  }
+  .ps-container {
+    max-height: 150px;
+    overflow-y: hidden;
+    position: relative;
+    overflow-x: hidden;
+  }
+  .ps-scrollbar-x-rail {
+    display: none !important;
+  }
+  .form-control {
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+    padding: 0;
+    padding-left: 6px;
+    line-height: 32px;
+    height: auto;
+  }
+  .col-sm-10 {
+    .dropdown-menu {
+      margin: 0 15px;
+    }
+  }
+  .dropdown-menu {
+    right: 0px;
+    margin-top: -1px;
+    border: 1px solid #cccccc;
+    padding: 0;
+    li {
+      padding: 5px;
+      &:hover, &.highlight {
+        background-color: @gray-lighter;
+      }
+    }
+  }
+  .form-control.th-input-complete {
+    .display-flex();
+    .align-items-flex(center);
+    .flex-wrap(wrap);
+    height: auto;
+    padding: 6px 12px 6px 7px;
+    &.fixed-size {
+      height: 34px;
+      overflow-y: hidden;
+    }
+    > div {
+      display: inline-block;
+      &:last-child {
+        .flex-grow(1);
+      }
+    }
+    input {
+      border: 0;
+      width: 100%;
+      outline: none;
+      padding-left: 5px;
+      height: 37px;
+      &:focus {
+        border: 0 !important;
+        -webkit-box-shadow: none !important;
+        box-shadow: none !important;
+      }
+    }
+    .th-input-selected {
+      border: 1px solid @gray-light;
+      color: @gray-light;
+      padding: 1px 2px;
+      border-radius: 3px;
+      list-style: none;
+      display: inline-block;
+      font-size: 13px;
+      margin: 0 2px;
+      &.invalid {
+        border-color: @orange;
+        color: @red;
+        a {
+          color: @default-color;
+        }
+      }
+      a {
+        color: @blue-light;
+        font-size: 12px;
+        display: inline;
+      }
+    }
+  }
+  .help-block {
+    padding-right: 0;
+  }
+}
+.th-select-striped {
+  .th-select-box {
+    .dropdown-menu {
+      >div > div > li:not(lastChild) {
+        border-bottom: 1px solid #cccccc;
+      }
+    }
+  }
+}
+@media (max-width: @screen-sm) {
+  .select-box {
+    width: 100%;
+    max-width: 100%;
+    max-height: 100px;
+    > div {
+      .display-flex();
+      .flex-wrap(wrap);
+      width: 94%;
+    }
+  }
+}

@@ -1,0 +1,57 @@
+<div class="markdown-bar btn-toolbar">
+  <div class="btn-group">
+    <button type="button" class="btn btn-default" markdown-heading level="1"><span class="fa fa-header"></span>1
+    </button>
+    <button type="button" class="btn btn-default" markdown-heading level="2"><span class="fa fa-header"></span>2
+    </button>
+    <button type="button" class="btn btn-default" markdown-heading level="3"><span class="fa fa-header"></span>3
+    </button>
+  </div>
+  <div class="btn-group">
+    <button type="button" class="btn btn-default" markdown-style modifier="**" register-action="bold"><span
+      class="fa fa-bold"></span></button>
+    <button type="button" class="btn btn-default" markdown-style modifier="*" register-action="italic"><span
+      class="fa fa-italic"></span></button>
+    <button type="button" class="btn btn-default" markdown-code-block language="{{selectedLanguage}}"><span
+      class="fa fa-code"></span></button>
+  </div>
+  <div class="btn-group">
+    <button type="button" class="btn btn-default" markdown-list prefix=">"><span class="fa fa-quote-left"></span>
+    </button>
+    <button type="button" class="btn btn-default" markdown-list prefix="-"><span class="fa fa-list-ul"></span></button>
+    <button type="button" class="btn btn-default" markdown-list prefix="#"><span class="fa fa-list-ol"></span></button>
+  </div>
+  <div class="btn-group pull-right">
+    <button type="button" class="btn btn-default" ng-click="togglePreview()">
+      <span class="fa fa-eye"></span> {{showPreview? 'esconder': 'visualizar'}}
+    </button>
+  </div>
+</div>
+
+<div class="markdown-row" ng-class="{'show-preview': showPreview}">
+  <div class="markdown-editor form-control">
+    <div ui-ace="{useWrapMode:true, showGutter: false, mode:'markdown', onLoad: onEditorLoad}"
+         ng-model="code"
+         ng-model-options="{updateOn:'default', debounce: { default: 200 }}"
+         ng-change="updateProblem()"
+         class="codeeditor"></div>
+  </div>
+  <div class="markdown-editor-preview" ng-if="showPreview">
+    <markdown-preview code="problem.stem.locales[preferredLanguage]"
+                      snippets="problem.snippets"
+                      language="selectedLanguage"></markdown-preview>
+
+    <div class="markdown-editor-choice" ng-repeat="choice in problem.choices">
+      <div class="markdown-editor-checkbox">
+        <input type="checkbox" ng-model="choice.correct" ng-change="formatContent()">
+      </div>
+      <div class="markdown-editor-choice-content">
+        <markdown-preview code="choice.locales[preferredLanguage]"
+                          snippets="problem.snippets"
+                          language="selectedLanguage"></markdown-preview>
+      </div>
+    </div>
+  </div>
+</div>
+
+<pre ng-if="debug"><strong>DEBUG: problem=</strong>{{problem|json}}</pre>

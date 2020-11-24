@@ -1,0 +1,43 @@
+<div class="modal-header">
+  <h3 class="modal-title">{{'quiz.restrictions.function.add' | translate}}</h3>
+  <button type=button" class="close" aria-label="Close" ng-click="close()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="create-form">
+    <form>
+      <div class="row">
+
+
+          <div class="form-group">
+            <label class="col-sm-3 control-label" translate>quiz.restrictions.function.name</label>
+            <div class="col-sm-9"><input class="form-control" type="text" ng-model="func.nome" required="true"/></div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label" translate>quiz.restrictions.function.parameters</label>
+            <div class="col-sm-9"><input class="form-control" type="number" min="0" ng-model="func.qtdParametros"/></div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-3 control-label" translate>quiz.restrictions.function.must_be</label>
+            <div class="col-sm-3"><label><input ng-disabled="func.type === 'call'" type="checkbox" ng-model="func.retorno"/> {{'quiz.restrictions.function.return' | translate}}</label></div>
+            <div class="col-sm-3"><label><input ng-disabled="func.type === 'call'" type="checkbox" ng-model="func.recursiva"/> {{'quiz.restrictions.function.recursive' | translate}}</label></div>
+          </div>
+
+
+          <!--<div class="form-group">-->
+            <!--<label class="col-sm-3 control-label" translate>quiz.restrictions.function.must_be</label>-->
+            <!--<div class="col-sm-3"><label><input type="radio" name="functionType" ng-model="func.type" value="exist"/> {{'quiz.restrictions.function.exist' | translate}}</label></div>-->
+            <!--<div class="col-sm-3"><label><input type="radio" name="functionType" ng-model="func.type" value="call"/> {{'quiz.restrictions.function.call' | translate}}</label></div>-->
+          <!--</div>-->
+      </div>
+
+    </form>
+  </div>
+</div>
+<div class="modal-footer">
+  <span ng-if="error">Erro inesperado ao salvar restrições</span>
+  <button type="button" class="btn btn-green" ng-click="save()" ng-disabled="!func.nome || func.nome.trim() === ''">{{'quiz.restrictions.function.add' | translate}}</button>
+  <button type="button" class="btn btn-blue small-margin-right" ng-click="close()">{{'quiz.similarity.drop' | translate}}</button>
+</div>

@@ -1,0 +1,15 @@
+<div class="th-notification-container">
+  <div class="th-notification-image-container">
+    <i class="background-img img-notification-size img-notification-quiz icon"></i>
+  </div>
+  <div class="th-notification-msg-container">
+    <div><span class="notification-name"><a href="/quiz/{{quiz.qid}}">{{quiz.title}}</a></span></div>
+    <div>Encerra em {{quiz.enddate | date:'dd/MM/yyyy'}}</div>
+    </div>
+  <div class="th-notification-result-container">
+    <div class="quiz-performance-container {{class}}">
+      <div><span class="quiz-performance-total">{{percentage}}%</span></div>
+
+    </div>
+  </div>
+</div>

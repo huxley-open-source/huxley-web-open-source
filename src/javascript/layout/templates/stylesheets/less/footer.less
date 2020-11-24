@@ -1,0 +1,42 @@
+footer {
+  color: white;
+  font-size: .825em;
+  clear: both;
+  position: relative;
+  background: black;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  .footer {
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+    height: 38px;
+    .logo {
+      display: table-cell;
+      vertical-align: middle;
+      & a {
+        background: url('/images/logo-white.png') no-repeat;
+        width: 134px;
+        height: 32px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-indent: -9999px;
+        display: block;
+      }
+    }
+    .copyright {
+      display: table-cell;
+      vertical-align: middle;
+      text-align: center;
+    }
+    .privacy {
+      display: table-cell;
+      vertical-align: middle;
+      text-align: right;
+      a {
+        color: white;
+      }
+    }
+  }
+}

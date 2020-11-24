@@ -1,0 +1,151 @@
+<div class="container content">
+  <div class="box">
+    <div class="header">
+      <h3 translate>{{'problem.title'}}</h3>
+      <button ng-if="currentUser.atLeastTeacherAssistant()" class="btn btn-blue" ui-sref="problem-create" translate>problem.create.title</button>
+    </div>
+
+    <div class="alert alert-warning alert-dismissible" role="alert" ng-if="statusCount.pending > 0" style="margin: -8px 11px 20px 11px; font-size: 12px;">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <strong>{{'problem.list.pendingProblems' | translate: {count:statusCount.pending} }}</strong>
+      <p>{{'problem.list.availablePending' | translate}}
+        <a href="" ng-click="filterMinePending()" class="alert-link">{{'problem.list.clickHere' | translate}}</a>
+        {{'problem.list.seeTheProblems' | translate}}
+      </p>
+    </div>
+
+    <div class="problems-list row">
+
+      <div class="col-sm-3 filters create-form">
+        <p><strong>{{'problem.list.filters' | translate}}</strong></p>
+
+        <hr/>
+
+        <input type="text" ng-model="searchParams.q" id="query" class="form-control" ng-keyup="searchByName()" placeholder="{{'problem.search' | translate}}">
+
+        <hr/>
+
+        <p>{{'problem.list.listOnly' | translate}}</p>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" ng-model="searchParams.excludeCorrect" ng-change="filterChange()"> {{'problem.list.dontSolved' | translate}}
+          </label>
+        </div>
+
+        <div class="checkbox" ng-if="currentUser.atLeastTeacherAssistant()" >
+          <label>
+            <input type="checkbox" ng-model="suggestedOnly" ng-click="toggleSuggestedFilter()" > {{'problem.list.createdByYou' | translate}}
+          </label>
+        </div>
+
+        <div class="checkbox" ng-if="currentUser.atLeastTeacherAssistant()" >
+          <label>
+            <input type="checkbox" ng-model="searchParams.quizOnly" ng-change="filterChange()"> {{'problem.list.quizProblem' | translate}}
+          </label>
+        </div>
+
+        <div ng-if="currentUser.atLeastTeacherAssistant()">
+
+          <hr/>
+
+          <p>{{'problem.list.status' | translate}}</p>
+          <select class="form-control" style="border: 1px solid #05adef;" ng-model="searchParams.status" ng-change="doSearch()">-->
+            <option value="">{{'problem.list.allStatus' | translate}}</option>
+            <option value="ACCEPTED">{{'problem.list.accepted' | translate}}</option>
+            <option value="PENDING">{{'problem.list.pending' | translate}}</option>
+            <option value="REJECTED">{{'problem.list.rejected' | translate}}</option>
+          </select>
+        </div>
+
+        <hr/>
+
+        <p>{{'problem.list.topics' | translate}}</p>
+        <selectize config="topicSelectConfig" options="topicOptions" ng-model="selectedTopics" name="topics"  ng-change="advancedSearch()"></selectize>
+
+        <hr/>
+
+        <p>{{'problem.list.difficultyLevel' | translate}}:</p>
+        <select class="form-control" style="border: 1px solid #05adef;"
+          name="ndSelect" id="ndSelect" ng-model="searchParams.nd" ng-change="changeNd()">
+          <option value="">Todos</option>
+          <option value="1">{{'problem.nd.1' | translate}}</option>
+          <option value="2">{{'problem.nd.2' | translate}}</option>
+          <option value="3">{{'problem.nd.3' | translate}}</option>
+          <option value="4">{{'problem.nd.4' | translate}}</option>
+          <option value="5">{{'problem.nd.5' | translate}}</option>
+        </select>
+
+        <hr/>
+
+        <p>{{'problem.locale' | translate}}:</p>
+        <select class="form-control" style="border: 1px solid #05adef;" name="repeatSelect" id="repeatSelect" ng-model="selectedLocale" ng-change="advancedSearch()">
+          <option ng-repeat="locale in localeOptions" value="{{locale.value}}">{{locale.text | translate}}</option>
+        </select>
+
+        <hr/>
+
+      </div>
+
+      <div class="col-sm-9">
+
+        <div class="th-group-nav-bar">
+          <div class="th-group-tab-header">
+            <ul class="th-nav-tabs">
+              <li ng-class="{ 'active': searchParams.problemType === 'ALGORITHM' }"><a class="algorithm-size" href="" ng-click="changeProblemType('ALGORITHM')">{{'problem.list.algorithm' | translate}}</a></li>
+              <li ng-class="{ 'active': searchParams.problemType === 'CHOICES' }"><a href="" ng-click="changeProblemType('CHOICES')">{{'problem.list.multipleChoice' | translate}}</a></li>
+              <li ng-class="{ 'active': searchParams.problemType === 'FILL_THE_CODE' }"><a href="" ng-click="changeProblemType('FILL_THE_CODE')">{{'problem.list.fillTheCode' | translate}}</a></li>
+            </ul>
+            <div style="margin-top: -8px; border-top: 5px solid #05adef"></div>
+          </div>
+        </div>
+
+        <th-loading loading="listLoading">
+          <table class="table problem-table">
+            <tbody>
+            <tr ng-repeat="problem in problemList">
+              <td class="problem-list-td">
+                <th-problem-box problem="problem" show-status="true" show-rank="true" show-topics="true" locale="selectedLocale"></th-problem-box>
+              </td>
+            </tr>
+            <tr ng-if="problemList.length == 0 && searched && !changedParams">
+              <td>
+                <div class="alert alert-info">
+                  {{'problem.resultNotFound' | translate}}
+                  <span ng-repeat="(key, value) in problemsCount.languages">
+                    <span ng-repeat="(keyy,valuee) in value" ng-if="searchParams.problemType === keyy">
+                      {{'problem.otherLanguageCount' | translate:{count: valuee} }} {{'user.languages.' + key | translate}}
+                    </span>
+                  </span>
+                </div>
+              </td>
+            </tr>
+            <tr ng-if="problemList.length == 0 && changedParams">
+              <td>
+                <div class="alert alert-info">
+                  {{'problem.notFound' | translate}}
+                </div>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </th-loading>
+      </div>
+
+
+    </div>
+    <div class="pagination-container" ng-show="paginationData.totalItems > paginationData.max && searched && listLoading === false">
+      <pagination items-per-page="paginationData.max"
+                  total-items="paginationData.totalItems"
+                  ng-model="paginationData.currentPage"
+                  ng-change="doSearch()"
+                  max-size="paginationData.maxSize"
+                  class="pagination-sm"
+                  boundary-links="true"
+                  direction-links="false"
+                  rotate="false"
+                  last-text="{{'pagination.last' | translate}}"
+                  first-text="{{'pagination.first'| translate}}">
+      </pagination>
+    </div>
+  </div>
+</div>

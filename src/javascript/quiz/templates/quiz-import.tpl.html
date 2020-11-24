@@ -1,0 +1,225 @@
+<div class="container content">
+  <div class="box">
+    <th-head header-title="'quiz.quizImport'"></th-head>
+    <div th-alert class="stats-alert">
+      {{'quiz.import.help' | translate}}
+    </div>
+    <form>
+      <div class="search-container">
+        <div>
+          <div class="col-lg-5">
+            <div class="input-search-container">
+              <i class="img-large img-large-search img-circle background-color background-img"></i>
+              <input type="text" ng-model="query" id="query" class="form-control search-input" ng-keyup="filterGroups()" placeholder="{{'group.search' | translate }}"/>
+              <div class="search-button-container">
+                <button class="btn btn-blue" ng-click="searchByName()" is-loading="loading">{{'search' | translate}}</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+
+
+    <form name="exportQuizzes" novalidate>
+      <div class="result-align black-title">
+        {{'quiz.import.chooseQuiz' | translate}}:
+        <div class="show-questionnaire ">
+
+
+          <div class="questionnaire-table-search-results">
+            <div>
+              <span>{{'quiz.import.availableGroups' | translate}}:</span>
+            </div>
+
+            <ul class="problem-list ">
+              <th-loading loading="loadingGroup">
+                <perfect-scrollbar class="quiz-scrollbar">
+                  <li class=""
+                      ng-repeat="group in filteredGroups">
+
+                    <div class="problem quiz-problem-list font-bold pointer-cursor" ng-click="expandGroup(group)">
+                      <div class="" ng-if="groupExpand !== group.id">
+                        <i class="glyphicon glyphicon-chevron-right "></i>
+                      </div>
+                      <div class="" ng-if="groupExpand === group.id">
+                        <i class="glyphicon glyphicon-chevron-down"></i>
+                      </div>
+
+                      <div class="black-title">
+                        {{group.name}}
+                      </div>
+
+
+                    </div>
+                    <div ng-if="groupExpand === group.id">
+                      <th-loading loading="loadingQuizzes">
+                        <ul class="problem-list quiz-export-group-list">
+                          <li ng-repeat="quiz in group.quests | orderBy:'startDate'" class="problem quiz-problem-list ">
+                            <div>
+                              {{quiz.title}} <br>
+                              <span class="start-date">
+                                Data Inicial: {{quiz.startDate | date:'dd/MM/yyyy HH:mm'}}
+                              </span>
+                            </div>
+                            <div class="quiz-problem-choose" ng-if="selectedQuizzesId[quiz.id] !== true">
+                              <button ng-click="addQuiz(quiz)" class="btn btn-default btn-transparent">
+                                <i class="choose-problem background-img img-circle circle-size icon background-color"></i>
+                              </button>
+                            </div>
+                            <div class="quiz-problem-choose remove-button" ng-if="selectedQuizzesId[quiz.id] === true">
+                              <button ng-click="removeQuiz(quiz)" type="button" class="btn btn-default btn-transparent">
+                                  <span class="remove-problem-button img-circle circle-size icon remove-button-align">×</span>
+                              </button>
+                            </div>
+                          </li>
+                          <li ng-if="group.quests.length === 0" translate>quiz.import.noGroups</li>
+                        </ul>
+                      </th-loading>
+                    </div>
+
+                  </li>
+
+                  <li class="text-center" ng-show="isLoading">
+                    <i class="img-medium img-medium-submission-waiting background-img icon img-bottom"></i>
+                  </li>
+                </perfect-scrollbar>
+              </th-loading>
+            </ul>
+
+            <div class="pagination-container problem-pagination" ng-show="true">
+              <pagination items-per-page="pagination.max"
+                          total-items="pagination.total"
+                          ng-model="pagination.page"
+                          ng-change="updateGroupsPages(groups)"
+                          max-size="5"
+                          class="pagination-sm"
+                          last-text="{{'pagination.last' | translate}}"
+                          first-text="{{'pagination.first'| translate}}">
+              </pagination>
+            </div>
+
+          </div>
+          <div class="table-divisor"></div>
+          <div class="questionnaire-table-search-results">
+            <div>
+              <span>{{'quiz.import.chosen' | translate}}:</span>
+            </div>
+            <div>
+              <ul class="quiz-problem-chosen problem-list">
+                <perfect-scrollbar class="quiz-scrollbar">
+                  <li class="problem" ng-repeat="quiz in selectedQuizzes track by $index | orderBy:'startDate' " ng-if="quiz !== undefined">
+                    <div>
+                      {{quiz.title}} <br>
+                      <span class="start-date">
+                        {{'quiz.create.startDate' | translate}}: {{quiz.startDate | date:'dd/MM/yyyy HH:mm'}}
+                      </span>
+                    </div>
+                    <div class="remove-button">
+                      <button ng-click="removeQuiz(quiz)" type="button" class="btn btn-default btn-transparent remove-problem-button">×</button>
+                    </div>
+                  </li>
+                </perfect-scrollbar>
+              </ul>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="group-select">
+        <div ng-class="{'has-error': exportQuizzes.groups.$dirty && !exportQuizzes.groups.$valid}">
+          <div>
+            <span>{{'quiz.import.chooseGroups' | translate}}:</span>
+          </div>
+          <selectize config='myConfig' options='myOptions' ng-model="selectGroups" name="groups" ng-required="true"></selectize>
+          <span class="help-block" ng-if="exportQuizzes.groups.$dirty && exportQuizzes.groups.$error.required" translate>
+            quiz.create.error.required
+          </span>
+        </div>
+      </div>
+
+      <div class="export-button-and-date-align">
+        <div class="quiz-choose-date">
+          <th-datepicker ng-model="quiz.endDate" date="startDate" label="'Data inicial'" element-id="'quizEndDate'" is-required="true"></th-datepicker>
+        </div>
+        <div class="form-group" ng-class="{'has-error': error}">
+          <button type="submit" class="btn btn-green" ng-click="formSubmit()">
+            {{'quiz.quizImport' | translate}}
+          </button>
+
+          <span class="help-block" ng-if="error">
+            {{'quiz.import.choose' | translate}}
+          </span>
+        </div>
+      </div>
+    </form>
+
+    <form action="" ng-if="showExportedQuizzes">
+
+
+
+      <div class="group-select-box exported-quizzes">
+        <div>
+          <span translate>quiz.import.confirm</span>:
+        </div>
+        <table class="table">
+          <thead>
+          <tr>
+            <th class="profile-quizes-left" translate>
+              quiz.import.quizTitle
+            </th>
+            <th class="profile-quizes-center">
+              Data Inicial
+            </th>
+
+            <th class="profile-quizes-right">
+              Data Final
+            </th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr ng-repeat="quiz in clonedQuizzes track by $index">
+            <th class="profile-quizes-left profile-quizes-border-th profile-capitalize">{{quiz.title}} </th>
+            <th class="profile-quizes-center profile-quizes-border-th">
+              {{quiz.startDate | date:'dd/MM/yyyy HH:mm'}}
+              <button type="button" ng-click="open(quiz, $index)" class="btn btn-default btn-transparent">
+                <i class="img-short img-small-pen icon background-img"></i>
+              </button>
+            </th>
+            <th class="profile-quizes-right profile-quizes-border-th">{{quiz.endDate | date:'dd/MM/yyyy HH:mm'}}</th>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="quiz-import-confirm-button-align form-group">
+        <div class="form-group" ng-class="{'has-error': responseError}">
+          <button type="button" ng-click="importQuizzes()" class="btn btn-green" ng-click="formSubmit()">
+            Confirmar
+          </button>
+        <span class="help-block" ng-if="responseError">
+            Erro inesperado no servidor.
+          </span>
+        </div>
+      </div>
+    </form>
+
+  </div>
+</div>
+
+<script type="text/ng-template" id="dateModal.html">
+  <div class="modal-header">
+    <h3 class="modal-title">Alterar data inicial</h3>
+    <button type="button" class="close" aria-label="Close" ng-click="close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form action="">
+      <th-datepicker ng-model="quiz.startDate" date="quiz.startDate" label="'group.startDate' | translate" element-id="'quizEndDate'" is-required="true" with-time="true" hours="quiz.hours" minutes="quiz.minutes"></th-datepicker>
+      <div class="modal-button-align">
+        <button class="btn btn-default btn-green" type="button" ng-click="confirm()">Confirmar</button>
+      </div>
+    </form>
+  </div>
+</script>

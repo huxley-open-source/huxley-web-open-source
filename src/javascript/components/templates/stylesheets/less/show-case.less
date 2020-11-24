@@ -1,0 +1,57 @@
+.show-case {
+  border: 1px solid @blue-light;
+  margin: 11px 1px;
+
+  .show-case-header {
+    .display-flex();
+    .align-items-flex(flex-end);
+    background-color: @blue-lighter;
+    color: @blue-darker;
+    height: 40px;
+    padding: 0 15px;
+    border-bottom: 1px solid @blue-light;
+    font-size: @font-small;
+    > div {
+      .flex-grow(1);
+      a {
+        text-decoration: none;
+        color: @blue;
+        text-transform: uppercase;
+      }
+    }
+  }
+  .show-case-body {
+    padding: 0 15px;
+    max-height: 500px;
+    overflow: auto;
+
+    .evaluation-output {
+      margin-left: -15px;
+    }
+    &.scrollable {
+      padding-right: 0px;
+      > div > div:first-child {
+        padding-right: 15px;
+      }
+    }
+    > .ps-container {
+      overflow-y: hidden;
+      position: relative;
+    }
+    > .table, > .ps-container > div > table {
+      margin-bottom: 0;
+      tr:first-child {
+        td {
+          border-top: none !important;
+        }
+      }
+      td:last-child, th:first-child {
+        padding-right: 0 !important;
+      }
+      td:first-child, th:first-child {
+        padding-left: 0 !important;
+      }
+    }
+
+  }
+}

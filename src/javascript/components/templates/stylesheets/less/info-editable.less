@@ -1,0 +1,86 @@
+.info-editable-container {
+  .info-edit-label {
+    margin-left: -4px;
+    display: inline-block;
+    position: relative;
+    > h5 {
+      display: inline-block;
+      margin: 0px;
+      font-weight: bold;
+      color: @default-color;
+    }
+  }
+  .info-edit-container {
+    margin-left: -28px;
+    border: 1px solid transparent;
+    .display-flex();
+    .align-items-flex(center);
+  }
+  &:not(.open) {
+    .info-edit-container {
+     &:hover {
+        .info-edit-label {
+          background-color: @blue-lighter;
+        }
+        .info-edit-img {
+          .img-small-edit-highlight {
+            display: inline-block !important;
+          }
+        }
+      }
+    }
+  }
+  .info-edit-input {
+    border: 1px transparent solid;
+    outline: none;
+    &.editable {
+      border: 1px @blue solid !important;
+    }
+  }
+  &.open {
+    .info-edit-container {
+      background-color: @blue;
+      border: 1px solid @blue;
+    }
+    .info-edit-label {
+      z-index: 1001;
+      color: @white;
+    }
+    .info-edit-img {
+      > i {
+        background-position: -10px -107px;
+      }
+      .img-small-edit-highlight {
+        display: inline-block !important;
+      }
+    }
+  }
+
+  .info-edit-img {
+    width: 28px;
+    text-align: center;
+    cursor: pointer;
+    .align-self-flex(stretch);
+    .img-small-edit-highlight {
+      display: none;
+    }
+  }
+
+  .info-edit-img > .img-small-edit-highlight {
+    vertical-align: middle;
+  }
+
+  .info-edit-img:hover {
+    background-color: @blue !important;
+  }
+  &.edit-inline {
+    .display-flex();
+    .align-items-flex(center);
+    .info-edit-container {
+      .info-edit-label {
+        padding-right: 5px;
+      }
+    }
+  }
+
+}

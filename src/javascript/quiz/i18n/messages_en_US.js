@@ -1,0 +1,170 @@
+/*global module*/
+
+module.exports = {
+    'quiz': {
+        'student': 'Student',
+        'quizImport' : 'Import Assignments',
+        'codeCompare': 'Compare submissions',
+        'restrictions': {
+            'title': 'Code restrictions',
+            'function': {
+                'add': 'Add function',
+                'title': 'Funções',
+                'name': 'Name',
+                'return': 'Return',
+                'recursive': 'Recursive',
+                'parameters': 'Parameters',
+                'none': 'No function registered',
+                'call': 'Function call',
+                'must_be': 'Must have/be',
+                'exist': 'Exist',
+                'call': 'Be called',
+                'list': 'Functions'
+            },
+            'ifs': 'Conditionals',
+            'fors': 'Loops (for)',
+            'whiles': 'Loops (while)',
+            'list': 'List',
+            'dict': 'Dictionary',
+            'tuple': 'Tuple',
+            'empty': 'Prevent empty blocks',
+            'penalty': 'Penalty'
+        },
+        'problemRestrictions': 'Code restrictions',
+        'clone': {
+            'title': 'Clone assignment',
+            'chooseGroup': 'Class',
+            'error': {
+                'groupOpenNotFound': 'You don\'t have classes'
+            }
+
+        },
+        'import': {
+            'title': 'Import',
+            'choose': 'Choose an assignment to import.',
+            'chooseQuiz': 'Choose which assignments you wish to import',
+            'availableGroups': 'Available classes',
+            'chooseGroups': 'Select the classes to import the assignments',
+            'help': 'The assignments duration and interval between them will be the same. The imported assignments will be added by the order of their start date.',
+            'chosen': 'Chosen assignments',
+            'noGroups': 'This class have no assignments',
+            'confirm': 'Assignments that will be imported',
+            'quizTitle': 'Assignment title'
+        },
+        'partial': 'Partial score assignment',
+        'closed': 'Closed',
+        'confirmSimilarity': 'Confirm',
+        'create': 'Create assignment',
+        'edit': 'Edit',
+        'end': 'Ens in: {{end}}',
+        'endSimple' : 'End',
+        'info': '{{total}} quetionnaires. {{open}} open and {{close}} closed',
+        'list': 'List',
+        'suggestCreate': 'Still don\'t have assignment registered?',
+        'suggestCreate2': 'Wish to create an assignment?',
+        'start': 'Start in: {{start}}',
+        'title': 'Assignments',
+        'singleTitle': 'Assignment',
+        'myQuizzes': 'MY ASSIGNMENTS',
+        'resultNotFound': 'No assignment found.',
+        'startSimple' : 'Start',
+        'save': 'Save',
+        'explanation': {
+            'emptyProblemList': 'This assignment does not have a problem list so it will not be available to the students',
+            'questClosed': 'This assignment will only be visible to the students from the start date',
+            'questOpen': 'Assignment visible to the students'
+        },
+        'score': 'Score',
+        'problemList' : 'Problems list',
+        'submissionList' : 'Submissions list',
+        'editProblems' : 'Edit',
+        'quizOnly': 'Quiz only problems',
+        'presentOnlyHelp': 'Attending students are those who viewed the assignment page on its duration period',
+        'create': {
+            'tab': 'New',
+            'availableProblems': 'Problems available following the search params',
+            'chosenProblems': 'Chosen problems:',
+            'totalPoints': 'Assignment total score:',
+            'assignPoints': 'Score:',
+            'title': 'Title',
+            'titlePlaceholder': 'Create here a title to your assignment',
+            'startDate': 'Start Date:',
+            'datePlaceholder': 'DD/MM/YY',
+            'endDate': 'End Date:',
+            'description': 'Description:',
+            'descriptionPlaceholder': 'Class description in maximum 112 characters',
+            'next': 'Next Step >>',
+            'error': {
+                'titleRequired': 'The assignment title can\'t be empty',
+                'required': 'This field is required'
+            },
+            'alert1': 'Add problems to your assignment. Start the problem search on our database.',
+            'alert2': 'Add a problem to start...',
+            'saved': 'Changes saved successfully',
+            'saving': 'Saving...'
+        },
+        'presentOnly': 'Only attending students',
+        'lists': {
+            'searchQuiz': 'SEARCH ASSIGNMENT',
+            'quizTitle': 'Title',
+            'quizScore': 'Score',
+            'quizTime': 'Deadline',
+            'start': 'Start',
+            'started': 'Started in',
+            'end': 'Ends ',
+            'ended': 'Ended '
+        },
+        'advancedSearch': {
+            'nameLabel': 'Filber by name:',
+            'namePlaceholder': 'Type the assignment name here...',
+            'dateLabel': 'Filter by end date:',
+            'start': 'From:',
+            'end': 'To:'
+        },
+        'scores': 'Scores',
+        'reviews' : 'Reviews',
+        'reviewList': 'List',
+        'reviewUser': 'Visualize',
+        'numberOfProblems' : 'This assignment have {{number}} problems.',
+        'studentsSolved': 'Indicator of how many students in this class solved the problem',
+        'similarity' : {
+            'suspect' : 'Suspect student',
+            'firstToSubmit' : 'First to submit',
+            'view' : 'VISUALIZE SIMILARITY',
+            'hide' : 'HIDE SIMILARITY',
+            'drop' : "Cancel",
+            'at': 'at',
+            'confirmed': 'CONFIRMED BY THE TEACHER',
+            'discarded': 'DISCARDED BY THE TEACHER',
+            'waiting': 'WAITING',
+            'similarity':'Similarity',
+            'confirmSimilarity': 'Confirm similarity?',
+            'notFound': 'No similarity found'
+        },
+        'review': {
+            'resetScore': 'Reset Score',
+            'score': 'Score',
+            'stats': 'Stats',
+            'view': 'VISUALIZE SUBMISSIONS',
+            'codeTry': 'Attempt',
+            'exportCode': 'Export Code',
+            'send': 'send'
+        },
+        'greater' : 'Got right more than 70%',
+        'smaller' : 'Got right less than 70%',
+        'notCorrect' : 'Wrong submissions',
+        'correct': 'Correct submissions',
+        'submissionsCount' : 'Total submissions',
+        'submissionsAvgPerDay' : 'Average submissions per day',
+        'studentsTried' : 'Tried to solve',
+        'studentsNotTried' : 'Didn\'t tried to solve',
+        'gradeThreshold' : 'Score above',
+        'scoreChanged' : 'Score changed by the teacher',
+        'restrictionPenalty': 'Penalty applied for restriction violation',
+        'quizSaved': 'Assignment successfully saved',
+        'quizStatsMsg' : 'The following graphs shown stats are based on the submissions sent while the assignment was active',
+        'export' : 'Export(xls)',
+        'searchByGrades': 'Order by score'
+
+    }
+};

@@ -1,0 +1,66 @@
+/*global module*/
+
+module.exports = {
+    'chat': {
+        'title': 'Inbox',
+        'select': {
+            'label': 'List',
+            'all': 'All',
+            'teacher': 'Teacher',
+            'student': 'Student',
+            'group': 'Class'
+        },
+        'noMsg' : ' You still don\' have messages.',
+        'send' : 'Send',
+        'sending': 'Sending message...',
+
+        'type': {
+            'type': 'Type',
+            'PROBLEM_QUESTION': 'Doubt',
+            'PROBLEM_BAD_NAME': 'Bad name',
+            'BAD_DESCRIPTION': 'Bad description',
+            'WRONG_TOPIC': 'Wrong topic',
+            'BAD_TEST_CASE': 'Wrong test case',
+            'MISSING_TEST_CASE': 'Missing test case',
+            'DIRECT_MESSAGE': 'Direct message'
+        },
+        'allMessages': 'All Messages',
+        'unresolved': 'Unresolved',
+        'sent': 'Sent',
+        'groups': 'Classes',
+        'problems': 'Problems',
+        'users': 'Users',
+        'noMessages': 'No messages in your inbox',
+        'messages': 'Messages',
+        'last': 'Last',
+        'fastAnswer': 'Answer received',
+        'seeChat': 'See chat',
+        'group': 'Classe',
+        'problem': 'Problem',
+        'recipient': 'Recipient',
+        'author': 'Author',
+        'members': 'Members',
+        'submissions': 'Submissions',
+        'noSubmission': 'No Submission',
+        'solved': 'Solved',
+        'backToInbox': 'Back to inbox',
+        'problemType': 'Problem Type',
+        'recipients': 'Recipient(s)',
+        'markAsSolved': 'Mark as solved',
+        'markAsUnsolved': 'Mark as unsolved',
+        'messageSent': 'sent',
+        'includeInMessage': 'Include in message',
+        'backToMessage': 'Back to message',
+        'archiveOld': 'Archive old messages',
+        'archived': 'Archived',
+        'noAnswer': 'No answer',
+        'archiveHelp': 'This operation will archive message that was not responded by the original author and are older than the informed period.',
+        'archiveError': 'An unexpected error ocurrer while archiving the messages.',
+        'archivedCount': 'archived messages',
+        'zeroArchived': 'No message to archive',
+        'olderThan': 'Older than',
+        'oneWeek': 'One week',
+        'twoWeeks': 'Two weeks',
+        'oneMonth': 'One month'
+    }
+};

@@ -1,0 +1,26 @@
+<div class="box multiview-bottom">
+  <table class="table">
+    <tbody>
+    <tr ng-repeat="notification in notifications">
+      <td class="notification-td">
+        <th-notification notification="notification"></th-notification>
+      </td>
+    </tr>
+    <tr ng-if="reports.length == 0"><td translate>group.resultNotFound</td></tr>
+    </tbody>
+  </table>
+</div>
+</div>
+<div class="pagination-container" ng-show="paginationData.totalItems > paginationData.itemsPerPage">
+  <pagination ng-show="paginationData.totalItems > paginationData.itemsPerPage" items-per-page="paginationData.itemsPerPage"
+              total-items="paginationData.totalItems"
+              ng-model="paginationData.currentPage"
+              ng-change="paginationChanged()"
+              max-size="paginationData.maxSize"
+              class="pagination-sm"
+              boundary-links="true"
+              direction-links="false"
+              rotate="false"
+              last-text="{{'pagination.last' | translate}}"
+              first-text="{{'pagination.first'| translate}}" />
+</div>

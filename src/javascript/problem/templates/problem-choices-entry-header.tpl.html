@@ -1,0 +1,39 @@
+<div class="problem-info-box">
+
+  <div id="info-nd-box" class="_{{problem.nd}}">
+    <p id="info-nd-text" translate>problem.difficultyLevel</p>
+    <p id="info-nd-number">{{problem.nd}}</p>
+  </div>
+
+  <div id="info-center">
+
+    <div id="info-problem-name-box">
+      <span class="info-problem-name">Questão
+        <span ng-if="quiz">{{problem.$index}} <span translate>of</span> {{quiz.questions.length}}</span>
+        <span ng-if="!quiz">#{{problem.id}}</span>
+      </span>
+      <afb:share:button href="{{problemUrl}}" type="button"></afb:share:button>
+    </div>
+
+    <p>
+      <span id="info-topics" translate>topics</span>:
+      <span ng-repeat="topic in problem.topics"><span ng-if="$index > 0">,</span> {{topic.name}}</span>
+    </p>
+
+    <p id="info-creation">
+      {{'problem.createdBy' | translate}}:
+      <a ui-sref="profile-show.problems({'id': problem.suggestedBy.id})">
+        {{problem.suggestedBy.name}}
+      </a>
+      <span translate>in</span>
+      {{problem.dateCreated | amDateFormat: 'DD/MM/YY'}}.
+      {{'problem.lastUpdated' | translate}}: <span am-time-ago="problem.lastUpdated"/>.
+    </p>
+
+    <p id="info-source">
+      <span>{{'problem.source' | translate }}: </span>
+      <span ng-if="problem.source && problem.source!=='null'">{{problem.source}}</span>
+      <span ng-if="!problem.source || problem.source === 'null'">{{ 'problem.notInformed' | translate }}</span>
+    </p>
+  </div>
+</div> <!-- FIM do box com informacoes gerais do problema -->

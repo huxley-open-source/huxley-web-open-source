@@ -1,0 +1,117 @@
+.diff-show {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  color: @default-color;
+  overflow-y: hidden;
+  overflow-x: hidden;
+  position: relative;
+  max-height: 227px;
+  .code-font;
+  font-size: @font-normal;
+
+  overflow-y: hidden;
+  overflow-x: hidden;
+  position: relative;
+  > div {
+    display: flex;
+    flex-direction: column;
+    white-space: nowrap;
+    table {
+      width: 100%;
+      tr {
+        border-bottom: @white 2px solid;
+        td.diff-line-count {
+          background-color: @gray-lighter;
+          border-right: 1px solid @gray;
+          border-bottom: 1px solid @gray-lighter;
+          color: @gray;
+          width: 10px;
+          text-align: right;
+          font-size: @font-small;
+          padding:0 10px 0 0;
+        }
+        &.diff-expected {
+          padding-right: 20px;
+          border-bottom: @blue-lighter 1px solid;
+          td {
+            padding-left: 20px;
+          }
+          u {
+            background-color: #eaffea;
+            text-decoration: none;
+            color: @default-color;
+          }
+
+        }
+        &:last-child {
+          border-bottom: 0 !important;
+          td {
+            border-bottom: 0 !important;
+          }
+        }
+      }
+    }
+  }
+
+
+  .modified, .added {
+    background-color: #ffecec;
+    > div {
+      background-color: #ffecec;
+    }
+  }
+  u {
+    background-color: #f8cbcb;
+    color: @red;
+    text-decoration: none;
+  }
+  .normal {
+    background-color: #eaffea;
+    > div {
+      background-color: #eaffea;
+    }
+  }
+  .removed {
+    background-color: @gray-lighter;
+    > div {
+      background-color: @gray-lighter;
+    }
+  }
+}
+.diff-expected {
+  white-space: pre;
+  &.truncated {
+    background-color: @gray-lighter;
+  }
+}
+.diff-actual {
+  border-bottom: @blue-lighter 1px solid !important;
+  white-space: pre;
+  &.truncated {
+    background-color: @gray-lighter;
+  }
+  u {
+    background-color: #f8cbcb;
+    text-decoration: none;
+    color: @default-color;
+  }
+
+}
+.diff-info {
+  font-size: @font-small;
+  margin-top: -20px;
+}
+
+
+
+.home-multiple-info.diff-container {
+  .show-case {
+    min-height: 0px;
+  }
+
+}
+
+.no-margin {
+  margin: 0px;
+}

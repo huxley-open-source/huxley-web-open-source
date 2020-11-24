@@ -1,0 +1,42 @@
+<div class="chat-box-wrapper">
+
+  <th-loading loading="!vm.ready"></th-loading>
+
+  <div class="chat-user" ng-show="vm.ready">
+    <img class="user-avatar" ng-src="{{vm.user.avatar}}?width=40&height=40">
+    <span class="user-name">{{vm.user.name}}</span>
+    <a ui-sref="profile-show.problems({id:vm.user.id})" class="btn btn-link"><span class="fa fa-link"></span></a>
+  </div>
+
+  <div class="chat-box" ng-show="vm.ready">
+
+    <div class="chat-messages" simple-scrollbar="{suppressScrollX: true}" scroll-glue>
+      <div>
+        <div class="chat-message-wrapper clearfix"
+             ng-class="{mine: message.sender.id !== vm.user.id, other: message.sender.id === vm.user.id}"
+             ng-repeat="message in vm.messages">
+
+          <div class="chat-message"
+               ng-class="{'show-data':vm.showData(message, vm.messages[$index + 1])}">
+            <img ng-src="{{message.sender.avatar}}?width=40&height=40" class="msg-thumb"/>
+          <span class="message-content">
+            <span class="message-body" th-submission-link>{{message.body}}</span>
+            <span class="message-timestamp">{{message.dateCreated|date:'dd/MM HH:mm:ss'}}</span>
+          </span>
+          </div>
+        </div>
+
+        <div class="chat-sending-message" ng-show="vm.sendingMessage">
+          {{'chat.sending' | translate}}
+        </div>
+      </div>
+    </div>
+
+    <form class="chat-send-message loading-bar-top loading-blue" ng-submit="vm.sendMessage()" is-loading="vm.sendingMessage">
+      <input type="text" ng-model="vm.messageContent" autofocus
+             class="form-control" placeholder="Digite uma mensagem para o usuário">
+      <button type="submit" ng-disabled="vm.sendingMessage"
+              class="mock-button btn btn-link">{{'chat.send' | translate}}</button>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,22 @@
+<div class="user-box">
+    <div class="user-box-img" ng-class="{'user-similarity-decorator' : similarityDecorator}">
+        <img ng-src="{{user.avatar}}?width=40&height=40">
+        <div id="similarity-symbol" ng-show="similarityDecorator">
+          <span>=</span>
+        </div>
+    </div>
+    <div class="user-box-info">
+        <span class="user-box-name">
+          <a ng-hide="noLinks" class="black-link" ui-sref="profile-show.problems({'id': user.id})">{{user.name}}</a>
+          <span ng-show="noLinks" class="black-link">{{user.name}}</span>
+        </span>
+        <span class="user-box-institution" ng-class="{'font-small': time}" ng-hide="noInstitution">
+          <a class="black-link" ng-hide="noLinks" ui-sref="institution-show.groups({'id': user.institution.id})">{{user.institution.name}}</a>
+          <span ng-show="noLinks" class="black-link"> {{user.institution.name}}</span>
+        </span>
+        <span class="font-small" ng-show="submission">
+          <span>{{'problem.submission.language' | translate}}: {{ submission.language.label }} | {{'problem.submission.time' | translate}}: {{ submission.time }}s</span>
+        </span>
+        <span class="font-small" ng-show="time">{{time | amDateFormat:'DD/MM'}} {{'quiz.similarity.at' | translate}} {{time | amDateFormat:'HH:mm'}}</span>
+    </div>
+</div>

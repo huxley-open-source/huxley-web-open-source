@@ -1,0 +1,20 @@
+<div class="box multiview-bottom">
+
+    <div class="blue-border-box">
+        <div class="create-form">
+            <form name="inviteStudent" class="group-invite-student" novalidate>
+              <div>
+                <th-input-complete-box has-error="error" type="'USER'" label=" role | translate" add-user="true" placeholder="placeholder | translate" chosen-list="userList" element-id="'groupTeacher'"></th-input-complete-box>
+              </div>
+              <div class="create-save-container text-right">
+                <span ng-if="saved">{{successMessage | translate}}</span>
+                <span ng-if="error2">{{'group.invitesFail' | translate}}</span>
+                <span ng-if="error">{{'group.invalidUser' | translate}}</span>
+                <button is-loading="$loadingButton" type="button" class="btn btn-green add-member-button text-uppercase" ng-click="inviteStudents()" ng-disabled="userList.length === 0 || error2 || error">{{buttonMessage | translate}}</button>
+              </div>
+            </form>
+
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,61 @@
+<div class="content container">
+  <div class="box">
+    <th-head header-title="'problem.choice-create.title'"></th-head>
+    <div class="create-form">
+
+      <form ng-submit="formSubmit()" name="form" novalidate>
+
+        <div class="form-group" ng-class="{'has-error': form.problemName.$dirty && !form.problemName.$valid}">
+          <label class="col-sm-2 control-label" for="problemName">{{'problem.choice-create.name' | translate}}</label>
+          <div class="col-sm-10">
+            <input class="form-control" type="text" id="problemName" name="problemName"
+                   ng-model="problem.name"
+                   ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }"
+                   ng-change="validateName()"
+                   placeholder="{{'problem.create.name' | translate}}"
+                   popover="{{'problem.create.namePopover' | translate}}"
+                   popover-trigger="focus" popover-placement="bottom"
+                   ng-blur="checkName()"
+                   ng-maxlength="{{problemInfo.nameMaxSize}}"
+                   required>
+          </div>
+
+          <span class="help-block" ng-if="form.problemName.$valid">{{'group.create.characterCount' | translate: {count: problemInfo.nameMaxSize - problem.name.length, total: problemInfo.nameMaxSize} }}</span>
+          <span class="help-block" ng-if="form.problemName.$dirty && createProblem.problemName.$error.required">{{'group.create.nameRequired' | translate}}</span>
+          <span class="help-block" ng-if="form.problemName.$error.maxlength">{{'group.create.characterCountError' | translate}}</span>
+          <span class="help-block" ng-if="form.problemName.$error.name">{{'group.create.nameUniqueError' | translate }}</span>
+        </div>
+
+        <div class="form-group">
+          <label for="problemLevel" class="col-sm-2">{{'problem.create.nd' | translate}}</label>
+          <div class="col-sm-6">
+            <th-select-box id="problemLevel" element="problem.level" style="padding:0;margin:0" class="th-select-striped" for="ndList"></th-select-box>
+          </div>
+        </div>
+
+        <div class="topic-filter">
+          <div class="topic-filter-top">
+            <label translate>problem.create.topicFilter</label>
+          </div>
+          <div class="topic-filter-bottom box-white">
+            <div ng-repeat="topic in allTopics">
+            <span ng-class="{'selection-box' : true, 'selection-box-selected': selectedTopics[topic.id]}"
+                  ng-click="filterTopic(topic.id)">{{topic.name}}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group clearfix" style="height:auto;">
+          <div class="col-sm-12">
+            <markdown-editor problem="problem"></markdown-editor>
+          </div>
+        </div>
+
+        <div class="create-save-container text-right">
+          <button type=submit class="btn btn-green">{{'problem.create.save' | translate}}</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>

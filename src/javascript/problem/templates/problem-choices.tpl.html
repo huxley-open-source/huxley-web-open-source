@@ -1,0 +1,24 @@
+<div class="content container">
+  <div class="box">
+    <div class="problem-header header">
+      <h3>
+        {{'problem.choices.title'|translate}}
+
+        <a class="btn btn-blue" ui-sref="problem-choices-create" translate>problem.create.title</a>
+        <a class="btn btn-blue" ui-sref="problem-choices-quiz-create" translate>problem.choices.quiz-create</a>
+      </h3>
+    </div>
+
+    <table class="table">
+      <tr ng-repeat="problem in problems">
+        <td>
+          <th-choice-box problem="problem"
+                         is-authenticated="isAuthenticated"
+                         show-status="true"
+                         show-topics="true"></th-choice-box>
+        </td>
+      </tr>
+      <tr ng-if="problems.length == 0 && searched"><td translate>problem.resultNotFound</td></tr>
+    </table>
+  </div>
+</div>

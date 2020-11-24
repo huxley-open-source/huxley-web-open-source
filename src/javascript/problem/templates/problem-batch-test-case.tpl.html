@@ -1,0 +1,66 @@
+<div class="multiview-bottom box">
+  <div>
+    <div>
+      <form name="batchTestCase" novalidate>
+        <div class="problem-batch-files">
+         <div>
+           <p>
+             Para realizar uploads de casos de teste em lote, o arquivo deve seguir o seguinte padrão:
+           </p>
+           <ul>
+             <li>Todos os arquivos de um caso de teste deve seguir o mesmo prefixo;</li>
+             <li>A entrada deve possuir a extensão .in;</li>
+             <li>A saída deve possuir a extensão .out;</li>
+             <li>A dica deve possuir a extensão .tip;</li>
+             <li>Os casos de teste devem estar compactados em um só arquivo;</li>
+           </ul>
+
+           <p><strong>Atenção: a soma do tamanho do arquivo de entrada com o de saída deve ter no máximo 8mb</strong></p>
+
+           <div class="batch-files-align">
+             <input file-model="file" type="file" file-upload multiple/>
+             <button class="btn btn-green" ng-click="batchUpload();">{{'problem.create.addTestCaseBatch' | translate}}</button>
+           </div>
+
+           <div class="text-danger" ng-show="error">
+             <span>{{error.message | translate }}</span>
+           </div>
+
+         </div>
+
+          <div>
+            <p class="batch-example">Exemplo:</p>
+            <p>
+              Temos um problema com dois casos de teste. Os arquivos do primeiro caso estão organizados da seguinte maneira:
+            </p>
+            <ul>
+              <li>1.in</li>
+              <li>1.out</li>
+              <li>1.tip</li>
+            </ul>
+
+            <p>Já o segundo:</p>
+            <ul>
+              <li>2.in</li>
+              <li>2.out</li>
+            </ul>
+
+            <p>
+              A estrutura do segundo caso de teste é um pouco diferente do primeiro, pois não possui dica. Os arquivos mandatórios para um caso de teste são a entrada e a saída.
+            </p>
+
+            <p>
+              Logo após os arquivos devem ser compactados em um só arquivo que pode ter qualquer nome.
+            </p>
+
+          </div>
+          <div class="stats-alert" ng-hide="!countTestCasesSaved">
+            <span>{{countTestCasesSaved}} casos de teste cadastrados.</span>
+          </div>
+
+        </div>
+      </form>
+    </div>
+  </div>
+
+</div>

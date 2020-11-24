@@ -1,0 +1,34 @@
+<div class="container content">
+
+  <div class="box multiview-top">
+    <th-head header-title="'problem.choices.title'"></th-head>
+    <th-choice-header></th-choice-header>
+  </div>
+
+  <div class="box multiview-bottom">
+    <th-choice-content></th-choice-content>
+
+    <div class="text-right layout-spacing">
+      <strong><small translate>problem.choices.all-questions</small>&nbsp;</strong>
+      <div class="problem-questions">
+        <button ng-repeat="p in quiz.questions"
+                class="btn"
+                ng-click="selectQuestion(p.$index)"
+                ng-disabled="p.$disabled || p === problem || p.$answered"
+                ng-class="{'btn-danger':p.$disabled,
+                           'btn-info': p.$answered,
+                           'btn-green': p === problem}">{{p.$index}}</button>
+      </div>
+    </div>
+
+    <div class="text-right layout-spacing">
+      <strong><small translate>problem.choices.sendWarning</small>&nbsp;</strong>
+
+      <button class="btn btn-danger" ng-show="problem.$index < quiz.questions.length"
+              ng-click="nextQuestion()" translate>problem.choices.next-question</button>
+      <button class="btn btn-green" ng-click="sendQuestion()" translate>problem.choices.send-question</button>
+    </div>
+
+  </div>
+
+</div>

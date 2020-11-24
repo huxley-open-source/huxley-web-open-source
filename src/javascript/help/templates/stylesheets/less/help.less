@@ -1,0 +1,185 @@
+.help-container {
+  .box {
+    min-height: 500px;
+  }
+  .layout-h-spacing {
+    word-break: break-word;
+    max-width: 740px;
+  }
+}
+
+.help-menu {
+
+  list-style: none;
+  float: right;
+  width: 190px;
+  padding: 0;
+
+  margin: 0 0 @base-spacing @base-spacing;
+
+  > li {
+
+    &.help-header {
+      color: @gray-dark;
+      font-size: 12px;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    > a {
+      display: block;
+      margin: 4px 0;
+      padding: 0px 8px;
+      border-left: 2px solid transparent;
+      &:hover {
+        border-left: 2px solid @gray-light;
+        text-decoration: none;
+      }
+
+      &:focus, &:active {
+        text-decoration: none;
+      }
+    }
+
+    > ul {
+      display: none;
+      margin: 0 0 10px 25px;
+      padding: 0;
+      list-style: none;
+    }
+
+    &.active {
+
+      > a {
+        font-weight: 500;
+        border-left: 2px solid @blue;
+      }
+
+      > ul {
+        display: block;
+      }
+    }
+  }
+}
+
+.help-menu-inner {
+
+  > li > a {
+    color: @gray;
+    font-size: 13px;
+    &:hover {
+      color: lighten(@gray, 10%);
+    }
+    &:hover, &:focus, &:active {
+      text-decoration: none;
+    }
+  }
+
+  > li.active > a {
+    color: @blue;
+    font-weight:bold;
+  }
+}
+
+.doubt-link-size {
+  font-size: 0.8em;
+}
+
+.help-table {
+  border: 1px solid @blue;
+  tr {
+    border-bottom: 1px solid @blue;
+    td:first-of-type {
+      padding-left: 10px !important;
+    }
+  }
+  td {
+    min-width: 180px;
+    border-right: 1px solid @blue;
+  }
+}
+
+.faqImage1 {
+  background-image: url("/images/help/faq/faqImage1.png");
+  width: 316px;
+  height: 61px;
+}
+
+.faqImage2 {
+  background-image: url("/images/help/faq/faqImage2.png");
+  width: 500px;
+  height: 350px;
+}
+
+.faqImage3 {
+  background-image: url("/images/help/faq/faqImage3.png");
+  width: 500px;
+  height: 350px;
+}
+
+.adminTutorial1 {
+  background-image: url("/images/help/admin/adminTutorial1.png");
+  width: 434px;
+  height: 266px;
+}
+
+.adminTutorial2  {
+  background-image: url("/images/help/admin/adminTutorial2.png");
+  width: 740px;
+  height: 459px;
+}
+
+.createGroup1  {
+  background-image: url("/images/help/teacher/createGroup1.png");
+  width: 740px;
+  height: 117px;
+}
+
+.createGroup2  {
+  background-image: url("/images/help/teacher/createGroup2.png");
+  width: 740px;
+  height: 256px;
+}
+
+.createGroup3  {
+  background-image: url("/images/help/teacher/createGroup3.png");
+  width: 740px;
+  height: 362px;
+}
+
+.createQuiz1  {
+  background-image: url("/images/help/teacher/createQuiz1.png");
+  width: 740px;
+  height: 199px;
+}
+
+.createQuiz2  {
+  background-image: url("/images/help/teacher/createQuiz2.png");
+  width: 740px;
+  height: 461px;
+}
+
+.createQuiz3  {
+  background-image: url("/images/help/teacher/createQuiz3.png");
+  width: 740px;
+  height: 632px;
+}
+
+.createProblem1  {
+  background-image: url("/images/help/teacher/createProblem1.png");
+  width: 740px;
+  height: 232px;
+}
+
+.createProblem2  {
+  background-image: url("/images/help/teacher/createProblem2.png");
+  width: 740px;
+  height: 397px;
+}
+
+.createProblem3  {
+  background-image: url("/images/help/teacher/createProblem3.png");
+  width: 740px;
+  height: 496px;
+}

@@ -1,0 +1,99 @@
+<div class="container content">
+  <div class="box">
+
+    <th-head header-title="'submission.title'"></th-head>
+
+    <div class="submission-filter-search">
+      <form class="">
+        <div style="width: 100%;" class="row">
+          <th-input-complete-box type="'USER'" only-one="true" fixed-size="true" label="'group.userName' | translate" placeholder="'group.userName' | translate" chosen-list="searchParams.user" element-id="'user-name'" ng-if="currentUser.atLeastAdmin()" class="col-sm-6"></th-input-complete-box>
+          <th-datepicker date="searchParams.submissionDateGe" label="'group.startDate' | translate" elementid="'start-date'" class="col-sm-6"></th-datepicker>
+        </div>
+        <div style="width: 100%;" class="row">
+          <th-input-complete-box type="'PROBLEM'" only-one="true" fixed-size="true" label="'group.problemName' | translate" placeholder="'group.problemName' | translate" chosen-list="searchParams.problem" element-id="'problem-name'" class="col-sm-6"></th-input-complete-box>
+          <th-datepicker date="searchParams.submissionDateLe" label="'group.endDate' | translate" elementid="'end-date'" class="col-sm-6"></th-datepicker>
+        </div>
+        <div style="width: 100%;" class="row">
+          <th-select-box label="'group.submissions.evaluation' | translate" element="searchParams.evaluations" class="th-select-striped col-sm-6" for="evaluationList"></th-select-box>
+          <div class="col-sm-6 submission-list-button-container">
+            <button class="btn btn-blue ng-scope text-uppercase" ng-click="list()" type="button" is-loading="loading">{{'group.submissions.search' | translate }}</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div style="overflow: auto">
+      <span us-spinner spinner-key="spinner"></span>
+      <th-loading loading="loading">
+        <table class="table submission-list">
+          <thead>
+          <tr>
+            <th>
+              <th-order-arrow label="'group.submissions.date'" sort-by="'submissionDate'" order='searchParams.order' element="searchParams.sort" search-function="list()"></th-order-arrow>
+            </th>
+            <th ng-if="currentUser.atLeastAdmin()">
+              <th-order-arrow label="'group.submissions.name'" sort-by="'user'" order='searchParams.order' element="searchParams.sort" search-function="search()"></th-order-arrow>
+            </th>
+            <th>
+              <th-order-arrow label="'group.submissions.problem'" sort-by="'problem'" order='searchParams.order' element="searchParams.sort" search-function="list()"></th-order-arrow>
+            </th>
+            <th class="text-center">
+              <th-order-arrow label="'group.submissions.evaluation'" sort-by="'evaluation'" order='searchParams.order' element="searchParams.sort" search-function="list()"></th-order-arrow>
+            </th>
+            <th class="text-center">
+              <th-order-arrow label="'problem.submission.language'" sort-by="'language'" order='searchParams.order' element="searchParams.sort" search-function="list()"></th-order-arrow>
+            </th>
+            <th class="text-center">
+              {{'group.submissions.visualize' | translate }}
+            </th>
+            <th ng-if="currentUser.atLeastTeacher()">
+              {{'group.submissions.reevaluate' | translate}}
+            </th>
+          </tr>
+
+        </thead>
+        <tbody>
+        <tr ng-repeat="submission in submissions">
+          <td>
+            {{submission.submissionDate | amDateFormat:'DD/MM/YYYY'}} {{'quiz.similarity.at' | translate}} {{submission.submissionDate | amDateFormat:'H:mm:ss'}}
+          </td>
+          <td class="submission-list-name" ng-if="currentUser.atLeastAdmin()">
+            <th-user-link user="submission.user"></th-user-link>
+          </td>
+          <td class="submission-list-name">
+            <a ng-href="/problem/{{submission.problem.id}}">{{submission.problem.name || ('submission.problem.differentLanguage' | translate)}}</a>
+          </td>
+          <td class="text-center">
+            <th-submission-status submission="submission" class="popover-gray"></th-submission-status>
+          </td>
+          <td class="text-center">
+            {{submission.language.label}}
+          </td>
+          <td class="text-center">
+            <a class="popover-gray" ui-sref="problem-show.submission-show({id: submission.problem.id, subId: submission.id})"><i class="img-medium img-medium-blue-search icon img-bottom background-img" popover="{{'submission.visualize' | translate}}" popover-trigger="mouseenter" popover-placement="right"></i></a>
+          </td>
+          <td ng-if="currentUser.atLeastTeacher()" class="text-center">
+            <a ng-click="reevaluateOne(submission)" class="popover-gray"><i class="glyphicon glyphicon-refresh refresh-icon-size" popover="{{'group.submissions.reevaluate' | translate}}" popover-trigger="mouseenter" popover-placement="right"></i></a>
+          </td>
+        </tr>
+        <tr ng-if="submissions.length == 0 && searched == true"><td translate>submission.resultNotFound</td></tr>
+        </tbody>
+      </table>
+      </th-loading>
+    </div>
+  </div>
+
+  <div class="pagination-container" ng-show="paginationData.totalItems > paginationData.itemsPerPage && searched == true && !loading">
+    <pagination ng-show="paginationData.totalItems > paginationData.itemsPerPage" items-per-page="paginationData.itemsPerPage"
+                total-items="paginationData.totalItems"
+                ng-model="paginationData.currentPage"
+                ng-change="paginationChanged()"
+                max-size="paginationData.maxSize"
+                class="pagination-sm"
+                boundary-links="true"
+                direction-links="false"
+                rotate="false"
+                last-text="{{'pagination.last' | translate}}"
+                first-text="{{'pagination.first'| translate}}" />
+  </div>
+
+</div>

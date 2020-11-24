@@ -1,0 +1,110 @@
+<div class="container content">
+  <div class="multiview-top box">
+
+  <!--<th-head header-title="'quiz.title'"></th-head>-->
+
+    <div class="header" style="display: flex;  justify-content: space-between; align-items: center">
+      <h3 translate>quiz.title</h3>
+      <span class="badge" style="margin-top: 9px" ng-if="quiz.partialScore" translate>quiz.partial</span>
+    </div>
+  <th-loading loading="loadingShow">
+    <div class="quiz-info-box">
+      <div class="quiz-info-left">
+        <p>
+          <strong> {{'quiz.create.title' | translate}}: </strong>{{quiz.title}}
+        </p>
+        <p>
+          <strong> {{'description'  | translate}}: </strong>{{quiz.description}}
+        </p>
+        <p>
+          <strong> {{'group'  | translate}}: </strong><a ui-sref="group-show.quizzes({id:quiz.group.url})">{{quiz.group.name}}</a>
+        </p>
+      </div>
+
+      <div class="quiz-info-right">
+        <div>
+          <span>
+            <strong> {{'score' | translate}}: </strong> <div class="box">{{quiz.score}}</div>
+          </span>
+        </div>
+        <span ng-if="quiz.serverTime < quiz.startDate" class="quiz-time-info">
+          <span ng-if="(quiz.serverTime < quiz.startDate)">{{'quiz.lists.start' | translate}} </span>
+          <span><th-time-difference server-date="quiz.serverTime" date="quiz.startDate"></th-time-difference></span>
+        </span>
+
+        <span ng-if="quiz.serverTime >= quiz.startDate" class="quiz-time-info">
+          <span ng-if="(quiz.serverTime < quiz.endDate)">{{'quiz.lists.end' | translate}} </span>
+          <span ng-if="(quiz.serverTime >= quiz.endDate)">{{'quiz.lists.ended' | translate}} </span>
+          <span><th-time-difference server-date="quiz.serverTime" date="quiz.endDate"></th-time-difference></span>
+        </span>
+        <p class="font-small">{{quiz.startDate | date:'dd/MM/yyyy HH:mm'}} à {{quiz.endDate | date:'dd/MM/yyyy HH:mm'}}</p>
+      </div>
+
+    </div>
+  </th-loading>
+
+   <!-- FIM do box com informacoes gerais da atividade -->
+
+  <!-- ABAS -->
+  <div class="th-group-nav-bar">
+    <div class="th-group-tab-header">
+      <ul class="th-nav-tabs">
+        <li ui-sref="quiz-show.score" ui-sref-active="active" ng-if="currentUser.atLeastTeacherAssistant(quiz.group) && false"><a ui-sref="quiz-show.score"> {{'score' | translate }}</a></li>
+        <li ng-class="{'active': $state.is('quiz-show.reviews') || $state.is('quiz-show.review-user')}" ng-if="currentUser.atLeastStudent(quiz.group)"><a ui-sref="quiz-show.reviews"> {{'quiz.scores' | translate }}</a></li>
+        <li ng-class="{'active': $state.is('quiz-show.problems') || $state.is('quiz-show.submissions')}" ng-if="!currentUser.isStudent(quiz.group)"><a ui-sref="quiz-show.problems"> {{'problems' | translate }}</a></li>
+        <li ui-sref="quiz-show.similarity" ui-sref-active="active" ng-if="currentUser.atLeastTeacherAssistant(quiz.group)"><a ui-sref="quiz-show.similarity"> {{'similarities' | translate }}</a></li>
+        <li ui-sref="quiz-show.stats" ui-sref-active="active" ng-if="currentUser.atLeastTeacherAssistant(quiz.group)"><a ui-sref="quiz-show.stats"> {{'stats' | translate }}</a></li>
+        <li ng-class="{'active': $state.is('quiz-show.edit-problems') || $state.is('quiz-show.edit')}" ng-if="currentUser.atLeastTeacherAssistant(quiz.group)"><a ui-sref="quiz-show.edit"> {{'quiz.edit' | translate }}</a></li>
+      </ul>
+    </div> <!-- FIM do cabecalho das abas -->
+
+    <!-- conteudo das abas -->
+    <div>
+      <div class="th-tab-pane" ng-class="{'active': $state.is('quiz-show.problems') || $state.is('quiz-show.submissions')}" ng-if="currentUser.atLeastStudent(quiz.group)">
+        <!-- submenu -->
+        <ul>
+          <li ui-sref="quiz-show.problems" ui-sref-active="active" ng-if="currentUser.isAuthenticated()"><span>{{'quiz.problemList' | translate}}</span></li>
+          <li ui-sref="quiz-show.submissions" ui-sref-active="active" ng-show="currentUser.atLeastTeacherAssistant(quiz.group)"><span>{{'quiz.submissionList' | translate}}</span></li>
+        </ul>
+      </div>
+      <div class="th-tab-pane" ui-sref="quiz-show.score" ui-sref-active="active">
+        <!-- submenu -->
+        <ul>
+          <li>&nbsp;</li>
+        </ul>
+      </div>
+      <div class="th-tab-pane" ui-sref="quiz-show.similarity" ui-sref-active="active" ng-show="currentUser.atLeastTeacherAssistant(quiz.group)">
+        <!-- submenu -->
+        <ul>
+          <li>&nbsp;</li>
+        </ul>
+      </div>
+      <div class="th-tab-pane" ng-class="{'active': $state.is('quiz-show.reviews') || $state.is('quiz-show.review-user')}" ng-if="currentUser.atLeastTeacherAssistant(quiz.group)">
+        <!-- submenu -->
+        <ul>
+          <li ui-sref="quiz-show.reviews" ui-sref-active="active" ng-if="currentUser.atLeastTeacherAssistant(quiz.group)"><span>{{'quiz.reviewList' | translate}}</span></li>
+          <li ui-sref="quiz-show.review-user" ui-sref-active="active" ng-if="currentUser.isAuthenticated()"><span>{{'quiz.reviewUser' | translate}}</span></li>
+        </ul>
+      </div>
+      <div class="th-tab-pane" ui-sref="quiz-show.stats" ui-sref-active="active" ng-show="currentUser.atLeastTeacherAssistant(quiz.group)">
+        <!-- submenu -->
+        <ul>
+          <li>&nbsp;</li>
+        </ul>
+      </div>
+      <div class="th-tab-pane" ng-class="{'active': $state.is('quiz-show.edit-problems') || $state.is('quiz-show.edit')}">
+        <!-- submenu -->
+        <ul>
+          <li ui-sref="quiz-show.edit" ui-sref-active="active"><span>{{'quiz.singleTitle' | translate}}</span></li>
+          <li ui-sref="quiz-show.edit-problems" ui-sref-active="active" ng-show="canEditProblems()"><span>{{'quiz.problemList' | translate}}</span></li>
+        </ul>
+      </div>
+    </div>
+  </div> <!-- END abas -->
+
+</div>
+
+<div ui-view></div>
+
+
+</div>

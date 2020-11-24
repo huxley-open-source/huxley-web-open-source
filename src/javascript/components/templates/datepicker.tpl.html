@@ -1,0 +1,28 @@
+<div class="form-group" ng-class="{'has-error': element.$dirty && !element.$valid}">
+  <label for="{{elementId}}" class="col-sm-2 control-label">{{label}}</label>
+  <div class="col-sm-10"  ng-class="{'th-date-time': withTime}">
+    <div>
+      <p class="input-group date-group">
+        <input type="text" class="form-control" datepicker-popup="dd/MM/yyyy" ng-model="date" is-open="isOpen" close-text="Close" id="{{elementId}}" name="{{elementId}}" placeholder="DD/MM/AAAA" show-button-bar="false" datepicker-options="dateOptions" ng-required="isRequired"/>
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-default btn-blue" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+      </p>
+    </div>
+    <div ng-if="withTime">{{'component.dateInput.on' | translate}}</div>
+    <div ng-if="withTime">
+      <th-select-box element="hours" class="th-select-striped" for="hoursMap" on-change="setHours(hours)"></th-select-box>
+    </div>
+    <div ng-if="withTime">:</div>
+    <div ng-if="withTime">
+      <th-select-box element="minutes" class="th-select-striped" for="minutesMap" on-change="setMinutes(minutes)"></th-select-box>
+    </div>
+
+
+
+
+  </div>
+  <span class="help-block" ng-class="{'th-date-time': withTime}" ng-if="element.$error.date">{{'component.dateInput.formatError' | translate }}</span>
+  <span class="help-block" ng-class="{'th-date-time': withTime}" ng-if="element.$dirty && element.$error.required">{{'component.dateInput.dateRequired' | translate}}</span>
+  <span class="help-block" ng-class="{'th-date-time': withTime}" ng-if="element.$dirty && element.$error.custom">{{validateMsg | translate }}</span>
+</div>

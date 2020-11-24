@@ -1,0 +1,46 @@
+<div class="problem-data">
+  <div class="problem-data-left">
+    <div>
+      <div class="grade _{{problem.nd}}">{{problem.nd}}</div>
+      <div class="arrow-right arrow-small arrow-position arrow-border-{{problem.nd}}"></div>
+      <i ng-show="problem.status === 'PENDING'" class="pending-problem icon img-small-alert img-short background-img" title="{{ 'problem.pendingProblem' | translate }}"></i>
+    </div>
+    <div class="problem-name">
+      <a ng-hide="nolink" ng-if="!locale" ui-sref="problem-show.description({ id: problem.id, quizId: quizId })">{{problem.name}}</a>
+      <a ng-hide="nolink" ng-if="locale" ui-sref="problem-show.description({ id: problem.id, locale: locale, quizId: quizId })">{{problem.name}}</a>
+      <span ng-show="nolink" class="blue-title">{{problem.name}}</span>
+      <div class="topic-list" ng-show="topics === true"><span ng-repeat="topic in problem.topics"><span ng-if="$index > 0">,</span> {{topic.name}}</span></div>
+      <div class="topic-list" ng-show="countTestCases === true || approvedBy === true">
+        <span class="topic-list" ng-show="countTestCases === true">
+          {{problem.testCases.total}}{{'problem.testCaseCount' | translate}}{{problem.testCases.examples}}{{'problem.testCaseCount2' | translate}}
+          </span>
+        <span ng-show="approvedBy === true && problem.approvedBy !== null"> {{'problem.approvedBy' | translate}} {{problem.approvedBy.name}}</span>
+        <span ng-show="approvedBy === true && problem.approvedBy === null"> {{'problem.suggestedBy' | translate}} {{problem.suggestedBy.name}}</span>
+      </div>
+    </div>
+  </div>
+
+  <ul class="problem-rank" ng-show="showRank && problem.rankVotes > 9">
+    <li ng-repeat="start in [1,2,3,4,5]" class="problem-star">
+      <i class="glyphicon" ng-class="{ 'glyphicon-star-empty': problem.userRank - 1 < $index, 'glyphicon-star': problem.userRank - 1>= $index }"/>
+    </li>
+  </ul>
+  <div class="problem-data-right" ng-show="isAuthenticated() && showStatus === true">
+
+
+
+    <div style="margin-right: 22px; text-align: center" class="problem-type-msg">
+      <div class="text-danger" ng-if="problem.problemType !== 'ALGORITHM'">{{'problem.type.' + problem.problemType | translate}}</div>
+      <div style="color: blue" ng-if="problem.quizOnly">{{'Problema de prova' | translate}}</div>
+    </div>
+
+    <div class="problem-status-box" ng-if="problem.currentUser !== undefined">
+      <p>{{'status' | translate}}:</p>
+      <th-problem-status  status="problem.currentUser.status" on-quiz= "onQuiz" />
+
+    </div>
+    <div class="quiz-problem-score" ng-show="problem.score !== undefined && showScore === true">
+      <span>{{'score' | translate}}: </span> <div class="box">{{problem.score}}</div>
+    </div>
+  </div>
+</div>

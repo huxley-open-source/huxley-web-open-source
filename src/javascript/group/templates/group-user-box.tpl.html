@@ -1,0 +1,44 @@
+<div class="user-box-container">
+    <div class="user-box th-item-fade" ng-class="{'active': isChecked[user.id], 'removed': userRemoved[user.id]}">
+        <div class="user-box-img" ng-class="{'teacher': user.role === 'TEACHER', 'teacher-assistant': user.role === 'TEACHER_ASSISTANT'}">
+            <img src="{{user.avatar}}?width=40&height=40">
+            <i ng-class="{'description-icon teacher': user.role === 'TEACHER', 'description-icon teacher-assistant': user.role === 'TEACHER_ASSISTANT'}">{{icon | translate}}</i>
+        </div>
+        <div class="user-box-info" ng-class="{'user-box-info-extended': group === undefined && institution === undefined}">
+            <span><a class="black-link" ui-sref="profile-show.problems({'id': user.id})">{{user.name}}</a></span>
+        </div>
+        <div class="group-user-box-menu" dropdown ng-if="!userRemoved[user.id]">
+            <a ui-sref="chat-list.chat-show({'id': user.id})">
+              <i class="icon img-medium img-medium-message background-img"></i>
+            </a>
+          <a ng-if="(group !== undefined || institution !== undefined)">
+            <i class="icon img-medium img-medium-trash background-img" dropdown-toggle></i>
+          </a>
+        <span class="dropdown-menu" role="menu" ng-if="(group !== undefined || institution !== undefined)">
+            <div class="popover right in">
+                <div class="arrow"></div>
+                <div class="popover-inner">
+                    <div class="popover-content background-alert">
+                        {{'group.users.confirmRemove' | translate}}
+                        <div class="group-exclude-user-container">
+                            <img src="{{user.avatar}}?width=40&height=40">
+                            <div>
+                              <span>{{user.name}}</span>
+                              <span>{{user.institution.name}}</span>
+                            </div>
+                        </div>
+                        <div class="group-exclude-user-menu">
+                            <button class="btn btn-blue" ng-click="removeItem()">{{'group.users.yes' | translate}}</button>
+                            <button class="btn btn-gray">{{'group.users.cancel' | translate}}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </span>
+            <input type="checkbox" ng-model="isChecked[user.id]" ng-click="updateCheck()" ng-if="!hideCheckBox && (group !== undefined || institution !== undefined)"/>
+        </div>
+    </div>
+    <div ng-if="userRemoved[user.id]" class="user-box-revert-container">
+        <button class="btn btn-blue" ng-click="addUser()">{{'group.users.undo' | translate}}</button>
+    </div>
+</div>

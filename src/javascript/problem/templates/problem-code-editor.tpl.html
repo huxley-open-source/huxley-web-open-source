@@ -1,0 +1,17 @@
+<div class="box multiview-bottom">
+
+  <span translate></span>
+
+  <!-- Linguagem -->
+  <div>
+    <th-select-box element="selectedLanguage" class="th-select-striped" for="availableLanguages"></th-select-box>
+  </div>
+
+  <div ui-ace="{ onLoad: aceLoaded }" ng-model="editor" class="codeeditor">
+  </div>
+
+  <div id="problem-send-answer-box">
+    <button class="btn btn-green">{{'problem.sendSolution' | translate}}</button>
+  </div>
+
+</div>

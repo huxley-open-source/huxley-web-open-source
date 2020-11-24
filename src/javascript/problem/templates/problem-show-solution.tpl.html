@@ -1,0 +1,63 @@
+<div class="multiview-bottom box">
+  <div class="upload-solution-box">
+
+    <div ng-if="submission.id" class="alert" ng-class="{
+          'alert-danger': submission.evaluation !== 'WAITING' && submission.evaluation !== 'CORRECT',
+          'alert-success': submission.evaluation === 'CORRECT',
+          'alert-info': submission.evaluation === 'WAITING'
+          }">
+
+      <i class="glyphicon glyphicon-remove" ng-show="submission.evaluation !== 'CORRECT' && submission.evaluation !== 'WAITING'"></i>
+      <i class="glyphicon glyphicon-ok" ng-show="submission.evaluation === 'CORRECT'"></i>
+      <i class="glyphicon glyphicon-refresh" ng-show="submission.evaluation === 'WAITING'"></i>
+      <strong><a ui-sref="problem-show.submission-show({subId: submission.id})">Submissão #{{submission.tries}}</a></strong>:
+
+      <span ng-show="submission.evaluation === 'WAITING'"> {{'problem.solution.waiting' | translate}} </span>
+      <span ng-show="submission.evaluation === 'CORRECT'"> {{'problem.solution.correct' | translate}} </span>
+      <span ng-show="submission.evaluation === 'WRONG_ANSWER'"> {{'problem.solution.wrongAnswer'| translate}} </span>
+      <span ng-show="submission.evaluation === 'EMPTY_ANSWER'"> {{'problem.solution.emptyAnswer'| translate}} </span>
+      <span ng-show="submission.evaluation === 'TIME_LIMIT_EXCEEDED'"> {{'problem.solution.timeLimit'| translate}} </span>
+      <span ng-show="submission.evaluation === 'RUNTIME_ERROR'"> {{'problem.solution.runTimeError'| translate}} </span>
+      <span ng-show="submission.evaluation === 'COMPILATION_ERROR'"> {{'problem.solution.compilationError'| translate}} </span>
+      <span ng-show="submission.evaluation === 'HUXLEY_ERROR'"> {{'problem.solution.huxleyError'| translate}} </span>
+      <span ng-show="submission.evaluation === 'EMPTY_TEST_CASE'"> {{'problem.solution.emptyTestCase'| translate}} </span>
+      <span ng-show="submission.evaluation === 'WRONG_FILE_NAME'"> {{'problem.solution.wrongFileName'| translate}} </span>
+      <span ng-show="submission.evaluation === 'PRESENTATION_ERROR'"> {{'problem.solution.presentationError'| translate}} </span>
+    </div>
+
+    <div class="restrictions-panel" ng-show="restrictions">
+      <div class="restrictions-help">
+        <span translate>problem.restriction.quizInfo</span>
+        <span translate>problem.restriction.quizPenalty</span> {{restrictionPenalty}}%.
+      </div>
+      <ul class="list-unstyled">
+        <li ng-repeat="(name, restriction) in restrictions" ng-class="{ 'text-success': restriction.success, 'text-danger': !restriction.success }">
+          <i class="glyphicon" ng-class="{ 'glyphicon-unchecked': !submission.id || submission.evaluation === 'WAITING', 'glyphicon-check': restriction.success, 'glyphicon-remove': !restriction.success }"></i>
+          <span ng-if="name === 'restricaoFuncoes'">
+            Deve conter as seguintes funções:
+          <ul class="list-unstyled" style="margin-left: 11px">
+            <li ng-repeat="funcao in restriction" ng-class="{ 'text-success': funcao.success, 'text-danger': !funcao.success }">
+              <i class="glyphicon" ng-class="{ 'glyphicon-unchecked': !submission.id || submission.evaluation === 'WAITING', 'glyphicon-check': funcao.success, 'glyphicon-remove': !funcao.success }"></i>
+              <span ng-class="{'text-success': funcao.result.nome }">Nome: {{funcao.nome}}</span> |
+              <span ng-class="{'text-success': funcao.result.parametros }">{{funcao.qtdParametros}} parâmetro(s)</span> |
+              <span ng-class="{'text-success': funcao.result.retorno }"><input type="checkbox" ng-disabled="true" ng-model="funcao.retorno"/> Retorno</span> |
+              <span ng-class="{'text-success': funcao.result.recursao }"><input type="checkbox" ng-disabled="true" ng-model="funcao.recursiva"/> Recursiva</span>
+            </li>
+          </ul>
+            </span>
+          <span ng-if="restriction.minimo">De {{restriction.minimo}} à {{restriction.maximo}} {{'problem.restriction.' + name | translate}} <span ng-if="!restriction.success">(Encontrado {{restriction.count}})</span></span>
+          <span ng-if="restriction.possuiLista">Deve possuir lista</span>
+          <span ng-if="restriction.possuiTupla">Deve possuir tupla</span>
+          <span ng-if="restriction.possuiDicionario">Deve possuir dicionário</span>
+          <span ng-if="name === 'restricaoBlocosVazios'" translate>problem.restriction.restricaoBlocosVazios</span>
+        </li>
+      </ul>
+    </div>
+
+
+    <div>
+      <th-code-view submission="submission" tip="true" info="true" editor="true" problem="problem"></th-code-view>
+    </div>
+
+  </div>
+</div>

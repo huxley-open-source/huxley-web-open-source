@@ -1,0 +1,121 @@
+<div class="container content">
+  <div class="box">
+    <th-head header-title="'user.profile'"></th-head>
+
+    <!--<div class="cropper">-->
+      <!--<th-cropper class="th-cropper"></th-cropper>-->
+    <!--</div>-->
+
+    <div class="editProfile">
+      <div class="editPhoto">
+        <div class="loading" ng-if="loading">
+          {{ 'user.edit.loading' | translate}}.
+        </div>
+        <div>
+          <div><img width="330px" height="248px" src="{{cropper.sourceImage}}" /></div>
+          <div class="file-input">
+            {{ 'user.edit.changeImage' | translate}}.
+            <input type="file" onchange="angular.element(this).scope().sendImage(this.files)" accept="image/jpeg, image/png" class="input-hidden"/>
+          </div>
+        </div>
+      </div>
+
+      <div class="profileForm">
+        <div class="create-form">
+          <form ng-submit="formSubmit()" name="editProfileForm">
+
+            <div class="form-group" ng-class="{'has-error': editProfileForm.name.$dirty && !editProfileForm.name.$valid}">
+              <label class="col-sm-2 control-label" for="name">{{ 'user.edit.name' | translate}}</label>
+              <div class="col-sm-10">
+                <input ng-change="checkChanges()" class="form-control" type="text" id="name" ng-maxlength="form.maxLength" name="name" ng-model="form.name" placeholder="{{ 'user.edit.name' | translate}}" required>
+              </div>
+              <div class="align-form-error">
+                <span class="help-block" ng-if="editProfileForm.name.$dirty && editProfileForm.name.$error.required">{{ 'user.edit.required' | translate}}.</span>
+                <span class="help-block" ng-if="editProfileForm.name.$dirty && editProfileForm.name.$error.maxlength">{{ 'user.edit.longName' | translate}}.</span>
+              </div>
+            </div>
+
+            <div class="form-group" ng-class="{'has-error': editProfileForm.username.$dirty && !editProfileForm.username.$valid}">
+              <label class="col-sm-2 control-label label-align" for="username">{{ 'user.edit.username' | translate}}</label>
+              <div class="col-sm-10">
+                <input class="form-control" type="text" id="username" ng-pattern="/^[a-zA-Z0-9]+/" ng-maxlength="form.maxLength" name="username" ng-change="userValidate()" ng-model="form.username" placeholder="{{ 'user.edit.username' | translate}}" required>
+              </div>
+              <div class="align-form-error">
+                <span class="help-block" ng-if="editProfileForm.username.$dirty && editProfileForm.username.$error.used">{{ 'user.edit.usedUser' | translate}}.</span>
+                <span class="help-block" ng-if="editProfileForm.username.$dirty && editProfileForm.username.$error.required">{{ 'user.edit.required' | translate}}.</span>
+                <span class="help-block" ng-if="editProfileForm.username.$dirty && editProfileForm.username.$error.maxlength">{{ 'user.edit.longUsername' | translate}}.</span>
+                <span class="help-block" ng-if="editProfileForm.username.$dirty && editProfileForm.username.$error.pattern">{{ 'user.edit.invalidUsername' | translate}}.</span>
+              </div>
+            </div>
+
+            <div class="form-group" ng-class="{'has-error': editProfileForm.Email.$dirty && !editProfileForm.Email.$valid}">
+              <label class="col-sm-2 control-label" for="Email">{{ 'user.edit.email' | translate}}</label>
+              <div class="col-sm-10">
+                <input class="form-control" type="email" id="Email" ng-pattern="/^[a-zA-Z0-9][a-zA-Z0-9\._-]*@([a-zA-Z0-9\._-]+\.)[a-zA-Z-0-9]{2}/" ng-change="emailValidate()" ng-maxlength="form.maxLength" name="Email" ng-model="form.email" placeholder="{{ 'user.edit.email' | translate}}" required>
+              </div>
+              <div class="align-form-error">
+                <span class="help-block" ng-if="editProfileForm.Email.$dirty && editProfileForm.Email.$error.used">{{'user.edit.emailError1' | translate}}</span>
+                <span class="help-block" ng-if="editProfileForm.Email.$dirty && editProfileForm.Email.$error.pattern">{{'user.edit.emailError2' | translate}}</span>
+                <span class="help-block" ng-if="editProfileForm.Email.$dirty && editProfileForm.Email.$error.required">{{ 'user.edit.required' | translate}}.</span>
+                <span class="help-block" ng-if="editProfileForm.Email.$dirty && editProfileForm.Email.$error.maxlength">{{ 'user.edit.longEmail' | translate}}.</span>
+              </div>
+            </div>
+
+            <div ng-if="institutions !== {}">
+              <th-select-box for="institutions" label="'home.homeInfo.institution' | translate" element="form.institution.id" class="th-select-striped" help-link="'profile-institution'"></th-select-box>
+            </div>
+
+            <div>
+              <th-select-box for="languages" label="'user.edit.language' | translate" element="form.locale" on-change="checkChanges()" class="th-select-striped"></th-select-box>
+            </div>
+
+            <div class="create-save-container text-right">
+              <span ng-show="form.done">{{ 'user.edit.infoChanged' | translate}}</span>
+              <span ng-show="!form.done"></span>
+              <a ui-sref="profile-edit-password">{{ 'user.edit.changePassword' | translate}}.</a>
+              <input class="btn btn-blue" type="submit" value="{{ 'user.edit.save' | translate}}" ng-disabled="!enableConfirm"/>
+              <!--<button class="btn btn-blue">{{ 'user.edit.save' | translate}}</button>-->
+            </div>
+            <div class="image-error" ng-if="imageError === 301042">{{'user.edit.avatarError1' | translate}}</div>
+            <div class="image-error" ng-if="imageError === 301041">{{'user.edit.avatarError2' | translate}}</div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <th-head header-title="'user.edit.notifications.title'"></th-head>
+
+      <div class="profile-notifications">
+        <table class="table-notification-preferences">
+          <tbody>
+          <tr ng-repeat="(type,val) in notificationTypes">
+            <th>{{'user.edit.notifications.types.' + type | translate}}</th>
+            <td><div class="checkbox"><label><input type="checkbox" ng-change="saveNotificationPreference(type, val)" ng-model="val.email"/>Email</label></div></td>
+            <td style="width: 20px" class="text-right">
+              <span ng-class="{ 'saving-notification': val.saving }" ng-if="val.saving"><small>Salvando...</small></span>
+              <span class="text-success" ng-if="val.saved"><i class="glyphicon glyphicon-ok"></i></span>
+              <!--<span ng-if="!savingNotification"><i class="glyphicon glyphicon-check"></i></span>-->
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="avatar-modal">
+  <script type="text/ng-template" id="myModalContent.html">
+    <div class="modal-header">
+      <h3 class="modal-title">{{'user.edit.changeAvatar' | translate}}.</h3>
+    </div>
+    <div class="modal-body">
+      <img th-cropper id="cropper" src="{{image}}" on-change="onload"/>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-primary" ng-click="ok()">{{'user.edit.change' | translate}}</button>
+      <button class="btn btn-warning" ng-click="cancel()">{{'user.edit.cancel' | translate}}</button>
+    </div>
+  </script>
+</div>

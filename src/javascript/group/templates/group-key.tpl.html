@@ -1,0 +1,43 @@
+<div class="container content">
+  <div class="box">
+    <th-head group="true" header-title="'group.title'"></th-head>
+    <div>
+      <ng-form ng-submit="verifyKey()" name="keyForm" novalidate>
+        <div class="search-container">
+          <div>
+            <div class="search-key-container">
+              <div class="input-search-container">
+                <i class="img-large img-large-key img-circle background-color background-img hidden-xs"></i>
+                <input type="text" ng-model="key" id="key" name="key" class="form-control search-input" placeholder="{{'group.key.tip' | translate }}"/>
+                <div class="search-button-container">
+                  <button class="btn btn-blue" ng-click="verifyKey()" ng-show="keyForm.key.$error.valid === true || !validated" translate>search.search</button>
+                </div>
+                <div ng-show="keyForm.key.$valid && validated">
+                  <div class="input-status input-status-ok glyphicon glyphicon-ok"></div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <span ng-show="!validated">{{'group.key.tip.msg' | translate}}</span>
+              <span ng-show="keyForm.key.$error.valid === false">{{'group.key.group' | translate}}: </span>
+              <span ng-show="keyForm.key.$error.valid === true" class="text-uppercase error">{{'group.key.invalid' | translate}}: </span><span ng-show="keyForm.key.$error.valid === true">{{'group.key.invalid.msg' | translate}}</span>
+            </div>
+            <div class="founded-group">
+              <div class="group-key-founded" ng-show="keyForm.key.$valid && validated">
+                <h5>{{group.name}}</h5>
+                <div class="font-small">{{group.institution.name}}</div>
+              </div>
+            </div>
+            <div class="button-container key">
+              <button type="button" class="btn btn-blue" ng-click="confirm()" ng-show="keyForm.key.$valid && validated" translate>group.key.confirm</button>
+            </div>
+            <a class="close-icon" ng-click="reloadSearch()" ng-show="keyForm.key.$error.valid === false"><i class="img-short img-rounded icon img-small-close background-img"></i></a>
+          </div>
+        </div>
+      </ng-form>
+    </div>
+    <div class="stats-alert" ng-if="error">
+      <span>{{'group.key.error' | translate}}</span>
+    </div>
+  </div>
+</div>

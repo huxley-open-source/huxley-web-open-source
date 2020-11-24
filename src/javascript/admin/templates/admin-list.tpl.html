@@ -1,0 +1,114 @@
+<div class="container content">
+  <div class="box multiview-top">
+    <th-head header-title="'admin.control.title'"></th-head>
+
+    <div class="th-group-nav-bar">
+      <!-- menu -->
+      <div class="th-group-tab-header">
+        <ul class="th-nav-tabs">
+          <li ng-class="{'active' : $state.is('admin.reevaluate') || $state.is('admin.submission-show')}">
+            <a ui-sref="admin.reevaluate"> {{'submission.title' | translate }}</a>
+          </li>
+          <li ng-class="{'active' : $state.is('admin.pendency') || $state.is('admin.pendency-create') || $state.is('admin.pendency-institution-approval') || $state.is('admin.pendency-teacher-document')
+          || $state.is('admin.pendency-teacher-approval') || $state.is('admin.pendency-group-invitation') || $state.is('admin.pendency-group-join')}">
+            <a ui-sref="admin.pendency"> {{'admin.pendency.title' | translate }}</a>
+          </li>
+          <li ng-class="{'active' : $state.is('admin.institutions') || $state.is('admin.institution-create')} ">
+            <a ui-sref="admin.institutions">{{'admin.institutions.title' | translate}}</a>
+          </li>
+          <li ng-class="{'active' : $state.is('admin.topics') || $state.is('admin.topics-create') || $state.is('admin.topics-edit') } ">
+            <a ui-sref="admin.topics">{{'admin.topics.title' | translate}}</a>
+          </li>
+          <li ng-class="{'active' : $state.is('admin.language') || $state.is('admin.language-create') || $state.is('admin.language-edit')}  ">
+            <a ui-sref="admin.language">{{'language.title' | translate}}</a>
+          </li>
+        </ul>
+      </div>
+
+
+      <div>
+        <div class="th-tab-pane" ng-class="{'active' : $state.is('admin.reevaluate') || $state.is('admin.submission-show')}">
+          <!-- submenu -->
+          <ul>
+            <li ui-sref="admin.reevaluate" ui-sref-active="active">
+              <a ui-sref="admin.reevaluate"> {{'admin.submissions.reevaluate' | translate }}</a>
+            </li>
+            <li ui-sref="admin.submission-show({'subId': idSubmission})" ui-sref-active="active">
+              <a ui-sref="admin.submission-show({'subId': idSubmission})">{{'admin.submissions.show' | translate}}</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="th-tab-pane" ng-class="{'active' : $state.is('admin.pendency') || $state.is('admin.pendency-create') || $state.is('admin.pendency-institution-approval') || $state.is('admin.pendency-teacher-document')
+         || $state.is('admin.pendency-teacher-approval') || $state.is('admin.pendency-group-invitation') || $state.is('admin.pendency-group-join') }">
+          <!-- submenu -->
+          <ul class="pendency-tabs-content">
+            <li ui-sref="admin.pendency" ui-sref-active="active">
+              <a ui-sref="admin.pendency" ui-sref-active="active">{{'pendency.type.1' | translate}}</a>
+            </li>
+            <li ui-sref="admin.pendency-institution-approval" ui-sref-active="active">
+              <a ui-sref="admin.pendency-institution-approval" ui-sref-active="active">{{'pendency.type.2' | translate}}</a>
+            </li>
+            <li ui-sref="admin.pendency-teacher-document" ui-sref-active="active">
+              <a ui-sref="admin.pendency-teacher-document" ui-sref-active="active">{{'pendency.type.3' | translate}}</a>
+            </li>
+            <li ui-sref="admin.pendency-teacher-approval" ui-sref-active="active">
+              <a ui-sref="admin.pendency-teacher-approval" ui-sref-active="active">{{'pendency.type.4' | translate}}</a>
+            </li>
+            <li ui-sref="admin.pendency-group-invitation" ui-sref-active="active">
+              <a ui-sref="admin.pendency-group-invitation" ui-sref-active="active">{{'pendency.type.5' | translate}}</a>
+            </li>
+            <li ui-sref="admin.pendency-group-join" ui-sref-active="active">
+              <a ui-sref="admin.pendency-group-join" ui-sref-active="active">{{'pendency.type.6' | translate}}</a>
+            </li>
+            <li ui-sref="admin.pendency-create" ui-sref-active="active">
+              <a ui-sref="admin.pendency-create" ui-sref-active="active">{{'admin.pendency.create' | translate}}</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="th-tab-pane" ng-class="{'active': $state.is('admin.institutions') || $state.is('admin.institution-create')} ">
+          <ul>
+            <li ui-sref="admin.institutions" ui-sref-active="active">
+              <a ui-sref="admin.institutions" ui-sref-active="active">{{'admin.institutions.list' | translate}}</a>
+            </li>
+            <li ui-sref="admin.institution-create" ui-sref-active="active">
+              <a ui-sref="admin.institution-create" ui-sref-active="active">{{'admin.institutions.create' | translate}}</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="th-tab-pane" ng-class="{'active': $state.is('admin.topics') || $state.is('admin.topics-create') || $state.is('admin.topics-edit')} ">
+          <ul>
+            <li ui-sref="admin.topics" ui-sref-active="active">
+              <a ui-sref="admin.topics" >{{'admin.topics.title' | translate}}</a>
+            </li>
+            <li ui-sref="admin.topics-create" ui-sref-active="active">
+              <a ui-sref="admin.topics-create">{{'admin.topics.create' | translate}}</a>
+            </li>
+            <li ui-sref="admin.topics-edit({'topicId': idTopic})" ui-sref-active="active">
+              <a ui-sref="admin.topics-edit({'topicId': idTopic})">{{'admin.topics.edit' | translate}}</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="th-tab-pane" ng-class="{'active': $state.is('admin.language') || $state.is('admin.language-create') || $state.is('admin.language-edit')} ">
+          <ul>
+            <li ui-sref="admin.language" ui-sref-active="active">
+              <a ui-sref="admin.language" >{{'language.title' | translate}}</a>
+            </li>
+            <li ui-sref="admin.language-create" ui-sref-active="active">
+              <a ui-sref="admin.language-create" >{{'language.create' | translate}}</a>
+            </li>
+            <li ui-sref="admin.language-edit({ 'id': idLanguage })" ui-sref-active="active">
+              <a ui-sref="admin.language-edit({ 'id': idLanguage })">{{'language.edit' | translate}}</a>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+  <div ui-view></div>
+</div>

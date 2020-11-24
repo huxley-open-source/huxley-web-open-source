@@ -1,0 +1,25 @@
+.header {
+  border-bottom: 2px solid @blue;
+  padding-bottom: 5px;
+  margin-bottom: 20px;
+  max-height: 63px;
+  height: 63px;
+}
+
+.header > div {
+  .display-flex();
+}
+
+.header > div > div {
+  .flex-grow(1);
+}
+
+.header h3 {
+  display: inline-block;
+  margin-left: 20px;
+  color: @default-color;
+}
+
+.header button {
+  margin: -6px 0 0 0;
+}

@@ -1,0 +1,57 @@
+.btn {
+  font-size: 11px;
+  padding: 3px  10px;
+  border-radius: 1px;
+  border: 0;
+  .text-uppercase;
+}
+
+.btn-blue {
+  background-color: @blue;
+  color: white;
+}
+
+.btn-blue-lighter {
+  background-color: @blue-lighter;
+  color: white;
+}
+
+.btn-green {
+  background-color: @green;
+  color: white;
+}
+
+.btn-gray {
+  background-color: @gray;
+  color: white;
+}
+
+.btn-red {
+  background-color: @red;
+  color: white;
+}
+
+.btn-orange {
+  background-color: @orange;
+  color: white;
+}
+
+.btn-default.btn-transparent {
+  background-color: transparent;
+  &:hover, &:visited, &:focus, &:active {
+    background-color: transparent;
+    box-shadow: none;
+  }
+}
+
+.remove-problem-button {
+  font-weight: bold;
+  font-size: 20px;
+  color: #cc2229;
+  padding: 0;
+  &:hover, &:visited, &:focus, &:active {
+    background-color: transparent;
+    box-shadow: none;
+    color: @blue;
+  }
+}

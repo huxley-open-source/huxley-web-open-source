@@ -1,0 +1,25 @@
+<div class="multiview-bottom box">
+  <div class="problem-description">
+
+    <div class="problem-description-header-container">
+      <p translate class="problem-base-code">problem.create.baseCode</p>
+      <div class="list-group choice-answers">
+        <div ui-codemirror="options1" class="base-code-size" ng-model="codeView"></div>
+      </div>
+    </div>
+
+    <div class="problem-description-header-container" ng-repeat="line in problem.blankLines track by $index">
+      <p class="problem-base-code">{{'problem.insertCode' | translate}} {{$index +1}}</p>
+      <div class="list-group choice-answers">
+        <div id="editor{{$index}}" ui-codemirror="options2" class="complete-code-size" ng-model="codes[$index]"></div>
+      </div>
+    </div>
+
+    <div id="problem-send-answer-box">
+      <button class="btn btn-green" ng-disabled="disableConfirm" ng-click="submitCode()" > {{'problem.sendSolution' | translate}}</button>
+      <a ng-if="submission" style="margin-right: 10px;" ui-sref="problem-show.insert-code({id:problem.id, submissionId: null})">
+        <button class="btn btn-blue">{{'component.codeView.resetCode' | translate}}</button>
+      </a>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,38 @@
+<div class="container content">
+  <div class="box">
+    <th-head header-title="'contact'"></th-head>
+    <form ng-submit="submitForm()" class="contact-form" name="contactForm">
+      <div th-alert class="stats-alert" closable="false">
+        {{'contactForm.msg' | translate}}
+      </div>
+      <div ng-if="!currentUser.isAuthenticated()" class="form-group name-field" ng-class="{'has-error': createGroup.groupUrl.$dirty && !createGroup.groupUrl.$valid}">
+        <label class="col-sm-2 control-label" for="nameField">{{'contactForm.name' | translate}}</label>
+        <div class="col-sm-10">
+          <input class="form-control" type="text" id="nameField" name="nameField" ng-model="form.name" placeholder="{{'contactForm.name' | translate}}" ng-maxlength="{{groupInfo.nameMaxSize}}" required>
+        </div>
+      </div>
+      <div ng-if="!currentUser.isAuthenticated()" class="form-group email-field" ng-class="{'has-error': createGroup.groupUrl.$dirty && !createGroup.groupUrl.$valid}">
+        <label class="col-sm-2 control-label" for="emailField">{{'contactForm.email' | translate}}</label>
+        <div class="col-sm-10">
+          <input class="form-control" type="email" id="emailField" name="emailField" ng-model="form.email" placeholder="{{'contactForm.email' | translate}}" ng-maxlength="{{groupInfo.nameMaxSize}}" required>
+        </div>
+      </div>
+      <div class="form-group subject-field">
+        <label class="col-sm-2 control-label" for="subjectField">{{'contactForm.subject' | translate}}</label>
+        <div class="col-sm-10">
+          <input class="form-control" type="text" id="subjectField" name="subjectField" ng-model="form.subject" placeholder="{{'contactForm.subject' | translate}}" ng-maxlength="{{groupInfo.nameMaxSize}}" required>
+        </div>
+      </div>
+      <div class="form-group message-field">
+        <label class="col-sm-2 control-label" for="messageField">{{'contactForm.message' | translate}}</label>
+        <div class="col-sm-10">
+          <textarea class="form-control textarea-resize-disabled" type="text" id="messageField" name="messageField" ng-model="form.body" placeholder="{{'contactForm.message' | translate}}" required></textarea>
+        </div>
+      </div>
+      <div class="contact-form-button">
+        <span ng-show="sent">{{'contactForm.msgSent' | translate}}</span>
+        <button type="submit" class="btn btn-blue">{{'contactForm.send' | translate}}</button>
+      </div>
+    </form>
+  </div>
+</div>

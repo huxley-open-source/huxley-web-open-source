@@ -1,0 +1,471 @@
+//Image background
+.background-img, .background-img:active {
+  background-image: url("/images/all-icons.png");
+}
+
+//Image background for the new submissions images
+.new-submission-img {
+  background-image: url("/images/submission/new-submission-status.png");
+}
+
+.img-logo-white {
+  background-image: url("/images/logo-white.png");
+  width: 134px;
+  height: 25px;
+}
+
+//Image background color
+.background-color {
+  background-color: @blue;
+}
+
+//Image sizes
+.img-large {
+  width: 69px;
+  height: 69px;
+}
+
+.img-big {
+  width: 55px;
+  height: 55px;
+}
+
+.img-medium {
+  width: 32px;
+  height: 32px;
+}
+
+.img-short {
+  width: 18px;
+  height: 18px;
+}
+
+.img-small {
+  width: 14px;
+  height: 13px;
+}
+
+.img-shortcuts {
+  width: 20px;
+  height: 18px;
+}
+
+.img-large-shortcuts {
+  width: 24px;
+  height: 18px;
+}
+
+.img-menu {
+  width: 35px;
+  height: 32px;
+}
+
+.icon {
+  display: inline-block;
+}
+
+.btn-icon {
+  padding: 0 2px;
+}
+
+.description-icon {
+  color: @white;
+  width: 11px;
+  height: 13px;
+  display: inline-block;
+  text-align: center;
+  font-size: 11px;
+  font-style: normal;
+  border-radius: 3px;
+  &.teacher {
+    background-color: @orange-light;
+  }
+  &.teacher-assistant {
+    background-color: @blue;
+  }
+  &.institution {
+    background-color: @black;
+  }
+  &.description {
+    background-color: @green;
+  }
+}
+
+//posicionament
+.img-bottom {
+  vertical-align: bottom;
+}
+
+//Large images
+
+.img-large-search {
+  background-position: -817px -200px;
+}
+
+.img-large-key {
+  background-position: -627px -200px;
+}
+
+.img-large-add-member1 {
+  background-position: -275px -310px;
+}
+
+.img-large-add-member2 {
+  background-position: -436px -308px;
+}
+
+.img-large-create-questionnaire {
+  background-position: -522px -308px;
+}
+
+.img-large-oracle {
+  background-position: -724px -198px;
+}
+
+//Small images
+
+.img-small-search {
+  background-position: -46px -25px;
+}
+
+.img-small-key {
+  background-position: -93px -25px;
+}
+
+.img-small-close {
+  background-position: -168px 5px;
+}
+
+.img-small-edit {
+  background-position: -16px -105px;
+  &.icon {
+    width: 20px;
+    height: 20px;
+    border-radius: 3px;
+  }
+}
+
+.img-small-edit-highlight {
+  background-position: -42px -107px;
+}
+
+.img-small-edit-highlight:hover {
+  background-position: -17px -107px;
+}
+
+.img-small-pen {
+  background-position: -186px -69px;
+}
+
+.img-small-copy {
+  .glyphicon-copy();
+  .glyphicon();
+}
+
+.img-small-remove {
+  .glyphicon-trash();
+  .glyphicon();
+  color: @red;
+}
+
+.img-small-alert {
+  background-position: -161px -151px;
+}
+
+.img-small-warning {
+  background-position: -194px -151px;
+}
+
+.img-small-question-sign {
+  .glyphicon;
+  .glyphicon-question-sign;
+  color: @red;
+}
+.img-warning-user-box {
+  position: relative;
+  .img-small-question-sign {
+    position: absolute;
+    left: 44px;
+    top: 44px;
+    border-radius: 10px;
+    background: white;
+  }
+}
+
+.img-small-locked {
+  background-position: -100px -153px;
+}
+
+.img-small-unlocked {
+  background-position: -129px -153px;
+}
+
+.img-small-msg {
+  background-position: -191px -108px;
+  &:hover {
+    background-position: -165px -108px;
+  }
+}
+
+.img-small-man {
+  background-position: -195px -259px;
+}
+
+//Submission status
+
+.img-medium-submission-waiting {
+//  background-position: -267px -132px;
+  background-position: -269px -133px;
+  -webkit-animation:spin 1.5s linear infinite;
+  -moz-animation:spin 1.5s linear infinite;
+  animation:spin 1.5s linear infinite;
+}
+
+.img-large-submission-waiting {
+  background-position: -262px 0px;
+}
+
+.img-medium-submission-correct {
+  background-position: -10px -505px;
+}
+
+.img-medium-submission-wrong-answer {
+  background-position: -53px -502px;
+}
+
+.img-medium-submission-time-limit-exceeded {
+  background-position: -94px -505px;
+}
+
+.img-medium-submission-empty-answer {
+  background-position: -137px -505px;
+}
+
+.img-medium-submission-compilation-error {
+  background-position: -181px -505px;
+}
+
+.img-medium-submission-runtime-error {
+  background-position: -223px -505px;
+}
+
+.img-medium-blue-search {
+  background-position: -57px -19px;
+}
+
+.img-medium-white-search {
+  background-position: -44px -27px;
+}
+
+.img-medium-message {
+  background-position: -13px -294px;
+  &.active {
+    background-position: -46px -294px;
+  }
+  &:hover {
+    background-position: -78px -294px;
+  }
+}
+
+.img-medium-trash {
+  background-position: -111px -295px;
+  &.active {
+    background-position: -143px -295px;
+  }
+  &:hover {
+    background-position: -175px -295px;
+  }
+}
+
+.img-medium-logo {
+  background-position: -126px -392px;
+}
+
+.img-medium-notebook {
+  background-position: -206px -450px;
+}
+
+.img-medium-medal {
+  background-position: -12px -60px;
+}
+
+.img-short-input {
+  background-position: -71px -458px;
+}
+
+.img-short-upload {
+  background-position: -19px -28px;
+}
+
+.img-short-output {
+  background-position: -99px -459px;
+}
+
+.img-short-window {
+  background-position: -47px -70px;
+}
+
+.img-medium-plus {
+  background-position: -17px -256px;
+}
+.img-short-output-not-correct {
+  background-position: -177px -458px;
+}
+
+.img-shortcuts-create-group {
+  background-position: -16px -221px;
+  &:hover {
+    background-position: -17px -190px;
+  }
+}
+
+.img-shortcuts-notifications {
+  background-position: -89px -219px;
+  &:hover {
+    background-position: -89px -189px;
+  }
+}
+
+.img-shortcuts-world {
+  background-position: -247px -221px;
+  &:hover {
+    background-position: -248px -191px;
+  }
+}
+
+.img-shortcuts-config {
+  background-position: -55px -221px;
+  &:hover, &:focus {
+    background-position: -55px -191px;
+  }
+}
+
+.img-shortcuts-messages {
+  background-position: -126px -221px;
+  &:hover {
+    background-position: -190px -221px;
+  }
+}
+
+.img-medium-problem-icon {
+  background-position: -19px -338px;
+}
+
+.img-medium-submission-icon {
+  background-position: -68px -337px;
+}
+
+.img-medium-quiz-icon {
+  background-position: -115px -339px;
+}
+
+.img-medium-group-icon {
+  background-position: -162px -339px;
+}
+.img-short-search-blue {
+  background-position: -70px -28px;
+}
+
+
+.img-big-huxley {
+  background-position: -450px -201px;
+}
+
+.img-bigger {
+  width: 180px;
+  height: 180px;
+}
+
+.img-bigger-white-huxley {
+  background-position: -872px -632px;
+}
+
+.img-short-create-group {
+  background-position: -41px -760px;
+}
+
+.img-short-create-quiz {
+  background-position: -84px -760px;
+}
+
+.img-notification-size {
+  width: 48px;
+  height: 48px;
+}
+
+.img-notification-quiz {
+  background-position: -375px -746px;
+}
+
+.img-notification-mural {
+  background-position: -315px -745px;
+}
+.img-small-download {
+  background-position: -16px -457px;
+  &.icon {
+    width: 20px;
+    height: 20px;
+    border-radius: 3px;
+  }
+}
+
+.img-medium-home {
+  background-position: -207px -338px;
+}
+
+.loading-container {
+  .img-loading, .img-loading-fail {
+    margin: 15px auto;
+  }
+
+}
+.img-loading {
+  width: 71px;
+  height: 71px;
+  .img-circle;
+  .background-color;
+  .background-img;
+  background-position: -261px 1px;
+  -webkit-animation:spin 1.5s linear infinite;
+  -moz-animation:spin 1.5s linear infinite;
+  animation:spin 1.5s linear infinite;
+}
+.img-loading-fail {
+  width: 71px;
+  height: 71px;
+  .img-circle;
+  .background-img;
+  background-position: -760px 706px;
+  border: 8px @red solid;
+}
+
+.img-small-blue-key {
+  background-position: -115px -28px;
+}
+
+
+
+.img-medium-submission-huxley-error {
+  background-position: -22px -9px;
+}
+
+.img-medium-submission-presentation-error {
+  background-position: -179px -9px;
+}
+
+.img-medium-submission-wrong-file-name {
+  background-position: -75px -9px;
+}
+
+.img-medium-submission-empty-test-case {
+  background-position: -121px -9px;
+}
+
+.img-oracle {
+  margin-top: -10px;
+}
+
+@-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
+@-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
+

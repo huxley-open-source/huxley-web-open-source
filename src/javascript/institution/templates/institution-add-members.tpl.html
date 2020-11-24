@@ -1,0 +1,26 @@
+<div class="box multiview-bottom">
+
+    <div class="blue-border-box">
+        <div class="create-form">
+            <ng-form name="invite-student" class="group-invite-student institution-invite" novalidate>
+              <div>
+                <th-select-box label="'institution.role' | translate" element="role" class="th-select-striped" for="roleList"></th-select-box>
+                <th-input-complete-box type="'USER'" label="'institution.invite' | translate" placeholder="'institution.invite' | translate" chosen-list="userList" element-id="'groupTeacher'"></th-input-complete-box>
+              </div>
+              <div class="create-save-container text-right" ng-if="!(saved || error)">
+                <button class="btn btn-green add-member-button text-uppercase" ng-click="inviteUsers()">{{'institution.sendInvite' | translate}}</button>
+              </div>
+              <div class="create-save-container text-right" ng-if="saved">
+                <span>{{'group.invitesSended' | translate}}</span>
+                <button class="btn btn-green add-member-button text-uppercase" ng-click="inviteUsers()">{{'institution.sendInvite' | translate}}</button>
+              </div>
+              <div class="create-save-container text-right" ng-if="error">
+                <span>{{'group.invitesFail' | translate}}</span>
+                <button class="btn btn-green add-member-button text-uppercase" ng-click="inviteUsers()">{{'institution.sendInvite' | translate}}</button>
+              </div>
+            </ng-form>
+
+        </div>
+    </div>
+
+</div>

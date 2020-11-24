@@ -1,0 +1,40 @@
+<div>
+  <div class="home-info no-margin" ng-if="lineReceived.length !== 0 && lineExpected.length !== 0">
+    <div class="home-multiple-info diff-container" sync-scrolls="diff-show">
+      <div>
+        <th-show-case>
+          <th-show-case-header>
+            <i class="icon img-short img-short-output background-img"/> {{'component.diff.outputExpected' | translate}}
+          </th-show-case-header>
+          <perfect-scrollbar wheel-speed="50" refresh-on-change="lineExpected" class="diff-show">
+            <table>
+              <tbody>
+                  <tr ng-repeat="line in lineExpected track by $index" class="{{line.class}}">
+                    <td ng-bind-html="lineCount[$index]" class="diff-line-count" ng-if="newDiff"></td>
+                    <td ng-bind-html="line.line"></td>
+                  </tr>
+              </tbody>
+            </table>
+          </perfect-scrollbar>
+
+        </th-show-case>
+      </div>
+      <div>
+        <th-show-case>
+          <th-show-case-header>
+            <i class="icon img-short img-short-output-not-correct background-img"/> {{'component.diff.outputReceived' | translate}}
+          </th-show-case-header>
+          <perfect-scrollbar wheel-speed="50" refresh-on-change="lineReceived" class="diff-show">
+            <table>
+              <tbody>
+              <tr ng-repeat="line in lineReceived track by $index" class="{{line.class}}">
+                <td ng-bind-html="line.line"></td>
+              </tr>
+              </tbody>
+            </table>
+          </perfect-scrollbar>
+        </th-show-case>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,40 @@
+<div class="box multiview-bottom">
+  <th-loading loading="loading">
+    <table class="table">
+      <thead>
+        <tr>
+          <th class="profile-quizes-left">
+            <th-order-arrow label="'user.table.title'" sort-by="'startDate'" order='searchParams.order' element="searchParams.sort" search-function="search()"></th-order-arrow>
+          </th>
+          <th class="profile-quizes-center">
+            <th-order-arrow label="'user.table.score-user'" sort-by="'userScore'" order='searchParams.order' element="searchParams.sort" search-function="search()"></th-order-arrow>
+          </th>
+          <th class="profile-quizes-right">
+            <th-order-arrow label="'user.table.score-quiz'" sort-by="'score'" order='searchParams.order' element="searchParams.sort" search-function="search()"></th-order-arrow>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="quiz in quizzes">
+            <th class="profile-quizes-left profile-quizes-border-th">{{quiz.title}} </th>
+            <th class="profile-quizes-center profile-quizes-border-th">{{quiz.userScore}}</th>
+            <th class="profile-quizes-right profile-quizes-border-th">{{quiz.score}}</th>
+        </tr>
+        <tr ng-if="quizzes.length == 0"><td translate>profile.quizNotFound</td></tr>
+      </tbody>
+    </table>
+  </th-loading>
+</div>
+<div class="pagination-container" ng-show="paginationData.totalItems > paginationData.itemsPerPage && !loading">
+  <pagination ng-show="paginationData.totalItems > paginationData.itemsPerPage" items-per-page="paginationData.itemsPerPage"
+              total-items="paginationData.totalItems"
+              ng-model="paginationData.currentPage"
+              ng-change="paginationChanged()"
+              max-size="paginationData.maxSize"
+              class="pagination-sm"
+              boundary-links="true"
+              direction-links="false"
+              rotate="false"
+              last-text="{{'pagination.last' | translate}}"
+              first-text="{{'pagination.first'| translate}}" />
+</div>

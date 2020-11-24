@@ -1,0 +1,65 @@
+<div class="container content">
+  <div class="box">
+    <th-head header-title="'institution.myTitle'"></th-head>
+    <form>
+      <div class="search-container">
+        <div>
+          <div class="col-lg-5">
+            <div class="input-search-container">
+              <i class="img-large img-large-search img-circle background-color background-img"></i>
+              <input type="text" ng-model="searchParams.q" id="query" class="form-control search-input" placeholder="{{'institution.search' | translate}}" ng-keyup="searchByName()"/>
+              <div class="search-button-container">
+                <button class="btn btn-blue" ng-click="searchByName()" translate>search</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  <div>
+    <th-loading loading="loading">
+      <table class="table margin-top-table">
+        <thead>
+        <tr>
+          <th>
+            <th-order-arrow label="'license.institution'" sort-by="'name'" order='searchParams.order' element="searchParams.sort" search-function="search()"></th-order-arrow>
+          </th>
+          <th class="text-center">
+            <th-order-arrow label="'pendency.list.stats'" sort-by="'status'" order='searchParams.order' element="searchParams.sort" search-function="search()"></th-order-arrow>
+          </th>
+          <th>
+            <th-order-arrow label="'institution.acronym'" sort-by="'acronym'" order='searchParams.order' element="searchParams.sort" search-function="search()"></th-order-arrow>
+          </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="institution in institutions">
+          <td class="license-list-text">
+            <a ui-sref="institution-show.groups({'id': institution.id})">{{institution.name}}</a>
+          </td>
+          <td class="text-center">
+          <span ng-show="institution.status === 'PENDING'">
+            {{'institution.status.pending' | translate}}
+          </span>
+          <span ng-if="institution.status === 'APPROVED'">
+            {{'institution.status.approved' | translate}}
+          </span>
+          <span ng-if="institution.status === 'REJECTED'">
+            {{'institution.status.rejected' | translate}}
+          </span>
+
+          </td>
+          <td class="license-list-text">
+            {{institution.acronym}}
+          </td>
+        </tr>
+        <tr ng-if="institutions.length == 0 && searched"><td translate>institution.resultNotFound</td></tr>
+        </tbody>
+      </table>
+    </th-loading>
+
+  </div>
+</div>
+</div>
+<div class="pagination-container" ng-if="paginationData.totalItems > paginationData.itemsPerPage && searched && !loading"><pagination items-per-page="paginationData.itemsPerPage" total-items="paginationData.totalItems" ng-model="paginationData.currentPage" ng-change="pageChanged()" max-size="paginationData.maxSize" class="pagination-sm" boundary-links="true" direction-links="false" rotate="false" last-text="{{'pagination.last' | translate}}" first-text="{{'pagination.first'| translate}}"></pagination></div>
+

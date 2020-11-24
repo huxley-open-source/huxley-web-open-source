@@ -1,0 +1,79 @@
+<div class="container content">
+  <div class="box">
+    <th-head header-title="'topcoder.title'"></th-head>
+
+    <div>
+      <h4>{{'topcoder.geral' | translate}}</h4>
+      <th-loading loading="loading">
+        <perfect-scrollbar class="top-coder-scrollbar">
+          <div class="top-coder-wrap focused-top-coder">
+            <div ng-repeat="topCoder in topCoders" class="top-coder-user-box">
+              <div class="top-coder-position-box">{{topCoder.position}}º</div>
+              <div class="top-coder-img-box"><a ui-sref="profile-show.problems({'id': topCoder.user.id})"><img class="top-coder-img-size" src="{{topCoder.user.avatar}}?width=40"></a></div>
+              <div class="top-coder-user-information-box">
+                <div><a class="black-link" ui-sref="profile-show.problems({'id': topCoder.user.id})">{{topCoder.user.name}}</a></div>
+                <div class="top-coder-user-information">
+                  <div class="font-small">
+                    <strong>{{topCoder.points}}</strong> - <a class="black-link" ui-sref="institution-show.groups({'id': topCoder.user.institution.id})">{{topCoder.user.institution.acronym || topCoder.user.institution.name}}</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </perfect-scrollbar>
+      </th-loading>
+    </div>
+
+    <div ng-if="currentUser && !currentUser.atLeastTeacherAssistant()">
+      <h4>{{'topcoder.focused' | translate}}</h4>
+      <th-loading loading="loadingFocused">
+        <div class="top-coder-wrap">
+          <div ng-repeat="topCoder in focusedTopCoder" class="top-coder-user-box focused-top-coder" ng-class="{'focused-user': (topCoder.user.id === currentUser.id)}">
+            <div class="top-coder-position-box">{{topCoder.position}}º</div>
+            <div class="top-coder-img-box"><a ui-sref="profile-show.problems({'id': topCoder.user.id})"><img class="top-coder-img-size" src="{{topCoder.user.avatar}}?width=40"></a></div>
+            <div class="top-coder-user-information-box">
+              <div><a class="black-link" ui-sref="profile-show.problems({'id': topCoder.user.id})">{{topCoder.user.name}}</a></div>
+              <div class="top-coder-user-information">
+                <div class="font-small">
+                  <strong>{{topCoder.points}}</strong> - <a class="black-link" ui-sref="institution-show.groups({'id': topCoder.user.institution.id})">{{topCoder.user.institution.acronym || topCoder.user.institution.name}}</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </th-loading>
+    </div>
+
+    <div ng-if="currentUser && groups.length > 0">
+      <h4>{{'topcoder.groups' | translate}} -
+        <select ng-model="selected.group" ng-options="group.name for group in groups track by group.id" class="form-control top-coder-group-select" ng-change="groupSearch()"></select>
+      </h4>
+      <th-loading loading="loadingGroup">
+        <perfect-scrollbar class="top-coder-scrollbar">
+          <div class="top-coder-wrap">
+            <div ng-repeat="topCoder in groupTopCoders" class="top-coder-user-box focused-top-coder">
+              <div class="top-coder-position-box">{{$index+1}}º</div>
+              <div class="top-coder-img-box"><a ui-sref="profile-show.problems({'id': topCoder.user.id})"><img class="top-coder-img-size" src="{{topCoder.user.avatar}}?width=40"></a></div>
+              <div class="top-coder-user-information-box">
+                <div><a class="black-link" ui-sref="profile-show.problems({'id': topCoder.user.id})">{{topCoder.user.name}}</a></div>
+                <div class="top-coder-user-information">
+                  <div class="font-small">
+                    <strong>{{topCoder.points}}</strong> - <a class="black-link" ui-sref="institution-show.groups({'id': topCoder.user.institution.id})">{{topCoder.user.institution.acronym || topCoder.user.institution.name}}</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div ng-if="groupTopCoders.length % 3 !== 0" class="top-coder-user-box focused-top-coder" style="visibility: hidden">
+              <div class="top-coder-position-box">º</div>
+              <div class="top-coder-img-box"></div>
+              <div class="top-coder-user-information-box">
+                <div></div>
+                <div class="top-coder-user-information"><div class="font-small"></div></div>
+              </div>
+            </div>
+          </div>
+        </perfect-scrollbar>
+      </th-loading>
+    </div>
+  </div>
+</div>

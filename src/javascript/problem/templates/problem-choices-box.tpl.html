@@ -1,0 +1,37 @@
+<div class="problem-choice-box">
+
+  <div class="choice-nd">
+    <div class="grade _{{problem.nd}}">{{problem.nd}}</div>
+    <div class="arrow-right arrow-small arrow-position arrow-border-{{problem.nd}}"></div>
+    <i ng-show="problem.status === 'PENDING'" class="pending-problem icon img-small-alert img-short background-img"
+       title="{{ 'problem.pendingProblem' | translate }}"></i>
+  </div>
+
+  <div class="pull-right" ng-show="expand">
+    <button class="btn btn-xs btn-default" ng-model="showMore" btn-checkbox>
+      <span class="fa fa-eye"></span>
+    </button>
+  </div>
+
+  <div class="choice-name" ng-class="{'name-expanded': expandDescription}">
+    <a ui-sref="problem-choices-show({ id: problem.id })"
+       ng-click="onClickProblem({ problem: problem, $event: $event })">
+      <div bind-markdown="problem.description"
+           display-inline="!showMore"
+           limit="100"></div>
+    </a>
+
+    <div class="topic-list" ng-if="showTopics === true">
+      <span ng-repeat="topic in problem.topics">
+        <span ng-show="$index > 0">,</span> {{topic.name}}</span>
+    </div>
+
+    <div class="topic-list" ng-show="countTestCases === true || approvedBy === true">
+        <span class="topic-list" ng-show="countTestCases === true">
+          {{problem.testCases.total}}{{'problem.testCaseCount' | translate}}{{problem.testCases.examples}}{{'problem.testCaseCount2' | translate}}
+          </span>
+      <span ng-show="approvedBy === true && problem.approvedBy !== null"> {{'problem.approvedBy' | translate}} {{problem.approvedBy.name}}</span>
+      <span ng-show="approvedBy === true && problem.approvedBy === null"> {{'problem.suggestedBy' | translate}} {{problem.suggestedBy.name}}</span>
+    </div>
+  </div>
+</div>

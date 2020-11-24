@@ -1,0 +1,52 @@
+<div class="multiview-bottom box">
+  <div ng-if="stats.submissionsCount && stats.submissionsCount > 0" th-alert class="stats-alert" closable="false">
+    {{'quiz.quizStatsMsg' | translate}}
+  </div>
+  <div ng-if="stats.submissionsCount && stats.submissionsCount === 0" th-alert class="yellow-box" closable="false">
+    {{'group.alertMsgs.msg4' | translate}}
+  </div>
+
+  <th-loading ng-if="!stats.submissionsCount || stats.submissionsCount > 0" loading="loadingStats">
+    <div class="checkbox text-right stats-box" ng-if="shouldShowPresence">
+      <label class="control-label" title="{{'quiz.presentOnlyHelp' | translate}}"><input type="checkbox" ng-model="statsFilter.presence" ng-change="getQuizStats()"/>{{'quiz.presentOnly' | translate}}</label>
+      <a class="present-help doubt-link-size glyphicon glyphicon-question-sign" href="" style="padding: 4px"
+         title="{{'quiz.presentOnlyHelp' | translate}}"></a>
+    </div>
+    <div class="stats-box">
+      <div class="stats-box-item">
+        <p>{{'quiz.submissionsCount' | translate}}</p>
+        <p class="stats-big">{{submissionsCount}}</p>
+      </div>
+
+      <div class="stats-box-item">
+        <p>{{'quiz.submissionsAvgPerDay' | translate}}</p>
+        <p class="stats-big">{{submissionsAvgPerDay}}</p>
+      </div>
+
+      <div class="stats-box-item graph-box">
+        <nvd3 id="gradeProportion" options="statsOptions.gradePieChart" data="stats.gradeProportion"></nvd3>
+      </div>
+      <div class="stats-box-item graph-box">
+        <nvd3 id="studentsTried" options="statsOptions.studentPieChart" data="stats.studentsTried"></nvd3>
+      </div>
+    </div>
+
+    <div>
+        <div>
+          <div>
+            <p class="stats-box-item-unique">{{'user.graph.topics'| translate}}</p>
+          </div>
+          <nvd3 options="profileTopics.options" data="profileTopics.data"></nvd3>
+        </div>
+    </div>
+    <div>
+      <div>
+        <div>
+          <p class="stats-box-item-unique">{{'user.graph.scoreNd'| translate}}</p>
+        </div>
+        <nvd3 options="ndChart.options" data="ndChart.data" ></nvd3>
+      </div>
+    </div>
+
+  </th-loading>
+</div>

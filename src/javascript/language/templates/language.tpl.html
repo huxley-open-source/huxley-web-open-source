@@ -1,0 +1,86 @@
+<div class="box multiview-bottom">
+    <div>
+      <div>
+        <form>
+          <div class="search-container">
+            <div>
+              <div class="col-lg-5">
+                <div class="input-search-container">
+                  <i class="img-large img-large-search img-circle background-color background-img"></i>
+                  <input type="text" ng-model="searchParams.languageToSearch" id="query" class="form-control search-input" ng-change="doSearch()" placeholder="{{'language.search' | translate}}"/>
+                  <div class="search-button-container">
+                    <button class="btn btn-blue" ng-click="doSearch()" translate>search</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <th-loading loading="loading">
+      <div>
+        <table class="table margin-top-table">
+          <thead>
+          <tr>
+            <th>
+              <th-order-arrow label="'language.name'" sort-by="'name'" order='searchParams.order' element="searchParams.sort" search-function="search()"></th-order-arrow>
+            </th>
+            <th class="text-right">
+              <span>{{'admin.topics.edit' | translate}}/{{ 'admin.topics.delete' | translate}}</span>
+            </th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr ng-repeat="language in languages">
+            <td class="license-list-text">
+              {{language.label}}
+            </td>
+            <td class="text-right">
+              <a class="small-margin-right" ui-sref="admin.language-edit({ 'id': language.id })"><i class="icon background-img img-short img-small-pen"></i></a>
+              <span class="dropdown quiz-box-menu">
+              <a   dropdown-toggle>
+                <i class="img-small-remove" ></i>
+              </a>
+              <span class="dropdown-menu" role="menu">
+                <div class="popover right">
+                  <div class="arrow"></div>
+                  <div class="popover-inner">
+                    <div class="popover-content background-alert">
+                      {{'language.confirmRemove' | translate}}
+                      <div class="group-exclude-user-container">
+                        <div>
+                          <span>{{language.label}}</span>
+                        </div>
+                      </div>
+                      <div class="group-exclude-user-menu">
+                        <button class="btn btn-blue" ng-click="deleteLanguage(language.id)">{{'group.users.yes' | translate}}</button>
+                        <button class="btn btn-gray">{{'group.users.cancel' | translate}}</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </span>
+            </span>
+            </td>
+          </tr>
+          <tr ng-if="languages.length == 0 && searched"><td translate>language.notFound</td></tr>
+          </tbody>
+        </table>
+      </div>
+        </th-loading>
+    </div>
+</div>
+  <div class="pagination-container" ng-show="paginationData.totalItems > paginationData.max">
+    <pagination items-per-page="paginationData.max"
+                total-items="paginationData.totalItems"
+                ng-model="paginationData.currentPage"
+                ng-change="paginationChanged()"
+                max-size="paginationData.maxSize"
+                class="pagination-sm"
+                boundary-links="true"
+                direction-links="false"
+                rotate="false"
+                last-text="{{'pagination.last' | translate}}"
+                first-text="{{'pagination.first'| translate}}">
+    </pagination>
+  </div>

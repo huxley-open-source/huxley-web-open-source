@@ -1,0 +1,41 @@
+<div class="th-notification-container">
+  <div class="th-notification-image-container">
+    <i ng-if="notification.kind === '1'" class="background-img img-notification-size img-notification-mural icon"></i>
+    <i ng-if="notification.kind === '2'" class="background-img img-notification-size img-notification-quiz icon"></i>
+    <div class="problem-data" ng-if="notification.kind === '3' || notification.type === 'USER_SUBMISSION_STATUS'">
+      <div class="problem-data-left">
+        <div class="grade _{{problem.nd}}">{{problem.nd}}</div>
+        <div class="arrow-right arrow-small arrow-position arrow-border-{{problem.nd}}"></div>
+      </div>
+    </div>
+    <img ng-if="notification.type === 'GROUP_MEMBER_SOLVED_PROBLEM'" src="{{user.avatar}}?width=40&height=40" class="img-notification-size icon">
+
+
+  </div>
+  <div class="th-notification-msg-container">
+    <div><span class="font-small th-notification-date">{{notification.date | amDateFormat:'DD/MM'}} {{'quiz.similarity.at' | translate}} {{notification.date | amDateFormat:'hh:mm'}}</span></div>
+    <div>
+      <span class="notification-message" ng-if="notification.type === 'GROUP_MEMBER_SOLVED_PROBLEM'">
+      {{user.name}} {{'component.notification.groupMemberSolved' | translate}} <a ng-href="/problem/{{problem.id}}">{{problem.name}}</a>
+      </span>
+      <span class="notification-message" ng-if="notification.type === 'USER_SUBMISSION_STATUS'">
+      {{'component.notification.userStatus' | translate}} <a ng-href="/problem/{{problem.id}}/submission/{{submission.id}}">{{problem.name}}</a> {{'component.notification.userStatus2' | translate}}
+      </span>
+    </div>
+    <div ng-if="notification.kind === '3'" class="th-notification-msg-problem">
+      <span class="notification-name">{{problem.name}}</span> | <span class="th-notification-msg-topics"><span ng-repeat="topic in problem.topics"><span ng-if="$index > 0">,</span> {{topic.name}}</span></span>
+    </div>
+    <div class="notification-submission" ng-if="notification.kind === 'GROUP_MEMBER_SOLVED_PROBLEM'" class="th-notification-msg-submission">
+{{submission.evaluation}}
+    </div>
+  </div>
+  <div ng-if="notification.type === 'USER_SUBMISSION_STATUS'" class="th-notification-result-container">
+    <div class="problem-data">
+      <div class="problem-data-right">
+        <div class="problem-status-box">
+          <th-problem-status status="submission.evaluation" without-popover="true"/>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

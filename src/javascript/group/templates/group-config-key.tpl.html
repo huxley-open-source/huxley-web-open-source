@@ -1,0 +1,22 @@
+<div class="box multiview-bottom">
+    <div class="group-key-container">
+        <div class="background-key">
+            <div ng-if="key !== null" >
+                <div class="popover top in fade" ng-class="{'active':popover}">
+                    <div class="arrow"></div>
+
+                    <div class="popover-inner">
+                        <div class="popover-content">{{'group.key.copyInfo' | translate}}</div>
+                    </div>
+                </div>
+                <input input-value="key" on-select="popover" th-auto-select/>
+            </div>
+        </div>
+        <div class="group-key-explanation-container">
+            {{'group.key.explanation' | translate}}
+        </div>
+        <div class="group-key-repeat-container">
+            <button is-loading="$loadingButton" class="btn btn-blue text-uppercase" ng-if="key !== null" ng-click="generateKey()">{{'group.key.reGenerate' | translate}}</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,16 @@
+<div class="problem-status {{class}}">
+
+  <div class="arrow-left arrow-medium" ng-if="withArrowBox === true && direction === 'left'"></div>
+  <div ng-if="(withoutPopover === undefined || withoutPopover === false) && direction !== 'bottom'" class="problem-status-container {{icon}} {{box}}"   popover-placement="left"
+       popover="{{popoverMessage | translate}}" popover-trigger="mouseenter">
+    <span class="glyphicon glyphicon-repeat" ng-if="status === 'WAITING'"></span>
+  </div>
+  <div ng-if="(withoutPopover === undefined || withoutPopover === false) && direction === 'bottom'" class="problem-status-container {{icon}} {{box}}"   popover-placement="bottom"
+       popover="{{popoverMessage | translate}}" popover-trigger="mouseenter">
+    <span class="glyphicon glyphicon-repeat" ng-if="status === 'WAITING'"></span>
+  </div>
+  <div ng-if="withoutPopover === true" class="problem-status-container {{icon}} {{box}}">
+    <span class="glyphicon glyphicon-repeat" ng-if="status === 'WAITING'"></span>
+  </div>
+  <div class="arrow-right arrow-medium" ng-if="withArrowBox === true && direction !== 'left'"></div>
+</div>

@@ -1,0 +1,117 @@
+<div class="container content">
+  <div class="box">
+    <th-head header-title="'problem.title'"></th-head>
+    <div class="dropdown" is-open="problemScreen.showFilter">
+      <form>
+        <div class="search-container">
+          <div>
+            <div class="col-lg-5">
+              <div class="input-search-container">
+                <i class="img-large img-large-search img-circle background-color background-img"></i>
+                <input type="text" ng-model="searchParams.q" id="query" class="form-control search-input" ng-keyup="searchByName()" placeholder="{{'problem.search' | translate}}"/>
+                <button type="button" class="advanced-search-button btn btn-default" dropdown-toggle>
+                  <div class="arrow-down arrow-small"></div>
+                </button>
+                <div class="search-button-container">
+                  <button class="btn btn-blue" ng-click="doSearch()" is-loading="listLoading">{{'search' | translate}}</button>
+                </div>
+              </div>
+            </div>
+            <div class="search-select-box-container">
+              <th-select-box label="'problem.manage.status' | translate" element="searchParams.status" class="th-select-striped" for="statusList" on-change="doSearch()"></th-select-box>
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <!-- Div usada somenta para permitir que a div advanced search se posicione sobre as demais
+      quando ela aparecer -->
+
+      <div class="advanced-search dropdown-menu" ng-click="disableDropdown($event)">
+        <button type="button" class="close" aria-label="Close" ng-click="showHideFilter()"><span aria-hidden="true">&times;</span></button>
+
+        <div class="difficulty-level-filter">
+          <p translate>problem.difficultyLevelFilter</p>
+
+          <div>
+            <div ui-slider="{range:true}" min="1" max="5" ng-model="problemScreen.difficultyLevel"></div>
+            <span class="cant-select-text default-cursor">=</span>
+            <div class="levelFilterDisplay">{{problemScreen.difficultyLevel[0]}} {{'problem.to' | translate}} {{problemScreen.difficultyLevel[1]}}</div>
+          </div>
+        </div>
+
+        <div class="problem-solved-filter">
+          <p translate>problem.solvedProblemsFilter</p>
+
+          <div class="box-white">
+            <i class="img-medium-notebook img-medium background-img"></i>
+          <span ng-class="{'selection-box' : true, 'selection-box-selected': !searchParams.excludeCorrect}"
+                ng-click="selectSolvedProblems(false)" translate>yes</span>
+          <span ng-class="{'selection-box' : true, 'selection-box-selected': searchParams.excludeCorrect}"
+                ng-click="selectSolvedProblems(true)" translate>no</span>
+          </div>
+
+        </div>
+
+        <div class="topic-filter">
+          <div class="topic-filter-top">
+            <span translate>problem.topicFilter</span>
+
+            <div>
+              <span> {{problemScreen.selectedTopicsSize}} {{ 'problem.selectedTopics' | translate}} | </span>
+              <input type="checkbox" ng-model="problemScreen.selectAllTopics" ng-click="selectAllTopics()">
+              <span translate>selectAll</span>
+            </div>
+          </div>
+          <div class="topic-filter-bottom box-white">
+            <div ng-repeat="topic in allTopics">
+            <span ng-class="{'selection-box' : true, 'selection-box-selected': problemScreen.selectedTopics[topic.id]}"
+                  ng-click="filterTopic(topic.id)">{{topic.name}}</span>
+            </div>
+          </div>
+        </div> <!-- END topic-filter -->
+
+        <div class="advanced-search-button-box text-right">
+          <button class="btn btn-blue" ng-click="doSearch()" is-loading="listLoading">{{'search' | translate}}</button>
+        </div>
+
+      </div> <!-- END advanced search  -->
+    </div> <!-- END advanced-search container -->
+
+    <div class="problem-list-header">
+      <p>{{'result' | translate}}:</p>
+    </div>
+    <th-loading loading="listLoading">
+      <table class="table problem-management-table">
+      <tbody>
+      <tr ng-repeat="prob in problemList">
+        <td>
+          <th-problem-box problem="prob" show-status="true" count-test-cases="true" approved-by="true"></th-problem-box>
+        </td>
+        <td>
+          <div class="management-select-box">
+            <th-select-box element="prob.status" class="th-select-striped" for="statusList" on-change="updateStatus(prob)"></th-select-box>
+          </div>
+        </td>
+      </tr>
+      <tr ng-if="problemList.length == 0 && searched"><td translate>problem.resultNotFound</td></tr>
+      </tbody>
+    </table>
+    </th-loading>
+
+  </div>
+  <div class="pagination-container" ng-show="paginationData.totalItems > paginationData.max && searched && !listLoading">
+    <pagination items-per-page="paginationData.max"
+                total-items="paginationData.totalItems"
+                ng-model="paginationData.currentPage"
+                ng-change="paginationChanged()"
+                max-size="paginationData.maxSize"
+                class="pagination-sm"
+                boundary-links="true"
+                direction-links="false"
+                rotate="false"
+                last-text="{{'pagination.last' | translate}}"
+                first-text="{{'pagination.first'| translate}}">
+    </pagination>
+  </div>
+</div>

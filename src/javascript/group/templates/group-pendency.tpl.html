@@ -1,0 +1,20 @@
+<div class="box multiview-bottom group-users">
+  <span us-spinner spinner-key="spinner"></span>
+    <div class="group-users-menu">
+        <div class="checkbox">
+
+            <label class="ng-binding">
+                {{'group.users.selectAll' | translate}} <input type="checkbox" ng-model="searchParams.selectedAll" ng-click="selectAll()"/>
+            </label>
+        </div>
+        <div ng-if="searchParams.selectedAll" class="dropdown group-user-box-menu">
+            | <a ng-click="addAll()">{{'group.pendencies.acceptSelected' | translate}}</a>
+            | <a ng-click="removeAll()">{{'group.pendencies.rejectSelected' | translate}}</a>
+        </div>
+    </div>
+    <div class="group-user-list">
+        <th-group-pendency-box user="user" ng-repeat="user in userList" is-checked="userSelected" all="searchParams.checkSelectAll" user-removed="userRemoved" user-accepted="userAccepted"></th-group-pendency-box>
+    </div>
+
+</div>
+<div class="pagination-container" ng-if="paginationData.totalItems > paginationData.itemsPerPage && searched"><pagination items-per-page="paginationData.itemsPerPage" total-items="paginationData.totalItems" ng-model="paginationData.currentPage" ng-change="pageChanged()" max-size="paginationData.maxSize" class="pagination-sm" boundary-links="true" direction-links="false" rotate="false" last-text="{{'pagination.last' | translate}}" first-text="{{'pagination.first'| translate}}"></pagination></div>

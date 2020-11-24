@@ -1,0 +1,44 @@
+.markdown-bar {
+  padding: 10px;
+
+  .btn-group {
+    border: 1px solid #eee;
+  }
+}
+
+.markdown-editor.form-control {
+  height: auto;
+}
+
+.markdown-row {
+  display: flex;
+  flex-direction: row;
+  align-content: flex-start;
+
+  .markdown-editor,
+  .markdown-editor-preview {
+    flex: 1;
+  }
+
+  .markdown-editor-preview {
+    display: none;
+    padding-left: 15px;
+  }
+
+  &.show-preview {
+    .markdown-editor-preview { display: block; }
+  }
+}
+
+.markdown-editor-choice {
+  .clearfix;
+
+  > .markdown-editor-checkbox {
+    float: left;
+    width: 30px
+  }
+
+  > .markdown-editor-choice-content {
+    margin-left: 30px;
+  }
+}

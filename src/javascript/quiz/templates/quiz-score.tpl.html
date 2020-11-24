@@ -1,0 +1,19 @@
+<div class="multiview-bottom box">
+  <div class="export-quiz">
+    Exportar notas:
+    <select>
+      <option>PDF</option>
+    </select>
+    <i class="background-img icon img-short img-small-download background-color"></i>
+  </div>
+  <table class="table">
+    <tbody>
+    <tr ng-repeat="student in students">
+      <td><th-user-box user="student"  class="no-hover-problem-box"/></td>
+      <td class="text-right quiz-score-td">
+        Nota: <div>{{ student.userScore }}</div>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

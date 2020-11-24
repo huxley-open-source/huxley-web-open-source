@@ -1,0 +1,37 @@
+<div class="box multiview-bottom">
+  <div class="institutionForm">
+    <div class="create-form">
+      <form ng-submit="sendInstitution()" name="createInstitutionForm" novalidate>
+        <div class="form-group" ng-class="{'has-error': createInstitutionForm.name.$dirty && !createInstitutionForm.name.$valid}">
+          <label class="col-sm-2 control-label" for="name">{{ 'user.edit.name' | translate}}</label>
+          <div class="col-sm-10">
+            <input class="form-control" type="text" id="name" ng-maxlength="form.maxLength" name="name" ng-model="form.institutionName" placeholder="{{ 'institution.name' | translate}}" required>
+          </div>
+          <div class="align-form-error">
+            <span class="help-block" ng-if="createInstitutionForm.name.$dirty && createInstitutionForm.name.$error.required">{{ 'user.edit.required' | translate}}.</span>
+            <span class="help-block" ng-if="createInstitutionForm.name.$dirty && createInstitutionForm.name.$error.maxlength">{{ 'user.edit.longName' | translate}}.</span>
+          </div>
+        </div>
+        <div class="form-group" ng-class="{'has-error': createInstitutionForm.acronym.$dirty && !createInstitutionForm.acronym.$valid}">
+          <label class="col-sm-2 control-label" for="acronym">{{ 'institution.acronym' | translate}}</label>
+          <div class="col-sm-10">
+            <input class="form-control" type="text" id="acronym" ng-maxlength="form.maxAcronymLength" name="acronym" ng-model="form.acronym" placeholder="{{ 'institution.acronym' | translate}}" required>
+          </div>
+          <div class="align-form-error">
+            <span class="help-block" ng-if="createInstitutionForm.acronym.$dirty && createInstitutionForm.acronym.$error.required">{{ 'user.edit.required' | translate}}.</span>
+            <span class="help-block" ng-if="createInstitutionForm.acronym.$dirty && createInstitutionForm.acronym.$error.maxlength">{{ 'user.edit.longName' | translate}}.</span>
+          </div>
+        </div>
+        <div class="create-save-container text-right">
+          <button class="btn btn-green">{{'admin.save' | translate}}</button>
+        </div>
+      </form>
+      <div ng-if="hasError && showResult" class="alert-box-without-group alert alert-dismissible fade in teacher-request-alert" role="alert">
+        {{'institution.msg.error' | translate}}
+      </div>
+      <div ng-if="!hasError && showResult" class="alert-box-without-group alert alert-dismissible fade in teacher-request-alert" role="alert">
+        {{'institution.msg.sent' | translate}}
+      </div>
+    </div>
+  </div>
+</div>

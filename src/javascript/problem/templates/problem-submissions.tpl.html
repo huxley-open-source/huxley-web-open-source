@@ -1,0 +1,77 @@
+
+<div class="box multiview-bottom submission-box">
+  <th-loading loading="problemInfoLoading"  >
+    <table class="table submission-list">
+    <thead>
+      <tr>
+        <th>
+          <th-order-arrow label="'date.sole'" sort-by="'submissionDate'" order='searchParams.order' element="searchParams.sort" search-function="search()"></th-order-arrow>
+        </th>
+        <th class="text-center">
+          <th-order-arrow label="'problem.submission.evaluationResult'" sort-by="'evaluation'" order='searchParams.order' element="searchParams.sort" search-function="search()"></th-order-arrow>
+        </th>
+        <th class="text-center">
+          <th-order-arrow label="'problem.submission.language'" sort-by="'language'" order='searchParams.order' element="searchParams.sort" search-function="search()"></th-order-arrow>
+        </th>
+        <th class="text-center">
+          <th-order-arrow label="'problem.submission.executionTime'" sort-by="'time'" order='searchParams.order' element="searchParams.sort" search-function="search()"></th-order-arrow>
+        </th>
+
+        <th class="text-center">
+          <span>{{'problem.submission.viewSource'| translate }}</span>
+        </th>
+
+        <th ng-if="currentUser.atLeastTeacher()">
+          {{'group.submissions.reevaluate' | translate}}
+        </th>
+
+      </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="submission in submissions">
+      <td>
+        {{submission.submissionDate | amDateFormat:'DD/MM/YYYY [às] H:mm:ss'}}
+      </td>
+
+      <td class="text-center">
+        <th-submission-status submission="submission" class="popover-gray"></th-submission-status>
+      </td>
+
+      <td class="text-center">
+        {{submission.language.label}}
+      </td>
+
+      <td class="text-center">
+        {{submission.time | number : 4}} {{'secondsAbbrev' | translate}}
+      </td>
+
+      <td class="text-center">
+        <a ui-sref="problem-show.submission-show({subId: submission.id})"><span ><i class="icon img-short img-short-search-blue background-img"></i></span></a>
+      </td>
+
+      <td ng-if="currentUser.atLeastTeacher()" class="text-center">
+        <a ng-click="reevaluateOne(submission)" class="popover-gray"><i class="glyphicon glyphicon-refresh refresh-icon-size" popover="{{'group.submissions.reevaluate' | translate}}" popover-trigger="mouseenter" popover-placement="right"></i></a>
+      </td>
+    </tr>
+    <tr ng-if="submissions.length == 0"><td translate>submission.resultNotFound</td></tr>
+    </tbody>
+  </table>
+  </th-loading>
+</div>
+
+<div class="pagination-container"
+     ng-if="searchParams.totalItems > searchParams.max && !problemInfoLoading">
+  <pagination items-per-page="searchParams.max"
+              total-items="searchParams.totalItems"
+              ng-model="searchParams.currentPage"
+              ng-change="paginationChanged()"
+              max-size="searchParams.max"
+              class="pagination-sm"
+              boundary-links="true"
+              direction-links="false"
+              rotate="false"
+              last-text="{{'pagination.last' | translate}}"
+              first-text="{{'pagination.first'| translate}}">
+
+  </pagination>
+</div>

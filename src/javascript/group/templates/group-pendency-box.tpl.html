@@ -1,0 +1,31 @@
+<div class="user-box-container">
+    <div class="user-box th-item-fade" ng-class="{'active': isChecked[user.id],
+'removed': userRemoved[user.id]}">
+        <div class="user-box-img" ng-class="{'teacher': user.role === 'TEACHER',
+    'teacher-assistant': user.role === 'TEACHER_ASSISTANT'}">
+            <img src="http://img.thehuxley.com/data/images/app/profile/thumb/{{user.smallPhoto}}">
+            <i ng-class="{'description-icon teacher': user.role === 'TEACHER', 'description-icon teacher-assistant': user.role === 'TEACHER_ASSISTANT'}">{{icon | translate}}</i>
+        </div>
+        <div class="user-box-info">
+            <span>{{user.name}}</span>
+            <span>{{user.institution.name}}</span>
+        </div>
+        <div class="group-pendency-box-menu" ng-if="!userRemoved[user.id]" ng-class="{'th-fade-out': userAccepted[user.id]}">
+            <div>
+                <button class="btn btn-green" ng-click="addUser()">{{'group.pendencies.accept' | translate}}</button>
+                <button class="btn btn-blue" ng-click="removeUser()">{{'group.pendencies.reject' | translate}}</button>
+            </div>
+            <div>
+                <input type="checkbox" ng-model="isChecked[user.id]" ng-click="updateCheck()"/>
+            </div>
+        </div>
+        <div class="group-pendency-box-menu th-item-fade group-pendency-status-box" ng-if="userAccepted[user.id]" ng-class="{'th-fade-in': userAccepted[user.id]}">
+            <div>
+                <button class="btn btn-green" disabled>{{'group.pendencies.accepted' | translate}}</button>
+            </div>
+        </div>
+    </div>
+    <div ng-if="userRemoved[user.id]" class="user-box-revert-container">
+        <button class="btn btn-blue" ng-click="revert()">{{'group.users.undo' | translate}}</button>
+    </div>
+</div>

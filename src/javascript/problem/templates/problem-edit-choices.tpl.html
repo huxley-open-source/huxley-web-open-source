@@ -1,0 +1,54 @@
+<div class="multiview-bottom box">
+  <div class="edit-box">
+
+    <div ng-if="problem.problemType === 'MULTIPLE_CHOICE' || problem.problemType === 'SINGLE_CHOICE' || problem.problemType === 'TRUE_OR_FALSE'">
+      <h3>{{'problem.options.options' | translate}}</h3>
+      <div class="add-options-align">
+        <div text-angular ng-model="new.option"></div>
+        <button type="button" class="btn btn-blue" ng-click="addOption()">{{'problem.options.addOption' | translate}}</button>
+      </div>
+      <table class="table">
+        <thead>
+        <tr>
+          <th>
+            {{'problem.options.options' | translate}}
+          </th>
+          <th class="option-align">
+            <span ng-if="problem.problemType === 'TRUE_OR_FALSE'">{{'problem.options.true' | translate}}</span>
+            <span ng-if="problem.problemType === 'MULTIPLE_CHOICE' || problem.problemType === 'SINGLE_CHOICE'">{{'problem.options.correct' | translate}}</span>
+          </th>
+          <th class="option-align">
+            {{'problem.options.delete' | translate}}
+          </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="option in problem.choices track by $index">
+          <th ng-bind-html="option.description">
+          </th>
+          <th class="option-align" ng-if="problem.problemType === 'SINGLE_CHOICE'">
+            <input type="radio" ng-model="correct.option" value="{{$index}}">
+          </th>
+          <th class="option-align" ng-if="problem.problemType === 'MULTIPLE_CHOICE' || problem.problemType === 'TRUE_OR_FALSE'">
+            <input type="checkbox" ng-model="option.correct" ng-true-value="true" ng-false-value="false">
+          </th>
+          <th class="option-align">
+            <a ng-click="deleteOption($index)">
+              <i class="img-small-remove" ></i>
+            </a>
+          </th>
+        </tr>
+        <tr ng-if="problem.choices.length === 0">
+          <th>
+            {{'problem.options.outOfOptions' | translate}}
+          </th>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="text-right">
+      <button ng-disabled="!enableConfirm" class="btn btn-green" ng-click="formSubmit(true)" is-loading="loading.form">{{'problem.create.save' | translate}}</button>
+    </div>
+  </div>
+</div>

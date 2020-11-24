@@ -1,0 +1,67 @@
+<div class="container content">
+  <div class="box">
+    <th-head group="true" header-title="'group.title'"></th-head>
+    <form>
+        <div class="search-container">
+            <div>
+                <div class="col-lg-5">
+                    <div class="input-search-container">
+                        <i class="img-large img-large-search img-circle background-color background-img hidden-xs"></i>
+                        <input type="text" ng-model="searchParams.q" id="query" class="form-control search-input" ng-keyup="searchByName()" placeholder="{{'group.search' | translate }}"/>
+                        <div class="search-button-container">
+                            <button class="btn btn-blue" ng-click="searchByName()" is-loading="loading">{{'search' | translate}}</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="checkbox" ng-show="currentUser.isAuthenticated()">
+                    <label>
+                        <input type="checkbox" ng-model="searchParams.all" ng-change="changeSearchScope()"/>{{'group.searchAllGroupsMsg' | translate }}
+                    </label>
+                </div>
+            </div>
+          </div>
+    </form>
+    <th-loading loading="loading">
+      <table class="table margin-top-table">
+        <thead>
+        <tr>
+          <th>
+            <span ng-if="currentUser.isAuthenticated() && !searchParams.all" class="text-uppercase" translate>group.myGroups</span>
+            <span ng-if="searchParams.all || !currentUser.isAuthenticated()" class="text-uppercase" translate>group.results</span>
+          </th>
+          <th class="text-right hidden-xs">
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" ng-model="view.sort" ng-change="search()"/>{{'group.orderByUpdate' | translate }}
+              </label>
+            </div>
+          </th>
+        </tr>
+
+        </thead>
+        <tbody>
+        <tr ng-repeat="group in groups">
+          <td>
+            <div>
+              <a ui-sref="group-show.quizzes({id: group.url})">{{group.name}}</a></h5>
+            </div>
+            <div>
+                    <span class="font-small">
+                        <em ng-show="group.institution.acronym">{{group.institution.acronym}}  -</em> <em>{{group.institution.name}}</em>,
+                         {{'date.created.in'| translate}} {{group.dateCreated | date:'dd/MM/yyyy'}}
+                    </span>
+            </div>
+          </td>
+          <td class="text-right font-small hidden-xs">{{'group.lastUpdated' | translate: { date:group.lastUpdated } }}</td>
+        </tr>
+        <tr ng-if="groups.length == 0 && searched"><td translate>group.resultNotFound</td></tr>
+        </tbody>
+      </table>
+    </th-loading>
+        </div>
+
+
+  </div>
+  <div class="pagination-container" ng-if="paginationData.totalItems > paginationData.itemsPerPage && searched && !loading"><pagination items-per-page="paginationData.itemsPerPage" total-items="paginationData.totalItems" ng-model="paginationData.currentPage" ng-change="pageChanged()" max-size="paginationData.maxSize" class="pagination-sm" boundary-links="true" direction-links="false" rotate="false" last-text="{{'pagination.last' | translate}}" first-text="{{'pagination.first'| translate}}"></pagination></div>
+
+</div>

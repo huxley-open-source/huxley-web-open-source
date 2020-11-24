@@ -1,0 +1,121 @@
+<div class="modal-header">
+  <h3 class="modal-title">{{'quiz.restrictions.title' | translate}}</h3>
+  <button type=button" class="close" aria-label="Close" ng-click="close()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="create-form">
+    <form>
+      <div class="row">
+        <div class="form-group">
+
+          <label class="col-sm-3 control-label" translate>quiz.restrictions.function.list</label>
+
+          <div class="col-sm-9">
+            <div class="text-right"><button class="btn btn-green" ng-click="addFunction()" translate type="button">quiz.restrictions.function.add</button></div>
+            <table class="table">
+              <thead>
+              <tr>
+                <th translate>quiz.restrictions.function.name</th>
+                <th translate>quiz.restrictions.function.return</th>
+                <th translate>quiz.restrictions.function.recursive</th>
+                <th translate>quiz.restrictions.function.parameters</th>
+                <th></th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr ng-repeat="func in restrictions.restricaoFuncoes">
+                <td>{{func.nome}}</td>
+                <td><i class="glyphicon glyphicon-ok" ng-if="func.retorno"></i></td>
+                <td><i class="glyphicon glyphicon-ok" ng-if="func.recursiva"></i></td>
+                <td style="width: 100px">{{func.qtdParametros}}</td>
+                <td><a ng-click="removeFunction(restrictions.restricaoFuncoes, $index)"><i class="glyphicon glyphicon-remove"></i></a></td>
+              </tr>
+              <tr ng-repeat="func in restrictions.restricaoFuncaoChamada">
+                <td>{{func.nome}}</td>
+                <td></td>
+                <td></td>
+                <td style="width: 100px">{{func.qtdParametros}}</td>
+                <td><a ng-click="removeFunction(restrictions.restricaoFuncaoChamada, $index)"><i class="glyphicon glyphicon-remove"></i></a></td>
+              </tr>
+              <tr ng-if="!restrictions.restricaoFuncoes.length && !restrictions.restricaoFuncaoChamada.length">
+                <td colspan="4" translate>quiz.restrictions.function.none</td>
+              </tr>
+              </tbody>
+            </table>
+
+          </div>
+        </div>
+
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label" for="restricaoIf"><input id="restricaoIf" type="checkbox" ng-model="funcOptions.restricaoIf"/> {{ 'quiz.restrictions.ifs' | translate}}</label>
+        <div class="col-sm-3">
+          <input class="form-control" type="number"  min="0" ng-disabled="!funcOptions.restricaoIf" name="restricaoIf" ng-model="restrictions.restricaoIf.minimo">
+        </div>
+        <div class="col-sm-2 text-center">
+          <label>à</label>
+        </div>
+        <div class="col-sm-3">
+          <input class="form-control" type="number"  min="0" ng-disabled="!funcOptions.restricaoIf" name="restricaoIf" ng-model="restrictions.restricaoIf.maximo">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label" for="restricaoFor"><input id="restricaoFor" type="checkbox" ng-model="funcOptions.restricaoFor"/> {{ 'quiz.restrictions.fors' | translate}}</label>
+        <div class="col-sm-3">
+          <input class="form-control" type="number" min="0" ng-disabled="!funcOptions.restricaoFor" name="restricaoFor" ng-model="restrictions.restricaoFor.minimo">
+        </div>
+        <div class="col-sm-2 text-center">
+          <label>à</label>
+        </div>
+        <div class="col-sm-3">
+          <input class="form-control" type="number" min="0" ng-disabled="!funcOptions.restricaoFor" name="restricaoFor" ng-model="restrictions.restricaoFor.maximo">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label" for="restricaoWhile"><input id="restricaoWhile" type="checkbox" ng-model="funcOptions.restricaoWhile"/> {{ 'quiz.restrictions.whiles' | translate}}</label>
+        <div class="col-sm-3">
+          <input class="form-control" type="number" min="0" ng-disabled="!funcOptions.restricaoWhile" name="restricaoWhile" ng-model="restrictions.restricaoWhile.minimo">
+        </div>
+        <div class="col-sm-2 text-center">
+          <label>à</label>
+        </div>
+        <div class="col-sm-3">
+          <input class="form-control" type="number" min="0" ng-disabled="!funcOptions.restricaoWhile" name="restricaoWhile" ng-model="restrictions.restricaoWhile.maximo">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label">Deve possuir: </label>
+        <label class="col-sm-3 control-label" style="text-align: center" for="restricaoLista">
+          <input id="restricaoLista" type="checkbox" ng-model="restrictions.restricaoLista.possuiLista" ng-change="print()"/> {{ 'quiz.restrictions.list' | translate}}</label>
+        <label class="col-sm-3 control-label" style="text-align: center" for="restricaoTupla">
+          <input id="restricaoTupla" type="checkbox" ng-model="restrictions.restricaoTupla.possuiTupla"/> {{ 'quiz.restrictions.tuple' | translate}}</label>
+        <label class="col-sm-3 control-label" style="text-align: center" for="restricaoDicionario">
+          <input id="restricaoDicionario" type="checkbox" ng-model="restrictions.restricaoDicionario.possuiDicionario"/> {{ 'quiz.restrictions.dict' | translate}}</label>
+      </div>
+
+      <hr/>
+
+      <div class="form-group">
+        <label class="col-sm-3 control-label" for="penalty">{{ 'quiz.restrictions.penalty' | translate}}</label>
+        <div class="col-sm-9">
+          <div class="input-group">
+          <input class="form-control" id="penalty" step="10" type="number" min="0" max="100" name="penalty" ng-model="options.penalty">
+          <span class="input-group-addon">%</span>
+          </div>
+        </div>
+      </div>
+
+    </form>
+  </div>
+</div>
+<div class="modal-footer">
+  <span ng-if="error">Erro inesperado ao salvar restrições</span>
+  <button type="button" class="btn btn-blue" ng-click="save()" ng-disabled="saving">{{'quiz.save' | translate}}</button>
+  <button type="button" class="btn btn-blue small-margin-right" ng-click="close()">{{'quiz.similarity.drop' | translate}}</button>
+</div>

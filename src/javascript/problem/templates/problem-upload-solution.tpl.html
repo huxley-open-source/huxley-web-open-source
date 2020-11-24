@@ -1,0 +1,41 @@
+<div class="multiview-bottom box">
+  <div class="upload-solution-box">
+
+    <form>
+      <div class="solution-upload-box" ng-show="!evaluating">
+          <!-- Arquivo -->
+          <div class="input-group upload-file file-input">
+            <div class="form-control">
+              <span ng-if="!solutionFile.name">{{'problem.chooseFile' | translate}}</span>
+              {{solutionFile.name}}
+            </div>
+            <input type="file" class="input-hidden" name="file"  onchange="angular.element(this).scope().suggestLanguage(this.files)" file-model="solutionFile"/>
+            <span class="input-group-addon" id="basic-addon2">
+              <div class="background-img icon background-color img-short img-short-upload">
+              </div>
+            </span>
+          </div>
+
+
+          <!-- Linguagem -->
+          <div class="upload-language">
+            <th-select-box element="selectedLanguage" class="th-select-striped" for="availableLanguages"></th-select-box>
+          </div>
+
+          <!-- Botão -->
+          <div class="upload-button">
+            <button type="input" value="Submit" ng-click="sendSolution()" class="btn btn-green text-uppercase" is-loading="$loadingButton">{{'problem.sendAnswer' | translate}}</button>
+          </div>
+      </div>
+    </form>
+
+
+    <div class="solution-answer answer-waiting margin-after" ng-show="evaluating">
+      <div class="answer-circle ans-circle-waiting"><i class="img-large img-large-submission-waiting background-img icon img-bottom"></i></div>
+      <p class="answer-text" > {{'problem.solution.waiting' | translate}} </p>
+
+    </div>
+
+
+  </div>
+</div>

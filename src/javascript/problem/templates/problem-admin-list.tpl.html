@@ -1,0 +1,62 @@
+<div class="container content">
+  <div class="box">
+    <th-head header-title="'problem.title'"></th-head>
+    <div>
+      <form>
+        <div class="search-container">
+          <div>
+            <div class="col-lg-5">
+              <div class="input-search-container">
+                <i class="img-large img-large-search img-circle background-color background-img"></i>
+                <input type="text" ng-model="searchParams.q" ng-change="search()" id="query" class="form-control search-input" placeholder="{{'problem.search' | translate}}"/>
+                <div class="search-button-container">
+                  <button class="btn btn-blue" ng-click="search()" translate>search</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="problem-adm-margin-top">
+      <table class="table">
+        <tbody>
+        <tr ng-repeat="prob in problems">
+          <td>
+            <th-problem-box problem="prob" show-status="true" show-topics="true"></th-problem-box>
+          </td>
+          <td></td>
+          <td>
+            <div class="btn-group">
+              <button class="btn btn-default btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                {{prob.status}} <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" role="menu">
+                <li>{{'problem.stats.accepted' | translate}}</li>
+                <li>{{'problem.stats.pending' | translate}}</li>
+                <li>{{'problem.stats.rejected' | translate}}</li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+        <tr></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="pagination-container" ng-show="paginationData.totalItems > paginationData.max">
+    <pagination items-per-page="paginationData.max"
+                total-items="paginationData.totalItems"
+                ng-model="paginationData.currentPage"
+                ng-change="paginationChanged()"
+                max-size="paginationData.maxSize"
+                class="pagination-sm"
+                boundary-links="true"
+                direction-links="false"
+                rotate="false"
+                last-text="{{'pagination.last' | translate}}"
+                first-text="{{'pagination.first'| translate}}">
+    </pagination>
+  </div>
+</div>

@@ -1,0 +1,98 @@
+<div class="multiview-bottom box">
+
+  <th-loading loading="loadingStudents">
+
+    <div class="text-right">
+      <div class="checkbox">
+        <label style="margin-right: 11px">
+          <input type="checkbox" ng-model="searchParams.order" ng-change="changeSearchScope()" ng-checked="quizReview.sortStudents === 'score'"/>{{'quiz.searchByGrades' | translate }}
+        </label>
+        <label class="control-label" title="{{'quiz.presentOnlyHelp' | translate}}" ng-if="shouldShowPresence">
+          <input type="checkbox" ng-model="studentFilter.presence"/>
+          {{'quiz.presentOnly' | translate}}</label>
+        <a class="present-help doubt-link-size glyphicon glyphicon-question-sign" href=""
+           title="{{'quiz.presentOnlyHelp' | translate}}"></a>
+      </div>
+    </div>
+
+    <div>
+      <a ng-click="exportXLS()" ng-if="currentUser.atLeastTeacher(quiz.group)">
+        <span class="glyphicon glyphicon-download" aria-hidden="true"></span>
+        <span>{{'quiz.export' | translate}}</span>
+      </a>
+    </div>
+    <div class="outer" ng-cloak>
+    <div ng-class="{ inner: quiz.largeProblemSet }" ng-floating-scroll>
+    <table class="table quiz-score-table table-bordered">
+      <thead>
+        <tr>
+          <th ng-class="{ fix: quiz.largeProblemSet }">{{'quiz.student' | translate}}</th>
+          <th class="score-column text-center" ng-class="{ 'fixed-width': quiz.largeProblemSet }" ng-repeat="p in quizReview.quizList[0].scores.correctProblems">{{$index + 1}}</th>
+        </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="student in quizReview.quizList | filter:shouldShowStudent">
+        <td ng-class="{ fix: quiz.largeProblemSet }">
+          <!--<a ui-sref="quiz-show.review-user({'userid': student.id})">-->
+            <div class="student-info">
+              <div>
+                <img ng-src="{{student.avatar}}?width=40&height=40" class="user-img">
+                <a ng-hide="noLinks" class="black-link" ui-sref="profile-show.problems({'id': student.id})" style="margin-left: 11px">
+                  <strong>{{student.name}}</strong>
+                </a>
+              </div>
+              <div class="user-score" style="color: #05adef" >
+                <a ui-sref="quiz-show.review-user({'userid': student.id})">{{ student.scores.totalScore | number:1}}</a>
+              </div>
+            </div>
+          <!--</a>-->
+        </td>
+
+        <td class="score-column" ng-class="{ 'fixed-width': quiz.largeProblemSet,
+                                             correct: problem.score > 0,
+                                             wrong: problem.score === 0,
+                                             'no-submission': problem.submissionCount === 0,
+                                             partial: quiz.partialScore && problem.partialScore !== problem.score,
+                                             penalty: problem.restrictionPenalty || problem.penalty }"
+            ng-repeat="problem in student.scores.correctProblems"><span>{{problem.submissionCount}}</span></td>
+
+      </tr>
+      </tbody>
+    </table>
+      </div>
+    </div>
+    <div ng-if="!quizReview.quizList.length" th-alert class="yellow-box" closable="false">
+      <div>
+        {{'group.newQuest.msg3' | translate}} asdasdasasdasdas
+        {{'group.newGroup.msg2' | translate}}
+        <a ui-sref="group-show.add-members({'id': quiz.group.url})">{{'group.newGroup.addMember1' | translate}}.</a>
+      </div>
+      <div class="yellow-box-buttons">
+        <i class="img-add-member1-size img-large-add-member1 background-img icon add-member1"></i>
+        <i class="img-large img-large-add-member2 img-circle background-color background-img icon add-member2"></i>
+        <a class="blue-box" ui-sref="group-show.add-members({'id': quiz.group.url})">{{'group.newGroup.addMember2' | translate}}</a>
+      </div>
+      <div class="another-info">
+        {{'group.newGroup.keyMsg' | translate}}.
+      </div>
+      <div class="yellow-box-buttons">
+        <div class="group-key-container">
+          <div class="background-key">
+            <div>
+              <div class="popover top in fade" ng-class="{'active':popover}">
+                <div class="arrow"></div>
+
+                <div class="popover-inner">
+                  <div class="popover-content">{{'group.key.copyInfo' | translate}}</div>
+                </div>
+              </div>
+              <input input-value="key" on-select="popover" th-auto-select/>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </th-loading>
+
+</div>
+<div class="pagination-container" ng-if="paginationData.totalItems > paginationData.itemsPerPage && !loading"><pagination items-per-page="paginationData.itemsPerPage" total-items="paginationData.totalItems" ng-model="paginationData.currentPage" ng-change="search()" max-size="paginationData.maxSize" class="pagination-sm" boundary-links="true" direction-links="false" rotate="false" last-text="{{'pagination.last' | translate}}" first-text="{{'pagination.first'| translate}}"></pagination></div>

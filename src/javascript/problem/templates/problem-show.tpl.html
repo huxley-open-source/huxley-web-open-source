@@ -1,0 +1,212 @@
+<div class="container content">
+
+  <div ng-cloak="true" class="problem-type" ng-class="{ 'choice': problem.problemType !== 'ALGORITHM' && problem.problemType !== 'FILL_THE_CODE', 'fillTheCode': problem.problemType === 'FILL_THE_CODE'}">
+    {{ 'problem.type.' + problem.problemType | translate}}
+  </div>
+
+  <div class="box multiview-top problem-show-small">
+
+    <meta property="og:title" content="title" />
+    <meta property="og:description" content="description" />
+    <meta property="og:image" content="thumbnail_image" />
+
+    <div class="problem-title" ng-if="!problemLoading">
+      <div style="display: flex; align-items: center">
+        <div class="grade _{{problem.nd}}">{{problem.nd}}</div>
+      <div style="display: flex; align-items: center;">
+        <h3 style="margin: 0px 11px" translate ng-class="{ 'pending-problem-name': !accepted }">{{problem.name}}</h3>
+      </div>
+
+      <div class="_{{problem.nd}} nd-name">{{'problem.nd.' + problem.nd | translate}}</div>
+      </div>
+
+      <ul class="problem-rank">
+        <li ng-repeat="start in start" class="problem-star" ng-class="{ voted: userScore }" ng-click="setScore($index)"
+            ng-mouseenter="starHover.index = $index"
+            ng-mouseleave="starHover.index = -1">
+          <i class="glyphicon" ng-class="{ 'glyphicon-star-empty': checkStar($index, starHover.index), 'glyphicon-star': !checkStar($index, starHover.index) }"/>
+        </li>
+      </ul>
+
+
+      <div style="display: flex; color: black; justify-content: space-between; align-items: center">
+
+        <div class="quiz-onyl-badge" style="margin-right: 11px" ng-if="problem.quizOnly">{{'problem.create.quizProblem' | translate }}</div>
+        <button class="uibutton confirm" ng-click="share()" style="margin-right: 11px;">
+          {{'problem.share' | translate}}
+        </button>
+
+        <th-problem-status ng-if="problem.problemType === 'ALGORITHM' || problem.problemType === 'FILL_THE_CODE'" status="problem.currentUser.status"></th-problem-status>
+        <th-problem-status ng-if="problem.problemType !== 'ALGORITHM' && problem.problemType !== 'FILL_THE_CODE'" status="problem.currentUser.status[0]"></th-problem-status>
+      </div>
+
+    </div>
+
+    <div ng-if="!accepted && problem.suggestedBy.id === currentUser.id" class="alert alert-warning alert-dismissible"
+         style="margin: 11px; font-size: 12px; display: flex; justify-content: space-between"
+         role="alert">
+      <div>
+        <strong>Você ainda não aprovou esse problema!</strong>
+
+        <div ng-if="hasProblems">
+          <p>Antes de aprovar o problema, verifique o checklist abaixo:</p>
+          <ul class="list-unstyled margin-after">
+            <li ng-repeat="(key,val) in checklist" ng-if="val" ng-class="{'text-success': !val, 'text-danger': val }">
+              <i class="glyphicon" ng-class="{'glyphicon-check': !val, 'glyphicon-unchecked': val }"></i>
+              {{'problem.checklist.' + key | translate}}
+              <a href="" ng-if="val" ng-href="{{getFixLink(key)}}"><i class="glyphicon glyphicon-pencil"></i></a>
+            </li>
+          </ul>
+        </div>
+
+        <div ng-if="!hasProblems">
+          Problemas não aprovados não são exibidos para os usuários. Clique no botão abaixo para aprovar agora esse problema.
+        </div>
+      </div>
+
+      <div ng-if="!hasProblems">
+        <button class="btn btn-green" style="height: 100%" ng-disabled="hasProblems" ng-click="approveProblem()">{{'Aprovar problema' | translate}}</button>
+      </div>
+    </div>
+
+    <div ng-if="!problemLoading">
+      <div class="problem-info-box">
+
+        <div>
+          <p ng-if="problem.baseLanguage">
+            <span>Linguagem: {{problem.baseLanguage.label}}</span>
+          </p>
+          <p>
+            <span ng-if="problem.problemType !== 'MULTIPLE_CHOICE' && problem.problemType !== 'SINGLE_CHOICE' && problem.problemType !== 'TRUE_OR_FALSE'">{{'problem.timeLimit' | translate}}: {{problem.timeLimit}}s</span>
+          </p>
+
+          <p>
+            <span translate>topics</span>:
+            <span ng-repeat="topic in problem.topics"><span ng-if="$index > 0">,</span> {{topic.name}}</span>
+          </p>
+        </div>
+        <div class="text-right" style="font-size: 11px">
+          <p>
+            {{'problem.createdBy' | translate}}:
+            <a ui-sref="profile-show.problems({'id': problem.suggestedBy.id})"> {{problem.suggestedBy.name}}</a>
+            <span translate>in</span> {{problem.dateCreated | amDateFormat: 'DD/MM/YY'}}
+          </p>
+          <p>{{'problem.lastUpdated' | translate}} <span am-time-ago="problem.lastUpdated"/></p>
+
+          <p>
+            <span>{{'problem.source' | translate }}: </span>
+            <span ng-if="problem.source && problem.source!=='null'">{{problem.source}}</span>
+            <span ng-if="!problem.source || problem.source === 'null'">{{ 'problem.notInformed' | translate }}</span>
+          </p>
+        </div>
+
+      </div>
+
+
+    <!-- ABAS -->
+    <div class="th-group-nav-bar">
+      <div class="th-group-tab-header">
+        <ul class="th-nav-tabs">
+          <li ui-sref="problem-show.description" ui-sref-active="active"><a ui-sref="problem-show.description"> {{'description' | translate }}</a></li>
+          <li ng-class="{'active' : $state.is('problem-show.insert-code') || $state.is('problem-show.show-solution')}" ng-if="problem.problemType === 'FILL_THE_CODE' && currentUser.isAuthenticated()"><a ui-sref="problem-show.insert-code">{{'problem.sendSolution' | translate}}</a></li>
+          <li class="hidden-sm hidden-xs" ng-class="{'active' : $state.is('problem-show.show-solution') || $state.is('problem-show.upload-solution') || $state.is('problem-show.code-editor') }" ng-if="problem.problemType === 'ALGORITHM' && currentUser.isAuthenticated()"><a ui-sref="problem-show.code-editor"> {{'problem.sendSolution' | translate }}</a></li>
+          <li class="hidden-lg hidden-md" ng-class="{'active' : $state.is('problem-show.show-solution') || $state.is('problem-show.upload-solution') || $state.is('problem-show.code-editor') }" ng-if="problem.problemType === 'ALGORITHM' && currentUser.isAuthenticated()"><a ui-sref="problem-show.code-editor"> {{'problem.sendSolution' | translate }}</a></li>
+          <li ng-class="{'active' : $state.is('problem-show.submissions') || $state.is('problem-show.submission-show') }" ng-if="currentUser.isAuthenticated() && (problem.problemType === 'ALGORITHM' || problem.problemType === 'FILL_THE_CODE')"><a ui-sref="problem-show.submissions"> {{'submissions' | translate }}</a></li>
+          <li class="" ng-if="currentUser.isAuthenticated() && problem.problemType === 'ALGORITHM'" ui-sref="problem-show.oracle" ui-sref-active="active"><a ui-sref="problem-show.oracle"> {{'problem.oracle' | translate }}</a></li>
+          <li ui-sref="problem-show.stats" ui-sref-active="active"><a ui-sref="problem-show.stats"> {{'stats' | translate }}</a></li>
+          <li class="hidden-xs" ng-class="{'active' : $state.is('problem-show.problem-edit') ||  $state.is('problem-show.problem-edit-choices') ||  $state.is('problem-show.problem-edit-insert-code') || $state.is('problem-show.problem-edit-description') || $state.is('problem-show.problem-edit-input') || $state.is('problem-show.problem-edit-output') || $state.is('problem-show.problem-edit-test-case') || $state.is('problem-show.problem-batch-test-case')}" ng-if="currentUser.atLeastAdmin() || problemOwner"><a ui-sref="problem-show.problem-edit">{{'problem.edit' | translate}}</a></li>
+          <li class="hidden-xs" ng-class="{'active' : $state.is('problem-show.translate') }"  ui-sref="problem-show.translate" ui-sref-active="active" ng-if="currentUser.atLeastTeacher() || problemOwner || currentUser.isTranslator()"><a ui-sref="problem-show.translate">{{'problem.translate' | translate}}</a></li>
+        </ul>
+      </div>
+      <!-- FIM do cabecalho das abas -->
+
+      <!-- conteudo das abas -->
+      <div>
+        <div class="th-tab-pane" ui-sref="problem-show.description" ui-sref-active="active" ng-if="((problem.problemType !== 'MULTIPLE_CHOICE' && problem.problemType !== 'SINGLE_CHOICE' && problem.problemType !== 'TRUE_OR_FALSE') || (currentUser.atLeastAdmin() || problemOwner))">
+          <!-- submenu -->
+          <ul>
+            <li>&nbsp;</li>
+          </ul>
+        </div>
+        <div class="th-tab-pane" ng-class="{'active' : $state.is('problem-show.submissions') || $state.is('problem-show.submission-show') }">
+          <!-- submenu -->
+          <ul>
+            <li ui-sref="problem-show.submissions" ui-sref-active="active">
+              <a ui-sref="problem-show.submissions" ui-sref-active="active">{{'problem.list.list' | translate}}</a>
+            </li>
+            <li ui-sref="problem-show.submission-show" ui-sref-active="active">
+              <a ui-sref="problem-show.submission-show" ui-sref-active="active">{{'problem.visualize' | translate}}</a>
+            </li>
+          </ul>
+        </div>
+        <div class="th-tab-pane" ui-sref="problem-show.oracle" ui-sref-active="active">
+          <!-- submenu -->
+          <ul>
+            <li>&nbsp;</li>
+          </ul>
+        </div>
+        <div class="th-tab-pane" ui-sref="problem-show.stats" ui-sref-active="active">
+          <!-- submenu -->
+          <ul>
+            <li>&nbsp;</li>
+          </ul>
+        </div>
+        <div class="th-tab-pane" ng-class="{'active' : ($state.is('problem-show.show-solution') || $state.is('problem-show.code-editor')) && problem.problemType === 'ALGORITHM' }">
+          <!-- submenu -->
+          <ul>
+            <li>&nbsp;</li>
+          </ul>
+          <!--<ul>-->
+            <!--<li class="hidden-sm hidden-xs" ui-sref="problem-show.show-solution" ui-sref-active="active" >-->
+              <!--<a ui-sref="problem-show.show-solution" ui-sref-active="active">{{'problem.uploadSolution' | translate}}</a>-->
+            <!--</li>-->
+            <!--<li ui-sref="problem-show.code-editor" ui-sref-active="active">-->
+              <!--<a ui-sref="problem-show.code-editor" ui-sref-active="active">{{'problem.useCodeEditor' | translate}}</a>-->
+            <!--</li>-->
+          <!--</ul>-->
+        </div>
+        <div class="th-tab-pane" ng-class="{'active' : $state.is('problem-show.problem-edit') || $state.is('problem-show.problem-edit-choices') ||  $state.is('problem-show.problem-edit-insert-code') || $state.is('problem-show.problem-edit-description') || $state.is('problem-show.problem-edit-input') || $state.is('problem-show.problem-edit-output') || $state.is('problem-show.problem-edit-test-case') || $state.is('problem-show.problem-batch-test-case')}">
+          <!-- submenu -->
+          <ul>
+            <li ui-sref="problem-show.problem-edit" ui-sref-active="active" >
+              <a ui-sref="problem-show.problem-edit" ui-sref-active="active">{{'problem.edit' | translate}}</a>
+            </li>
+            <li ui-sref="problem-show.problem-edit-choices" ng-if="problem.problemType === 'MULTIPLE_CHOICE' || problem.problemType === 'SINGLE_CHOICE' || problem.problemType === 'TRUE_OR_FALSE'" ui-sref-active="active" >
+              <a ui-sref="problem-show.problem-edit-choices" ui-sref-active="active">{{'problem.editTab.choices' | translate}}</a>
+            </li>
+            <li ui-sref="problem-show.problem-edit-description" ui-sref-active="active" >
+              <a ui-sref="problem-show.problem-edit-description" ui-sref-active="active">{{'problem.editTab.description' | translate}}</a>
+            </li>
+            <li ng-if="problem.problemType === 'ALGORITHM' || problem.problemType === 'FILL_THE_CODE'" ui-sref="problem-show.problem-edit-input" ui-sref-active="active" >
+              <a ui-sref="problem-show.problem-edit-input" ui-sref-active="active">{{'problem.editTab.input' | translate}}</a>
+            </li>
+            <li ng-if="problem.problemType === 'ALGORITHM' || problem.problemType === 'FILL_THE_CODE'" ui-sref="problem-show.problem-edit-output" ui-sref-active="active" >
+              <a ui-sref="problem-show.problem-edit-output" ui-sref-active="active">{{'problem.editTab.output' | translate}}</a>
+            </li>
+            <li ng-if="problem.problemType === 'ALGORITHM' || problem.problemType === 'FILL_THE_CODE'" ui-sref="problem-show.problem-edit-test-case" ui-sref-active="active" >
+              <a ui-sref="problem-show.problem-edit-test-case" ui-sref-active="active">{{'problem.editTab.testCase' | translate}}</a>
+            </li>
+            <li ng-if="problem.problemType === 'ALGORITHM' || problem.problemType === 'FILL_THE_CODE'" ui-sref="problem-show.problem-batch-test-case" ui-sref-active="active" >
+              <a ui-sref="problem-show.problem-batch-test-case" ui-sref-active="active">{{'problem.editTab.batchTestCase' | translate}}</a>
+            </li>
+            <li ui-sref="problem-show.problem-edit-insert-code" ng-if="problem.problemType === 'FILL_THE_CODE'" ui-sref-active="active" >
+              <a ui-sref="problem-show.problem-edit-insert-code" ui-sref-active="active">{{'problem.editTab.code' | translate}}</a>
+            </li>
+          </ul>
+        </div>
+        <div class="th-tab-pane" ng-class="{'active' : ($state.is('problem-show.insert-code') || $state.is('problem-show.show-solution')) && problem.problemType === 'FILL_THE_CODE'}" ui-sref-active="active">
+          <!-- submenu -->
+          <ul>
+            <li>&nbsp;</li>
+          </ul>
+        </div>
+      </div>
+    </div> <!-- END abas -->
+    </div>
+  </div>
+
+  <div ui-view></div>
+
+
+
+</div>

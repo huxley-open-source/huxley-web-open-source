@@ -1,0 +1,143 @@
+<div class="box multiview-bottom">
+  <th-loading loading="problemInfoLoading"  >
+    <div class="problem-description">
+      <div ng-if="problem.problemType === 'ALGORITHM' || problem.problemType === 'FILL_THE_CODE'" class="problem-description-header-container">
+        <div class="problem-section-head">
+          {{'problem.description' | translate}}
+
+        <div dropdown style="position: relative" class="pull-right" ng-if="languages.length">
+          <button class="btn btn-link" type="button" dropdown-toggle>Trocar lingua</button>
+          <ul class="dropdown-menu" role="menu">
+            <li ng-repeat="(key,value) in languages">
+              <a ui-sref="problem-show.description({ id: problem.id, locale: value })" translate>{{ 'user.languages.' + value.replace('_','') | translate}}</a></li>
+            </li>
+          </ul>
+        </div>
+        </div>
+        <div ng-bind-html="problem.description"/>
+      </div>
+      <div ng-if="problem.problemType === 'ALGORITHM' || problem.problemType === 'FILL_THE_CODE'" class="problem-description-header-container">
+        <p translate class="problem-section-head">problem.inputFormat</p>
+        <div ng-bind-html="problem.inputFormat"/>
+      </div>
+      <div ng-if="problem.problemType === 'ALGORITHM' || problem.problemType === 'FILL_THE_CODE'" class="problem-description-header-container">
+        <p translate class="problem-section-head">problem.outputFormat</p>
+        <div ng-bind-html="problem.outputFormat"/>
+      </div>
+
+      <div ng-if="problem.problemType === 'FILL_THE_CODE'" class="problem-description-header-container">
+        <p ng-if="problem.problemType === 'FILL_THE_CODE'" translate class="problem-base-code">problem.create.baseCode</p>
+        <div ng-if="problem.problemType === 'FILL_THE_CODE'" class="list-group choice-answers">
+          <div ui-codemirror="options" ng-model="problem.baseCode"></div>
+        </div>
+      </div>
+
+      <div>
+        <p translate class="problem-section-head" ng-show="examples.length > 0">problem.examples</p>
+        <div class="problem-example-container">
+          <div class="problem-example-box" ng-repeat="example in examples">
+              <div>
+                <p class="examples-copy">
+                  <i class="img-short img-short-input background-img"></i>
+                  <span>{{'problem.input' | translate}}</span>
+                  <th-copy ng-if="!example.large" class="copy-button" text="example.input"></th-copy>
+                  <span ng-if="example.large" class="copy-button">
+                    <button ng-click="downloadTestCaseExample(example.id)">
+                      <i class="glyphicon glyphicon-save"></i>
+                    </button>
+                  </span>
+                </p>
+
+                <div class="problem-content-wrapper">
+                  <p id="example-input{{example.id}}" class="problem-example-content"><br>{{example.input}}<br><span ng-if="example.large">...</span></p>
+                  <p class="example-download" ng-if="example.large">Este caso de teste está truncado.<a ng-click="downloadTestCaseExample(example.id)"> Clique aqui para baixar.</a></p>
+                </div>
+
+              </div>
+
+              <div>
+                <p class="examples-copy">
+                  <i class="img-short img-short-output background-img"/>
+                  <span>{{'problem.output' | translate }}</span>
+                  <th-copy ng-if="!example.large" class="copy-button" text="example.output"></th-copy>
+                  <span ng-if="example.large" class="copy-button">
+                    <button ng-click="downloadTestCaseExample(example.id)">
+                      <i class="glyphicon glyphicon-save"></i>
+                    </button>
+                  </span>
+                </p>
+                <div class="problem-content-wrapper">
+                  <p id="example-output{{example.id}}" class="problem-example-content"><br>{{example.output}}<br><span ng-if="example.large">...</span></p>
+                  <p class="example-download" ng-if="example.large">Este caso de teste está truncado.<a ng-click="downloadTestCaseExample(example.id)"> Clique aqui para baixar.</a></p>
+                </div>
+
+              </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div ng-if="(problem.problemType === 'SINGLE_CHOICE' || problem.problemType === 'MULTIPLE_CHOICE' || problem.problemType === 'TRUE_OR_FALSE')" class="problem-description-header-container">
+        <p translate class="problem-section-head">problem.choices.descriptionTitle</p>
+        <div ng-bind-html="problem.description"/>
+      </div>
+
+      <div ng-if="(problem.problemType === 'SINGLE_CHOICE' || problem.problemType === 'MULTIPLE_CHOICE' || problem.problemType === 'TRUE_OR_FALSE') && evaluation" class="evaluation-answer-description">
+        <div class="solution-answer answer-correct" ng-show="(evaluation === 'CORRECT')">
+          <div class="answer-circle ans-circle-correct"><i class="answer-image glyphicon glyphicon-ok"></i></div>
+          <p class="answer-text" > {{'problem.solution.correct' | translate}} </p>
+        </div>
+
+        <div class="solution-answer answer-not-correct" ng-show="evaluation !== 'CORRECT' && evaluation !== 'WAITING'">
+          <div class="answer-circle ans-circle-not-correct"><i class="answer-image glyphicon glyphicon-remove"></i></div>
+          <p class="answer-text"> {{'problem.solution.wrongChoice'| translate}} </p>
+        </div>
+
+        <div class="solution-answer answer-waiting" ng-show="(evaluation === 'WAITING')">
+          <div class="answer-circle ans-circle-waiting"><i class="img-loading"></i></div>
+          <p class="answer-text" > {{'problem.solution.waiting' | translate}} </p>
+
+        </div>
+      </div>
+
+      <div ng-if="problem.problemType === 'SINGLE_CHOICE' || problem.problemType === 'MULTIPLE_CHOICE' || problem.problemType === 'TRUE_OR_FALSE'" class="problem-description-header-container">
+        <p ng-if="problem.problemType === 'SINGLE_CHOICE'" translate class="problem-section-head">problem.choices.answerSingle</p>
+        <p ng-if="problem.problemType === 'MULTIPLE_CHOICE'" translate class="problem-section-head">problem.choices.answerMultiple</p>
+        <p ng-if="problem.problemType === 'TRUE_OR_FALSE'" translate class="problem-section-head">problem.choices.answerTrue</p>
+        <div ng-if="problem.problemType === 'SINGLE_CHOICE' || problem.problemType === 'MULTIPLE_CHOICE' || problem.problemType === 'TRUE_OR_FALSE'" class="list-group choice-answers">
+
+          <a ng-if="problem.problemType === 'SINGLE_CHOICE' || problem.problemType === 'MULTIPLE_CHOICE'" href class="list-group-item"
+             ng-class="{active:choice.correct}"
+
+             ng-repeat="choice in problem.choices">
+            <div class="choice-options">
+              <span ng-click="selectChoice(choice)" class="fa fa-check-circle choice-answer-check-true"></span>
+            </div>
+            <div class="choice-answer-content" bind-markdown="choice.description"></div>
+          </a>
+
+          <a ng-if="problem.problemType === 'TRUE_OR_FALSE'" class="list-group-item"
+             ng-class="{active:choice.correct, false: choice.$false}"
+
+             ng-repeat="choice in problem.choices">
+            <div class="choice-options">
+              <span ng-click="selectChoice(choice)" class="fa fa-check-circle choice-answer-check-true"></span>
+              <span ng-click="falseChoice(choice)" class="fa fa-times choice-answer-check-false"></span>
+            </div>
+            <div class="choice-answer-content" bind-markdown="choice.description"></div>
+          </a>
+        </div>
+      </div>
+    </div> <!-- END problem description -->
+
+    <div id="problem-send-answer-box" style="justify-content: space-between; flex-direction: row">
+      <div>
+        <button class="btn btn-red" ui-sref="chat-report({'problem': problem.id})">{{'problem.report.title' | translate}}</button>
+        <button class="btn btn-blue" ui-sref="chat-new-question({'problem': problem.id})">{{'problem.report.question' | translate}}</button>
+      </div>
+      <button ng-if="problem.problemType === 'ALGORITHM'" class="btn btn-green" ui-sref="problem-show.code-editor({'id': problem.id})"> {{'problem.sendSolution' | translate}}</button>
+      <button ng-if="problem.problemType === 'FILL_THE_CODE'" class="btn btn-green" ui-sref="problem-show.insert-code({'id': problem.id})"> {{'problem.sendSolution' | translate}}</button>
+      <button ng-if="problem.problemType !== 'ALGORITHM' && problem.problemType !== 'FILL_THE_CODE'" class="btn btn-green" ng-click="sendSolution()" > {{'problem.sendSolution' | translate}}</button>
+    </div>
+  </th-loading>
+</div>

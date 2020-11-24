@@ -1,0 +1,35 @@
+<div class="box multiview-bottom profile-topic-table">
+  <th-loading loading="loading">
+    <table class="table">
+      <thead>
+      <tr>
+        <th class="profile-quizes-left">
+          <th-order-arrow label="'user.solvedByTopics.topics'" sort-by="'topic'" order='searchParams.order' element="searchParams.sort" search-function="search()"></th-order-arrow>
+        </th>
+        <th class="profile-quizes-center">
+          <th-order-arrow label="'user.solvedByTopics.total'" sort-by="'total'" order='searchParams.order' element="searchParams.sort" search-function="search()"></th-order-arrow>
+        </th>
+        <th class="profile-quizes-center">
+          <th-order-arrow label="'user.solvedByTopics.tried'" sort-by="'tried'" order='searchParams.order' element="searchParams.sort" search-function="search()"></th-order-arrow>
+        </th>
+        <th class="profile-quizes-center">
+          <th-order-arrow label="'user.solvedByTopics.correct'" sort-by="'correct'" order='searchParams.order' element="searchParams.sort" search-function="search()"></th-order-arrow>
+        </th>
+        <th class="profile-quizes-right">
+          <th-order-arrow label="'user.solvedByTopics.percentage'" sort-by="'percentage'" order='searchParams.order' element="searchParams.sort" search-function="search()"></th-order-arrow>
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="topic in profileTopics.data[0].values | orderBy:searchParams.sort:reverse">
+        <th class="profile-quizes-left profile-quizes-border-th profile-capitalize">{{topic.topic}} </th>
+        <th class="profile-quizes-center profile-quizes-border-th">{{topic.total}}</th>
+        <th class="profile-quizes-center profile-quizes-border-th">{{topic.tried}}</th>
+        <th class="profile-quizes-center profile-quizes-border-th">{{topic.correct}}</th>
+        <th class="profile-quizes-right profile-quizes-border-th">{{topic.percentage | number:1}}%</th>
+      </tr>
+      <tr ng-if="profileTopics.data[0].values.length == 0"><td>Nenhum tópico encontrado</td></tr>
+      </tbody>
+    </table>
+  </th-loading>
+</div>

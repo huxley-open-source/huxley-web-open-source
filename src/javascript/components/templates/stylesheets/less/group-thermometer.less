@@ -1,0 +1,79 @@
+.th-group-thermometer-container {
+  .display-flex();
+  height: 40px;
+  .align-items-flex(flex-start);
+  .th-group-thermometer-info {
+    color: @default-color;
+    .flex-grow(1);
+    .th-group-thermometer-name {
+      font-weight: bold;
+    }
+    .th-group-thermometer-institution{
+      font-size: @font-small;
+    }
+    span {
+      display: block;
+      max-width: 250px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+
+  .th-group-thermometer-wrapper {
+    text-align: center;
+    width: 94px;
+    .th-group-thermometer-box {
+      position: absolute;
+    }
+    .th-group-thermometer-status {
+      position: relative;
+      z-index: 20;
+      right: 6px;
+    }
+    .th-group-thermometer-icon-box {
+      height: 32px;
+    }
+    span {
+      text-transform: uppercase;
+      font-size: @font-small;
+    }
+    .th-group-thermometer-legend-box {
+      width: 100%;
+      text-align: center;
+      > span {
+        margin-left: -16px;
+      }
+    }
+    .th-group-thermometer {
+      padding-bottom: 1px;
+      border-bottom: 2px solid @blue-lighter;
+      .display-flex();
+      .align-items-flex(flex-end);
+      width: 78px;
+      &.building {
+        opacity: 0.7;
+      }
+      .th-group-thermometer-bar {
+        margin: 1px;
+        width: 11px;
+        height: 25px;
+        background-color: @blue-lighter;
+        display: inline-block;
+        border-bottom: 3px solid @gray-light;
+      }
+      .th-group-thermometer-bar {
+        &.low-activity {
+          border-bottom: 5px solid @orange;
+        }
+        &.medium-activity {
+          border-bottom: 13px solid @yellow;
+        }
+        &.high-activity {
+          border-bottom: 25px solid @green;
+        }
+      }
+
+    }
+  }
+}

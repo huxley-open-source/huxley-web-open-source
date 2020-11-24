@@ -1,0 +1,50 @@
+<div class="container content">
+  <div class="box">
+    <div class="header">
+      <div>
+        <div>
+          <h3>{{'home.login.title' | translate}}</h3>
+        </div>
+      </div>
+    </div>
+    <div class="login-error-box" ng-class="{'no-visibility': !hasError}">
+      <span ng-if="status === 401">{{'home.login.invalid' | translate}}</span>
+      <span ng-if="status == 500">{{'home.login.unknown' | translate}}</span>
+      <span ng-if="status === -1">{{'home.login.hostUnreachable' | translate}}</span>
+    </div>
+    <div class="login-form">
+      <form name="login" novalidate>
+        <div class="form-group" ng-class="{'has-error': login.username.$dirty && !login.username.$valid}">
+          <label class="col-xs-2 control-label" for="username">{{'home.login.login' | translate}}</label>
+          <div class="col-xs-10">
+            <input ng-change="formChanged()" class="form-control" type="text" id="username" name="username" ng-model="user.username" placeholder="{{'home.login.username' | translate}}" required>
+          </div>
+          <span class="help-block" ng-if="login.username.$dirty && login.username.$error.required">{{'home.login.required' | translate}}</span>
+        </div>
+        <div class="form-group" ng-class="{'has-error': login.password.$dirty && !login.password.$valid}">
+          <label class="col-xs-2 control-label" for="password">{{'home.login.password' | translate}}</label>
+          <div class="col-xs-10">
+            <input ng-change="formChanged()" class="form-control" type="password" id="password" name="password" ng-model="user.password" placeholder="{{'home.login.password' | translate}}" required>
+          </div>
+          <span class="help-block" ng-if="login.password.$dirty && login.password.$error.required">{{'home.login.required' | translate}}</span>
+        </div>
+        <div class="form-group">
+          <label class="col-xs-2 control-label" for="connected"></label>
+          <div class="col-xs-10 checkbox">
+              <input type="checkbox" ng-model="user.connected" name="connected" id="connected"/>{{'home.login.keepLogged' | translate }}
+          </div>
+
+        </div>
+        <div class="create-save-container text-right">
+          <button class="btn btn-green" ng-click="sendForm()">{{'home.login.action' | translate}}</button>
+          {{'home.login.or' | translate}} <a ui-sref="signIn">{{'home.login.signOn' | translate}}</a>
+          <div class="font-small"><a ui-sref="retry-password">{{'home.login.passwordRetry' | translate}}</a></div>
+        </div>
+      </form>
+
+    </div>
+
+
+  </div>
+
+</div>

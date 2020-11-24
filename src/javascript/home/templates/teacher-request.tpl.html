@@ -1,0 +1,37 @@
+<div class="container content">
+  <div class="box">
+    <div class="home-panel">
+      <div class="home-panel-left">
+
+      </div>
+      <div class="home-panel-mid">
+        <div class="home-panel-logo-container"><i class="img-circle icon"><i class="background-img icon img-bigger img-circle img-bigger-white-huxley"></i></i></div>
+        <div>
+          <h5>{{'home.request.teacherTitle' | translate }}</h5>
+          {{'home.request.teacherExplanationPt1' | translate }}<br>
+          {{'home.request.teacherExplanationPt2' | translate }}<br>
+          {{'home.request.teacherExplanationPt4' | translate }}
+        </div>
+      </div>
+    </div>
+    <div class="alert-box-without-group alert alert-dismissible fade in teacher-request-alert" role="alert">
+      {{'home.request.institutionExplanation' | translate}}
+    </div>
+    <div class="text-center">
+      <div class="teacher-request-container">
+        <ng-form novalidate>
+          <th-input-complete-box type="'INSTITUTION'" model-name="true" only-one="true" fixed-size="true" label="'group.institution' | translate" placeholder="'group.institution' | translate" chosen-list="institution" element-id="'institution-name'"></th-input-complete-box>
+          <div class="create-save-container text-right">
+            <button ng-click="sendPendency()" class="btn btn-blue">{{'home.request.button' | translate }}</button>
+          </div>
+        </ng-form>
+        <div ng-if="hasError && showResult" class="alert-box-without-group alert alert-dismissible fade in teacher-request-alert" role="alert">
+           {{'home.request.error' | translate}}
+        </div>
+        <div ng-if="!hasError && showResult" class="alert-box-without-group alert alert-dismissible fade in teacher-request-alert" role="alert">
+          {{'home.request.sent' | translate}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

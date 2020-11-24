@@ -1,0 +1,66 @@
+<div class="multiview-bottom box">
+  <th-loading loading="$parent.loadingStats"  >
+    <div class="stats-box">
+      <div class="stats-box-item">
+        <p class="stats-box-title">{{'group.stats.data.students' | translate}}</p>
+        <p class="stats-big">{{group.students.length}}</p>
+      </div>
+      <div class="stats-box-item">
+        <p class="stats-box-title">{{'group.stats.data.teacherAssistant' | translate}}</p>
+        <p class="stats-big">{{group.teacherAssistants.length}}</p>
+      </div>
+    <div class="stats-box-item">
+      <p class="stats-box-title">{{'group.stats.data.submissionsCount' | translate}}</p>
+      <p class="stats-big">{{submissionCount}}</p>
+    </div>
+
+    <div class="stats-box-item">
+      <p class="stats-box-title">{{'group.stats.data.submissionsCorrect' | translate}}</p>
+      <p class="stats-big">{{correctSubmissionCount}}</p>
+    </div>
+
+    <div class="stats-box-item">
+      <p class="stats-box-title">{{'group.stats.data.problemsTriedAverage' | translate}}</p>
+      <p class="stats-big">{{(problemsTriedAverage).toFixed(0)}}</p>
+    </div>
+
+    <div class="stats-box-item">
+      <p class="stats-box-title">{{'group.stats.data.problemsSolvedAverage' | translate}}</p>
+      <p class="stats-big">{{(problemsSolvedAverage).toFixed(0)}}</p>
+    </div>
+
+    <div ng-if= "submissionCount > 0" class="stats-box-item graph-box">
+      <p class="stats-box-title">{{'group.stats.data.submissionByEvaluation' | translate}}</p>
+      <nvd3 id="submissionsPerStatusId" options="statsOptions.submissionPieChart" data="submissionByEvaluation"></nvd3>
+    </div>
+
+    <div ng-if= "submissionCount > 0" class="stats-box-item graph-box">
+      <p class="stats-box-title">{{'group.stats.data.submissionByLanguage' | translate}}</p>
+      <nvd3 id="submissionsPerLanguageId" options="statsOptions.submissionPieChart" data="submissionByLanguage"></nvd3>
+    </div>
+
+      <div ng-if= "submissionCount > 0" class="stats-box-item">
+      <p class="stats-box-title">{{'problem.stats.lastSubmissions' | translate}}</p>
+      <ul class="problem-stats-submission-list">
+        <li ng-repeat="submission in group.stats.lastSubmissions">
+          <th-user-box user="submission.user" time="submission.submissionDate"></th-user-box>
+          <th-problem-status status="submission.evaluation" with-arrow-box="true" direction="'left'" without-popover="true"></th-problem-status>
+        </li>
+      </ul>
+
+
+    </div>
+
+    <div ng-if= "submissionCount > 0" class="stats-box-item">
+      <p class="stats-box-title">{{'problem.stats.mostEfficient' | translate}}</p>
+      <ul class="problem-stats-submission-list">
+        <li ng-repeat="submission in group.stats.fastestSubmissions">
+          <th-user-box user="submission.user" submission="submission"></th-user-box>
+          <th-problem-status status="submission.evaluation" with-arrow-box="true" direction="'left'" without-popover="true"></th-problem-status>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+  </th-loading>
+</div>

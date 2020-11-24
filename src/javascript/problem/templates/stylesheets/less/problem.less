@@ -1,0 +1,1555 @@
+@right-margin: 20px;
+@margin-base: 20px;
+
+
+// box de busca por nome de problema (parte superior da tela)
+.search-box {
+  .display-flex();
+  .justify-content-flex(space-between);
+  .align-items-flex(center);
+
+  background-color: @gray-darker;
+
+}
+
+// fica do lado esquerdo da tela e contém a lupa e a barra
+.search-bar {
+  .display-flex();
+  .flex-direction(row);
+  .align-items-flex(center);
+  width: 50%;
+}
+
+// A lupa
+.search-bar i {
+  position: relative;
+  margin: 2px -5px 2px 2px;
+}
+
+// Input com a barra e o botão para a busca avancada
+.search-input-box {
+  .display-flex();
+  width: 100%;
+}
+
+// Input para digitar o nome do problema
+.search-input-box input {
+  padding-left: 10px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+
+}
+
+// Botão para ativar a busca avanćada
+.search-input-box button {
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  border-left: 0px;
+  background-color: @gray-darker;
+}
+
+// comportamento de quando o mouse passa por cima do botão que ativa a busca avancada
+.search-input-box button:hover {
+  background-color: @gray-dark;
+}
+
+//FILTROS
+
+// div da busca avançada
+
+
+
+
+.difficulty-level-filter {
+  .display-flex();
+  .flex-direction(column);
+}
+.difficulty-level-filter > div {
+  .display-flex();
+  .flex-direction(row);
+  .align-items-flex(center);
+}
+
+// slider de busca avanćada por ND
+.difficulty-level-filter > div > div {
+  width: 300px;
+  margin: 15px 15px 15px 8px;
+  background: @blue-light;
+  border-color: @blue;
+}
+
+.difficulty-level-filter > div > div .ui-slider-range{
+  background: @blue-darker;
+}
+
+.difficulty-level-filter > div >  input {
+  width: 50px;
+  margin: 5px;
+  text-align: center;
+}
+
+.topic-filter {
+  margin-top:10px;
+  .display-flex();
+  .flex-direction(column);
+  .topic-filter-top {
+    .display-flex();
+    .flex-direction(row);
+    .justify-content-flex(space-between);
+  }
+
+  .topic-filter-bottom{
+    .display-flex();
+    .flex-wrap(wrap);
+    .flex-direction(row);
+    button {
+      margin: 2px;
+    }
+  }
+}
+
+// RESULTADOS
+.problem-list-header {
+  .display-flex();
+  .flex-direction(row);
+  .justify-content-flex(space-between);
+  .align-items-flex(flex-end);
+
+  clear: both;
+  margin: 20px @right-margin 5px @left-margin;
+  > p {
+    text-transform: uppercase;
+    font-size: 0.8em;
+    margin: 0px;
+    font-weight: bold;
+  }
+}
+
+.problem-management-table {
+  .management-select-box {
+    .display-flex();
+    .justify-content-flex(flex-end);
+    .form-group {
+      margin-bottom: 0;
+      width: 170px;
+    }
+  }
+
+}
+
+.problem-list {
+  .display-flex();
+  .flex-direction(column);
+  padding-left: 0px;
+}
+
+
+.problem-data {
+  .display-flex();
+  .justify-content-flex(space-between);
+  .align-items-flex(center);
+}
+
+.problem-data-left {
+  .display-flex();
+  > div:first-child {
+    position: relative;
+    .display-flex();
+    .justify-content-flex(center);
+  }
+}
+
+.grade {
+  width: 40px;
+  height: 40px;
+  min-width: 35px;
+  min-height: 35px;
+  text-align: center;
+  color: white;
+  font-size: 26px;
+  font-weight: bold;
+  line-height: 40px;
+}
+
+.nd-name {
+    align-items: center;
+    color: white;
+    font-size: 12px;
+    padding: 3px 11px;
+}
+
+._1 {
+  background-color: @green-light !important;
+}
+._2 {
+  background-color: @green !important;
+}
+._3 {
+  background-color: @orange-light !important;
+}
+._4 {
+  background-color: @orange !important;
+}
+._5 {
+  background-color: @red !important;
+}
+
+.arrow-border-1 {
+  border-left-color: @green-light !important;
+}
+.arrow-border-2 {
+  border-left-color: @green !important;
+}
+.arrow-border-3 {
+  border-left-color: @orange-light !important;
+}
+.arrow-border-4 {
+  border-left-color: @orange !important;
+}
+.arrow-border-5 {
+  border-left-color: @red !important;
+}
+
+.arrow-position {
+  margin: auto 0px;
+  margin-right: 9px;
+}
+
+.topic-list {
+  white-space: nowrap;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  max-width: 220px;
+}
+
+.problem-name {
+  display: flex !important;
+  .flex-direction(column);
+  .justify-content-flex(center);
+  font-size: 12px;
+  white-space: nowrap;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  > span {
+    white-space: nowrap;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+    max-width: 220px;
+  }
+  a {
+    color: @blue;
+    margin-top: 2px;
+    white-space: nowrap;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+    max-width: 220px;
+  }
+
+  p {
+    text-transform: uppercase;
+    margin-top: -3px;
+    margin-bottom: 0;
+    color: @black;
+    font-size: 11px;
+  }
+}
+
+.problem-data-right {
+  .display-flex();
+  .align-items-flex(center);
+  //margin-bottom: 8px;
+  .box {
+    margin: 0;
+    padding: 0;
+    width: 40px;
+    text-align: center;
+    display: inline-block;
+  }
+}
+
+// Div que contém o status do problema (certo, errado ou não tentado)
+.problem-status-box {
+  .display-flex();
+  .align-items-flex(center);
+  // Texto
+  > p {
+    font-size: 0.7em;
+    margin-bottom: 0;
+    margin-right: 5px;
+  }
+
+}
+
+.problem-status {
+  .display-flex();
+  .align-items-flex(center);
+
+  .problem-status-container {
+    color: white;
+    width: 24px;
+    height: 24px;
+    border-radius: @border-radius-base;
+    .display-flex();
+    .align-items-flex(center);
+    .justify-content-flex(center);
+    &.problem-status-box {
+      width: 60px;
+      height: 60px;
+      border-radius: 0;
+    }
+    &.problem-status-circle {
+      border-radius: 50%;
+      margin-right: 40px;
+    }
+  }
+
+  &.status-correct {
+    .problem-status-container {
+      background-color: @green-light;
+    }
+    .arrow-left {
+      border-right-color: @green-light;
+    }
+    .arrow-right {
+      border-left-color: @green-light;
+    }
+
+  }
+
+  &.status-not-correct {
+    .problem-status-container {
+      background-color: @red-light;
+    }
+    .arrow-left {
+      border-right-color: @red-light;
+    }
+    .arrow-right {
+      border-left-color: @red-light;
+    }
+  }
+
+  &.status-not-tried {
+    .problem-status-container {
+      background-color: @white;
+      border: 2px solid @blue-light;
+      color: @blue-darker;
+      .glyphicon.glyphicon-repeat {
+        -webkit-animation:spin 1.5s linear infinite;
+        -moz-animation:spin 1.5s linear infinite;
+        animation:spin 1.5s linear infinite;
+      }
+    }
+  }
+  .arrow-left {
+
+  }
+}
+
+body:not(:-moz-handler-blocked) {
+  .glyphicon.glyphicon-repeat {
+    padding-top: 1px;
+  }
+}
+
+//////////////////////////////////////////////////////////////////////////////////////
+// CSS para a página de SHOW
+//////////////////////////////////////////////////////////////////////////////////////
+
+.problem-info-box {
+  color:black;
+  .display-flex();
+  .justify-content-flex(space-between);
+  margin-bottom: 15px;
+  padding: 0px 11px;
+  align-items: center;
+  font-size: 11px;
+
+  .problem-status-margin {
+    margin-right: 15px;
+  }
+
+  p {
+    margin-bottom: 2px;
+  }
+}
+
+.problem-info-box #info-nd-box{
+  width: 75px;
+  height: 75px;
+  background-color: @green-light;
+  text-align: center;
+  padding: @padding-base-vertical 0px @padding-base-vertical 0px;
+  border-radius: @border-radius-base;
+}
+
+.problem-info-box #info-nd-text {
+  text-transform: uppercase;
+  font-size: @font-smaller;
+  margin: 0px;
+}
+
+.problem-info-box #info-nd-number {
+  color: white;
+  font-size: @font-size-h1;
+  font-weight: bold;
+  margin: 0px;
+}
+
+.problem-info-box #info-center {
+  .flex-grow(1);
+  margin-left: @margin-base;
+  margin-right: @margin-base;
+}
+
+.problem-info-box .info-problem-name-box {
+  display: inline-block;
+}
+
+.problem-info-box .info-problem-name {
+  font-size: @font-size-large;
+  padding-right: @padding-base-vertical;
+}
+
+.problem-info-box #info-topics {
+  text-transform: uppercase;
+  font-size: @font-small;
+}
+
+.problem-info-box #info-creation {
+  font-size: @font-small;
+}
+
+.other-problem-info {
+  font-size: @font-small;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  padding: 0px 12px;
+
+  p {
+    margin: 0;
+  }
+}
+.problem-info-box #info-source {
+  font-size: @font-small;
+  font-style: italic;
+}
+
+.problem-description {
+  color: black;
+  margin: 0 15px;
+  font-size: 12px;
+  word-break: keep-all;
+  > div:last-of-type {
+    .problem-section-head {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.problem-section-head {
+  padding: @padding-base-horizontal @padding-base-horizontal @padding-base-horizontal @padding-base-horizontal;
+  background-color: @blue-lighter;
+  color : @blue-darker;
+  font-size: 12px;
+  margin: 30px 0;
+}
+
+.problem-example-box {
+  .display-flex();
+  border: 1px solid @blue;
+  border-left: 0;
+
+  i {
+    display: inline-block;
+  }
+
+  > div {
+    width: 50%;
+    border-left: 1px solid @blue;
+    &:first-of-type {
+      border-right: 1px solid @blue;
+      margin-right: 2px;
+    }
+  }
+
+  > div > p:first-child {
+
+    .flex-grow(1);
+    border-bottom: 1px solid @blue;
+    background-color: @blue-lighter;
+    color : @blue-darker;
+    font-size: @font-small;
+    padding: @padding-base-vertical @padding-base-horizontal @padding-base-vertical @padding-base-horizontal;
+  }
+}
+
+#problem-send-answer-box {
+  .display-flex();
+  .flex-direction(row-reverse);
+  border-top: 2px solid @gray-light;
+  margin-top: 2px;
+  padding-top: @padding-base-vertical;
+  margin: 15px 15px 20px 15px;
+}
+
+//////////////////////////////////////////////////////////////////////////////////////
+// CSS para a página do editor de código
+//////////////////////////////////////////////////////////////////////////////////////
+
+.codeeditor {
+  width: 100%;
+  height: 480px;
+}
+
+//////////////////////////////////////////////////////////////////////////////////////
+// CSS para a página de upload de arquivo
+//////////////////////////////////////////////////////////////////////////////////////
+
+
+.solution-answer {
+  .display-flex();
+  .justify-content-flex(center);
+  .align-items-flex(center);
+  padding: 40px 10px 10px 10px;
+  .flex-direction(column);
+}
+
+.answer-circle {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  .display-flex();
+  .justify-content-flex(center);
+  .align-items-flex(center);
+}
+.ans-circle-correct {
+  background-color: @green-light;
+}
+
+.ans-circle-waiting {
+  background-color: @blue;
+}
+
+.ans-circle-not-correct {
+  background-color: @red;
+}
+
+.answer-image {
+  font-size: 60px;
+  color: white;
+}
+
+.answer-text {
+  color : black;
+}
+
+.answer-correct {
+  background-color: @green-lighter;
+}
+
+.answer-waiting {
+  background-color: @blue-light;
+}
+
+.answer-not-correct {
+  background-color: @red-light;
+}
+
+// Boxes para mostrar as entradas e saídas
+.solution-input-box {
+  .flex-grow(1);
+  width: 100%;
+  margin-top: 20px !important;
+  border: 1px solid @blue;
+  &.error-box {
+    border: 1px solid @red;
+    margin-right: 2px;
+  }
+}
+
+.input-style {
+  margin-left: 5px;
+  white-space: pre-line;
+}
+
+.show-input-scrollbar {
+  max-height: 250px;
+  overflow-y: hidden;
+  position: relative;
+}
+
+.box-one-column {
+  display: block;
+}
+
+.box-multiple-columns {
+  width: 100%;
+  .display-flex();
+  > div {
+    flex-grow : 1;
+  }
+}
+.solution-input-box-header {
+  border-bottom: 1px solid @blue;
+  background-color: @blue-lighter;
+  color: @blue-darker;
+  font-size: @font-small;
+  height : 40px;
+  padding: @padding-base-vertical @padding-base-horizontal;
+  &.diff-legend-header {
+    border: 1px solid @blue;
+  }
+  .icon {
+    padding-top: 20px;
+  }
+}
+.solution-title-default {
+  border-bottom: 1px solid @blue-light;
+  background-color: @blue-lighter;
+  color: @blue-darker;
+  font-size: @font-small;
+  height : 40px;
+  padding: @padding-base-vertical @padding-base-horizontal @padding-base-vertical @padding-base-horizontal;
+  &.diff-legend-header {
+    border: 1px solid @blue-light;
+    font-weight: normal;
+    padding-bottom: 0px;
+  }
+  .icon {
+    padding-top: 20px;
+  }
+}
+
+.solution-title-error {
+  border-bottom: 1px solid @red;
+  background-color: @red-light;
+  color: @red;
+  font-size: @font-small;
+  height : 40px;
+  padding: @padding-base-vertical @padding-base-horizontal @padding-base-vertical @padding-base-horizontal;
+}
+
+.solution-title-blue-dark {
+  border-bottom: 1px solid @blue;
+  background-color: @blue-darker;
+  color: white;
+  font-size: @font-small;
+  height : 40px;
+  padding: @padding-base-vertical @padding-base-horizontal @padding-base-vertical @padding-base-horizontal;
+}
+
+.margin-after {
+  margin: 0px 0px @margin-base 0px;
+}
+
+.problem-description-header-container {
+  > div {
+    margin-left: 5px;
+  }
+
+  //p {
+  //  word-break: break-word;
+  //}
+
+  > .choice-description, > .list-group {
+    margin-left: 0;
+  }
+
+  > .list-group > .list-group-item {
+    &:first-child {
+      border-radius: 0;
+    }
+  }
+}
+.problem-example-container > :not(:first-child)  {
+  border-top: 0;
+}
+
+
+
+.problem-example-content {
+  .code-font;
+  font-size: 12px;
+  padding-left: @padding-base-horizontal;
+}
+
+// Fim dos boxes
+
+.th-circle() {
+  border-radius : 50%;
+  display: inline-block;
+  padding : 5px;
+  i {
+    display: inline-block;
+  }
+
+}
+
+.th-circle-orange {
+  .th-circle;
+  background-color: @orange;
+}
+
+.th-circle-blue {
+  .th-circle;
+  background-color: @blue;
+}
+
+.solution-help-box {
+  background-color: @blue-light;
+  border-radius: @border-radius-base;
+  .display-flex();
+  .align-items-flex(center);
+  padding: 0 @padding-base-horizontal 0 4px;
+  height: 70px;
+  margin: @margin-base 0 @margin-base 27px;
+
+  .solution-box-left {
+    width: 80%;
+    .display-flex();
+    .align-items-flex(center);
+    > span {
+      color: @blue-darker;
+      margin-left: @margin-base;
+    }
+
+    > div:first-child {
+      margin-left: -37px;
+    }
+
+  }
+
+  .solution-box-right {
+    width: 20%;
+    .display-flex();
+    .justify-content-flex(flex-end);
+    > button:first-child {
+      margin-right: @margin-base;
+    }
+  }
+  &.progress-box {
+    background-color: @blue-lighter;
+    margin-left: 40px;
+    .th-progress {
+      margin-top: 15px;
+    }
+    .solution-box-right {
+      .black-title {
+        width: 70px;
+      }
+      width: 50%;
+    }
+    .solution-box-left {
+      width: 50%;
+    }
+  }
+}
+
+.problem-suggestion-box {
+  background-color: @blue-lighter;
+  padding: 0 @padding-base-horizontal 0 @padding-base-horizontal;
+  height: 70px;
+  margin: 0 0 @margin-base 27px;
+  .display-flex();
+  .justify-content-flex(space-between);
+  .align-items-flex(center);
+
+  #next-problem-inner-box {
+    display: inherit;
+    .align-items-flex(inherit);
+
+    > span:nth-child(2) {
+      margin-left: @margin-base;
+      color : @blue-darker;
+    }
+
+    > span:nth-child(3){
+      color : @black;
+    }
+  }
+
+  #next-problem-circle {
+    margin-left: -37px;
+  }
+
+  #play-img {
+    font-size : 55px;
+    color : white;
+  }
+
+
+}
+
+.oracle-header {
+  .display-flex();
+  margin-bottom: 50px;
+  color: white;
+  >i {
+    z-index: 0;
+  }
+
+  #oracle-description-box {
+    width: 100%;
+    .display-flex();
+    .align-items-flex(center);
+    .justify-content-flex(center);
+    margin-left: -30px;
+    padding-left: 40px;
+    background-color: @blue-darker;
+  }
+}
+
+.ask-oracle-button {
+  width: 100%;
+  display:flex;
+  .justify-content-flex(flex-end);
+  padding: 15px 10px;
+  background-color: @blue-lighter;
+  margin-bottom: 5px;
+}
+
+.stats-box {
+  .display-flex();
+  .flex-wrap(wrap);
+  margin: 20px;
+}
+
+.stats-box-item {
+  .flex-grow(1);
+  width: 50%;
+  border-bottom: 1px solid @blue;
+  text-align: center;
+  p {
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    .groupappstats-box-title {
+      color: @default-color;
+    }
+
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .stats-box-item {
+    width: 100% !important;
+  }
+}
+
+.stats-box-item-unique {
+  text-align: center;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.stats-big {
+  color : @blue;
+  font-size: 56px;
+  font-weight: bold;
+}
+
+.problem-stats-submission-list {
+  text-align: left;
+  li {
+    .display-flex();
+    list-style: none;
+    margin-bottom: 5px;
+    .problem-status {
+      margin-top: -1px;
+      margin-left: -10px;
+    }
+    .user-box {
+      background: @blue-lighter;
+      width: 330px;
+    }
+  }
+}
+
+.submission-border {
+  border-top: 1px solid @blue;
+  margin-top: 25px;
+  padding-top: 8px;
+}
+
+.submission-list > thead > tr > th {
+  padding-bottom: 8px !important;
+  color: @black;
+}
+
+.submission-list > tbody > tr {
+  color: @black;
+}
+
+.oracle-box {
+  margin: 30px 20px;
+}
+
+.input-output {
+  border: 1px solid @blue;
+  > div:first-of-type {
+    margin-right: 2px;
+    border: none;
+    border-right: 1px solid @blue;
+  }
+  > div:last-of-type {
+    border: none;
+    border-left: 1px solid @blue;
+  }
+  .solution-title-default {
+    margin-bottom: 0;
+  }
+  .solution-input-box {
+    margin-top: 0 !important;
+  }
+}
+
+.textarea-resize-disabled {
+  border-radius: 0;
+  resize: none;
+}
+
+.upload-solution-box {
+  margin: 0 15px;
+  margin-top: 20px;
+  > div {
+    margin-bottom: 20px;
+  }
+}
+
+.input-hidden {
+  cursor: pointer !important;
+  height: 100%;
+  position:absolute;
+  top: 0;
+  right: 0;
+  font-size: 0;
+  width: 100%;
+  z-index:10;
+  opacity: 0;
+  -moz-opacity: 0;
+  filter:progid:DXImageTransform.Microsoft.Alpha(opacity=0)
+}
+
+.input-hidden-upload {
+  cursor: pointer !important;
+  height: 100%;
+  position: relative;
+  top: -22px;
+  right: 0;
+  font-size: 0;
+  width: 100%;
+  z-index:10;
+  opacity: 0;
+  -moz-opacity: 0;
+  filter:progid:DXImageTransform.Microsoft.Alpha(opacity=0)
+}
+
+.file-input {
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  height: 25px;
+  width: 25px;
+}
+
+.solution-upload-box {
+  .display-flex();
+  .justify-content-flex(space-between);
+  padding: 8px 10px;
+  background-color: @blue-lighter;
+  margin-bottom: 5px;
+  .has-error {
+    .form-control {
+      border: 1px solid @red !important;
+    }
+  }
+}
+
+.upload-file {
+  width: 50%;
+  .form-control {
+    border: 1px solid @blue;
+    height: 30px;
+    padding: 4px 12px;
+  }
+  .input-group-addon {
+    background-color: @blue;
+    border: 1px solid @blue;
+    height: 30px;
+    padding: 4px 12px;
+  }
+}
+
+.upload-language {
+  padding: 0px 11px;
+  .dropdown-toggle > div {
+    width: 225px;
+  }
+  > div {
+    margin-bottom: 0;
+    .form-control {
+      border: 1px solid @blue;
+      padding: 4px 12px;
+      height: 30px;
+      line-height: 20px;
+    }
+  }
+  .btn-blue, .btn-blue:hover, .btn-blue:active {
+    border: 1px solid @blue;
+    padding: 4px 12px;
+    height: 30px !important;
+    width: 44px !important;
+  }
+}
+
+.upload-button {
+  margin: auto 0;
+  > button {
+    padding: 2px 25px;
+  }
+}
+
+.doubt-dropdowns {
+  padding: 20px;
+  background-color: @blue-lighter;
+  color: @black;
+}
+
+.tip-dropdown {
+  margin-bottom: 20px;
+  > div:last-of-type {
+    background-color: @white;
+    border: 1px solid @blue;
+    min-height: 50px;
+    width: 100%;
+    border-radius: 3px;
+    > div {
+      padding: 5px 10px;
+    }
+  }
+}
+
+.java-dropdown {
+  margin-bottom: 20px;
+  > div:last-of-type {
+    background-color: @white;
+    border: 1px solid @blue;
+    min-height: 50px;
+    width: 100%;
+    border-radius: 3px;
+    > div {
+      padding: 5px 10px;
+    }
+  }
+  pre {
+    background-color: @white;
+    color: @black;
+    border: 0;
+    margin-bottom: 0;
+    .purple-code {
+      color: rgb(127, 0, 85);
+    }
+    .blue-code {
+      color: rgb(60, 76, 114);
+    }
+    .green-code {
+      color: rgb(113, 150, 130);
+    }
+  }
+}
+
+
+.doubt-dropdown-buttons {
+  border-top: 1px solid @white;
+  padding-top: 15px;
+  margin: 0 -20px;
+  padding-right: 20px;
+  > div {
+    .display-flex();
+    text-align: end;
+    .align-self-flex(flex-end);
+    .justify-content-flex(flex-end);
+    > button {
+      margin-left: 10px;
+    }
+  }
+}
+
+.teacher-help-dropdown {
+  .form-group {
+    padding: 0 !important;
+    margin: 0 !important;
+    margin-bottom: 20px !important;
+  }
+  label {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  .form-group > div {
+    width: 100% !important;
+  }
+}
+
+.graph-box {
+  height: 385px;
+}
+
+.problem-adm-margin-top {
+  margin-top: 20px;
+}
+
+.levelFilterDisplay {
+  border: 1px solid @gray !important;
+  width: 50px !important;
+  height: 26px;
+  background-color: @white !important;
+  line-height: 25px;
+  text-align: center;
+  color: @gray;
+  .default-cursor;
+  .cant-select-text;
+}
+
+.problem-test-case-tool-bar {
+  .display-flex();
+  .align-items-flex(center);
+  div {
+    display: inline-block;
+    .flex-grow(1);
+    input {
+      top: -2px;
+    }
+  }
+  button {
+    margin-left: 2px;
+  }
+}
+
+.pending-problem {
+  position: absolute;
+  bottom: -4px;
+  right: 8px;
+  border-radius: 50%;
+  background-color: #ffffff;
+}
+
+h3.pending-problem-name {
+  color: @red;
+}
+.checkbox-search-all-problems{
+  width: 67px;
+}
+
+.text-button-align-code-view {
+  display: inline-flex;
+  height: 100%;
+  vertical-align: bottom;
+  margin-left: 5px;
+  margin-right: -2px;
+}
+
+
+.edit-box {
+  padding: 0 20px;
+  .text-right {
+    padding: 10px 0;
+  }
+}
+
+.edit-align {
+  padding-left: 17px;
+}
+
+.code-font {
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', 'monospace' !important;
+  white-space: pre-wrap;
+  color: @default-color;
+}
+
+.diff-box {
+  margin-bottom: 15px;
+}
+
+.problems-list {
+  &.row {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  hr {
+    margin-top: 12px;
+    margin-bottom: 12px;
+  }
+
+  .filters {
+    font-size: 13px;
+    border-right: 1px solid #ddd;
+  }
+
+  .problem-table {
+    margin-top: 11px;
+
+    > tbody > tr:first-child > td {
+      border-top: none !important;
+    }
+  }
+}
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////
+// CSS para a as páginas relacionadas aos problemas de multipla escolha
+//////////////////////////////////////////////////////////////////////////////////////
+
+.problem-header > h3 > button {
+  margin-bottom: -4px;
+  &:first-of-type {
+    margin-left: 15px;
+  }
+}
+
+.problem-choice-box {
+
+  .clearfix;
+
+  .choice-nd {
+    margin: 0 15px 15px -10px;
+    float: left;
+    position: relative;
+
+    > .arrow-right {
+      position: absolute;
+      right: -4px;
+      top: 50%;
+      margin: -4px 0 0 0;
+    }
+  }
+
+  .choice-name {
+    margin-left: 45px;
+  }
+
+  .pull-right {
+    margin-left: 10px;
+    margin-right: -10px;
+  }
+}
+
+.choice-description {
+  padding: 8px 12px;
+  margin-left: 0;
+}
+
+.choice-answers > .list-group-item {
+
+  .default-cursor();
+  padding-left: 0;
+  .display-flex();
+
+  .choice-options {
+    .display-flex();
+    .flex-direction(column);
+    .justify-content-flex(space-between);
+    height:50px;
+  }
+
+  .choice-answer-check-true, .choice-answer-check-false {
+    .pointer-cursor();
+    float: left;
+    width: 55px;
+    text-align: center;
+    font-size: 20px;
+    color: #999;
+    opacity: 0.1;
+    transition: opacity .2s ease;
+  }
+
+  .choice-answer-content {
+    width: 100%;
+  }
+
+  &:hover {
+    .choice-answer-check-true, .choice-answer-check-false {
+      opacity: 0.5;
+    }
+  }
+
+  &.active, &.active:hover {
+    .choice-answer-check-true {
+      color: #fff;
+      opacity: 1;
+      transition: none;
+    }
+    .choice-answer-check-false {
+      color: #999;
+      opacity: 1;
+      transition: none;
+    }
+  }
+
+  &.false, &.false:hover {
+    .choice-answer-check-true {
+      color: #999;
+      opacity: 1;
+      transition: none;
+    }
+    .choice-answer-check-false {
+      color: #fff;
+      opacity: 1;
+      transition: none;
+    }
+  }
+
+  &.false {
+    color: #fff;
+    background-color: @red;
+    border-color: @red;
+  }
+}
+
+.problem-questions {
+  > .btn {
+    margin-left: 2px;
+    font-weight: 700;
+    background: #eee;
+    padding: 0 8px;
+    line-height: 20px;
+
+    &.btn-green { .btn-green; }
+    &.btn-info { .btn-info; }
+    &.btn-danger { .btn-danger; }
+  }
+}
+
+.copy-button {
+  margin-left: auto;
+  > button {
+    background: none;
+    border: none;
+    color: #05adef;
+    font-size: 15px;
+    &:hover {
+      color: #0E4B7D;
+    }
+  }
+}
+
+.examples-copy {
+  display: flex;
+  > span {
+    align-self: flex-end;
+  }
+}
+.problem-content-wrapper {
+  max-height: 200px;
+  overflow: auto;
+  > .example-download {
+    padding-left: 12px;
+  }
+}
+
+.batch-files-align {
+  .display-flex();
+  .justify-content-flex(space-between);
+  .flex-direction(column);
+  margin: 20px 20px;
+  height: 60px;
+}
+
+.problem-batch-files {
+  .problem-description();
+  margin-bottom: 20px;
+  .display-flex();
+  > div {
+    width: 50%;
+  }
+}
+
+.batch-example {
+  font-weight: bold;
+}
+
+.test-case-selected {
+  animation: fadeIt 2s ease-in-out;
+}
+
+@keyframes fadeIt {
+  0%   { background-color: #fff; }
+  50%  { background-color: @alert-warning-bg; }
+  100% { background-color: #fff; }
+}
+
+.problem-checklist {
+  background-color: @alert-warning-bg;
+  border: 1px solid @alert-warning-border;
+  padding: 11px;
+  margin-left: 40px;
+  margin-right: 40px;
+}
+
+.problem-filters {
+  display: flex;
+  padding: 8px;
+  background-color: #eee;
+  margin: 11px 11px 0px 11px;
+
+  .form-control {
+    width: auto;
+    margin-right: 8px;
+  }
+}
+
+.option-align {
+  width: 20%;
+  text-align: center;
+}
+
+.add-options-align {
+  .display-flex();
+  .align-items-flex(flex-end);
+  > div {
+    width: 85%;
+  }
+  button {
+    height: 24px;
+    vertical-align: top;
+    margin-left: 10px;
+  }
+}
+
+.create-align-fields {
+  > div {
+    padding: 5px 10px;
+    margin: 5px 18px;
+  }
+}
+
+.problem-base-code {
+  .problem-section-head();
+  margin-bottom: 0px;
+}
+
+.complete-code-size {
+  .CodeMirror {
+    height: 175px;
+  }
+}
+
+.base-code-size {
+  .CodeMirror {
+    height: 300px;
+  }
+}
+
+.complete-code {
+  .th-select-striped {
+    height: 50px;
+  }
+}
+
+.evaluation-answer-description {
+  margin-bottom: -25px;
+}
+
+.problem-choice-color {
+  background-color: #f1ffea;
+}
+
+.problem-fill-color {
+  background-color: #eaf2ff;
+}
+
+.problem-title {
+  display: flex;
+  color: black;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 11px;
+  padding: 11px;
+  border-bottom: 2px solid #05adef;
+}
+
+.problem-type {
+  padding: 4px 11px;
+  font-size: 11px;
+  text-align: right;
+  background-color: #05adef;
+  color: white;
+  font-weight: bold;
+  margin-top: -11px;
+  border: 1px solid grey;
+  border-bottom: none;
+}
+
+.problem-type.choice {
+  background-color: #3c763d;
+}
+
+.problem-type.fillTheCode {
+  background-color: #337ab7;
+}
+
+.quiz-onyl-badge {
+  background-color: #d9edf7;
+  color: #31708f;
+  border-radius: 0;
+  border: 1px solid #5789a2;
+  padding: 2px 8px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.submission-error {
+  color: @red;
+}
+
+.selectize-input {
+  border: 1px solid #05adef;
+}
+
+.upload-image-button{
+  opacity: 0;
+  width: 34px;
+  height: 24px;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+
+.evaluation-pane {
+  padding: 11px;
+}
+
+.problem-rank {
+  list-style: none;
+  padding: 0;
+  display: inline-block;
+  .problem-star {
+    display: inline-block;
+    padding: 0px 2px;
+    font-size: 14px;
+    color: @blue;
+    &:hover {
+      color: @blue-darker;
+      cursor: pointer;
+    }
+
+    &.voted {
+      color: @blue-darker;
+    }
+  }
+}
+
+.restrictions-panel {
+  font-size: 13px;
+  background-color: @blue-lighter;
+  border: 1px solid @gray-light;
+  padding: 11px;
+
+  .restrictions-help {
+    margin-bottom: 11px;
+  }
+}

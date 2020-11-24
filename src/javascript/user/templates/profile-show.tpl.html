@@ -1,0 +1,88 @@
+<div class="container content">
+  <div class="box multiview-top">
+    <th-profile-head></th-profile-head>
+    <div  style="display:none" class="alert-box-without-group alert alert-dismissible fade in" role="alert">
+      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+      <div class="alert-box-without-group-text">{{'user.alert-profile-msg1'| translate}}<br><br>{{'user.alert-profile-msg2'| translate}}<br>{{'user.alert-profile-msg3'| translate}}
+        <a>aqui</a>{{'user.alert-profile-msg4'| translate}} </div>
+    </div>
+
+    <div class="profile-graph-loading-container">
+      <div ng-if="loading" class="profile-graph-loading-margin">
+      </div>
+      <th-loading loading = "loading">
+        <div ng-if="profileUserComplete.ndCount > 0" ng-switch="slider" ng-mouseenter="stopSlide()" ng-mouseleave="continueSlide()">
+          <div class="graph-title-content">
+            <a ng-click="leftSlide()" class="btn btn-blue-lighter arrow-back cursor-pointer">
+              <i class="arrow-left arrow-blue icon"></i>
+              <i class="arrow-left arrow-blue-lighter icon arrow-small"></i>
+            </a>
+            <span class="graph-title" ng-switch-when="0" >{{'user.graph.topcoder'| translate}}</span>
+            <span class="graph-title" ng-switch-when="1" >{{'user.graph.scoreNd'| translate}}</span>
+            <a ng-click="rightSlide()" class="btn btn-blue-lighter arrow-next cursor-pointer">
+              <i class="arrow-right arrow-blue icon"></i>
+              <i class="arrow-right arrow-blue-lighter icon arrow-small"></i>
+            </a>
+          </div>
+          <nvd3 options="profileNd.options" data="profileNd.data" ng-switch-when="0"></nvd3>
+          <nvd3 options="profileSolvedNd.options" data="profileSolvedNd.data" ng-switch-when="1"></nvd3>
+        </div>
+        <div ng-if="profileUserComplete.ndCount === 0" class="graph-title-content">
+          <span class="graph-title graph-title-center">{{'user.graph.scoreNd'| translate}}</span>
+        </div>
+        <nvd3 ng-if="profileUserComplete.ndCount === 0" options="profileSolvedNd.options" data="profileSolvedNd.data" ></nvd3>
+      </th-loading>
+    </div>
+
+
+    <div class="profile-menu">
+      <div class="th-group-nav-bar">
+        <div class="th-group-tab-header">
+          <ul class="th-nav-tabs">
+            <li ui-sref=".problems" ui-sref-active="active"><a ui-sref=".problems">{{'user.table.title2'|translate}}</a></li>
+            <li ng-show="currentUser.id == profileUser.id" ui-sref=".quizzes" ui-sref-active="active"><a ui-sref=".quizzes">{{'user.table.title1'|translate}}</a></li>
+            <li ui-sref=".groups" ui-sref-active="active"><a ui-sref=".groups">{{'user.table.title3'|translate}}</a></li>
+            <li ui-sref=".solved-by-topics" ui-sref-active="active"><a ui-sref=".solved-by-topics">{{'user.table.title5'|translate}}</a></li>
+            <li ng-if="false" ui-sref=".notifications" ui-sref-active="active"><a ui-sref=".notifications">{{'user.table.title4'|translate}}</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="th-tab-pane" ui-sref=".quizzes" ui-sref-active="active">
+            <ul>
+              <li>&nbsp;</li>
+            </ul>
+          </div>
+
+          <div class="th-tab-pane" ui-sref=".problems" ui-sref-active="active">
+            <ul>
+              <li>&nbsp;</li>
+            </ul>
+          </div>
+
+          <div class="th-tab-pane" ui-sref=".groups" ui-sref-active="active">
+            <ul>
+              <li>&nbsp;</li>
+            </ul>
+          </div>
+
+          <div class="th-tab-pane" ui-sref=".notifications" ui-sref-active="active">
+            <ul>
+              <li>&nbsp;</li>
+            </ul>
+          </div>
+
+          <div class="th-tab-pane" ui-sref=".solved-by-topics" ui-sref-active="active">
+            <ul>
+              <li>&nbsp;</li>
+            </ul>
+          </div>
+        </div>
+        <div class="tab-content">
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <div ui-view></div>
+
+</div>

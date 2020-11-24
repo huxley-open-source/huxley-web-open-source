@@ -1,0 +1,49 @@
+<div>
+  <th-head header-title="'user.profile'"></th-head>
+</div>
+<div class="profile-header">
+    <div>
+        <img class ="profile-photo-margin" src="{{profileUser.bigAvatar}}">
+        <div ng-if="profileUserComplete.topcoderRank" class="profile-topCoder-information-container">
+            <span class="profile-information-status-color profile-topCoder-position-photo">{{profileUserComplete.topcoderRank}}º</span>
+        </div>
+        <span ng-if="profileUserComplete.topcoderRank" class="arrow arrow-right profile-arrow-photo"></span>
+
+    </div>
+    <div class="profile-information">
+        <div>
+            <div class="profile-user-name">
+                <th-user-link user="profileUser"/>
+            </div>
+            <div class="profile-institution-name">
+                <span ><a class="black-link" ui-sref="institution-show.groups({'id': profileUser.institution.id})">{{profileUser.institution.name}}</a></span>
+            </div>
+        </div>
+        <div class="profile-status-container">
+            <div class="profile-status">
+                <div>
+                    <span class="profile-information-title-color" translate>user.submissions</span>
+                        <span class="profile-information-status-color">{{profileUserComplete.submissionsCount}}</span>
+                </div>
+                <div>
+                    <span class="profile-information-title-color" translate>user.attempts</span>
+                    <span class="profile-information-status-color">{{profileUserComplete.triedProblemsCount}}</span>
+                </div>
+            </div>
+            <div class="profile-status">
+                <div>
+                    <span class="profile-information-title-color" translate>user.topCoderScore</span>
+                    <span class="profile-information-status-color">{{profileUserComplete.ndCount}}</span>
+                </div>
+                <div>
+                    <span class="profile-information-title-color" translate>user.solved-problems</span>
+                    <span class="profile-information-status-color">{{profileUserComplete.solvedProblemsCount}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div ng-if="profileUser.id === currentUser.id" class="profile-edit-button">
+      <a ui-sref="profile-edit"><i class="icon background-img img-short img-small-pen"></i></a>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,84 @@
+<div class="container content">
+  <div class="box">
+    <div class="header">
+      <div>
+        <div>
+          <h3>{{'home.userCreate.title' | translate}}</h3>
+        </div>
+      </div>
+    </div>
+    <div class="sign-in-form">
+      <form ng-submit="formSubmit()" name="createUser" novalidate>
+        <div class="form-group" ng-class="{'has-error': createUser.name.$dirty && !createUser.name.$valid}">
+          <label class="col-sm-2 control-label" for="name">{{'home.userCreate.name' | translate}}</label>
+          <div class="col-sm-10">
+            <input class="form-control" type="text" id="name" name="name" ng-model="user.name" placeholder="{{'home.userCreate.name' | translate}}" ng-maxlength="255" required>
+          </div>
+          <div class="align-form-error">
+            <span class="help-block" ng-if="createUser.name.$valid">{{'group.create.characterCount' | translate: {count: 255 - user.name.length, total: 255} }}</span>
+            <span class="help-block" ng-if="createUser.name.$dirty && createUser.name.$error.required">{{'home.userCreate.required' | translate}}</span>
+            <span class="help-block" ng-if="createUser.name.$error.maxlength">{{'group.create.characterCountError' | translate}}</span>
+          </div>
+        </div>
+        <div class="form-group" ng-class="{'has-error': createUser.username.$dirty && !createUser.username.$valid}">
+          <label class="col-sm-2 control-label" for="username">{{'home.userCreate.username' | translate}}</label>
+          <div class="col-sm-10">
+            <input class="form-control" type="text" id="username" name="username" ng-model="user.username" ng-pattern="/^[a-zA-Z0-9]+/" placeholder="{{'home.userCreate.username' | translate}}" ng-change="validateUsername()" ng-maxlength="255" required>
+          </div>
+          <div class="align-form-error">
+            <span class="help-block" ng-if="createUser.username.$valid">{{'group.create.characterCount' | translate: {count: 255 - user.username.length, total: 255} }}</span>
+            <span class="help-block" ng-if="createUser.username.$dirty && createUser.username.$error.required">{{'home.userCreate.required' | translate}}</span>
+            <span class="help-block" ng-if="createUser.username.$error.maxlength && !createUser.username.$error.unique">{{'group.create.characterCountError' | translate}}</span>
+            <span class="help-block" ng-if="createUser.username.$error.unique && !createUser.username.$error.format">{{'home.userCreate.usernameUniqueError' | translate }}</span>
+            <span class="help-block" ng-if="createUser.username.$error.format">{{'home.userCreate.usernameFormatError' | translate }}</span>
+          </div>
+        </div>
+        <div class="form-group" ng-class="{'has-error': createUser.email.$dirty && !createUser.email.$valid}">
+          <label class="col-sm-2 control-label" for="email">{{'home.userCreate.email' | translate}}</label>
+          <div class="col-sm-10">
+            <input class="form-control" type="email" id="email" name="email" ng-model="user.email" placeholder="{{'home.userCreate.email' | translate}}" ng-change="validateEmail()" ng-blur="validateEmailR()" ng-maxlength="255" required>
+          </div>
+          <div class="align-form-error">
+            <span class="help-block" ng-if="createUser.email.$valid">{{'group.create.characterCount' | translate: {count: 255 - user.email.length, total: 255} }}</span>
+            <span class="help-block" ng-if="createUser.email.$dirty && createUser.email.$error.required">{{'home.userCreate.required' | translate}}</span>
+            <span class="help-block" ng-if="createUser.email.$error.maxlength">{{'group.create.characterCountError' | translate}}</span>
+            <span class="help-block" ng-if="createUser.email.$error.unique">{{'home.userCreate.emailUniqueError' | translate }}</span>
+            <span class="help-block" ng-if="createUser.email.$error.email">{{'home.userCreate.emailInvalid' | translate }}</span>
+          </div>
+        </div>
+        <div class="form-group" ng-class="{'has-error': createUser.emailR.$dirty && !createUser.emailR.$valid}">
+          <label class="col-sm-2 control-label" for="emailR">{{'home.userCreate.emailR' | translate}}</label>
+          <div class="col-sm-10">
+            <input class="form-control" type="email" id="emailR" name="emailR" ng-model="user.emailR" placeholder="{{'home.userCreate.emailR' | translate}}" ng-change="validateEmailR()" ng-maxlength="255" required>
+          </div>
+          <div class="align-form-error">
+            <span class="help-block" ng-if="createUser.emailR.$valid">{{'group.create.characterCount' | translate: {count: 255 - user.emailR.length, total: 255} }}</span>
+            <span class="help-block" ng-if="createUser.emailR.$dirty && createUser.emailR.$error.required">{{'home.userCreate.required' | translate}}</span>
+            <span class="help-block" ng-if="createUser.emailR.$error.maxlength">{{'group.create.characterCountError' | translate}}</span>
+            <span class="help-block" ng-if="createUser.emailR.$error.email">{{'home.userCreate.emailInvalid' | translate }}</span>
+            <span class="help-block" ng-if="createUser.emailR.$error.repeat">{{'home.userCreate.emailRepeatError' | translate }}</span>
+          </div>
+        </div>
+        <div class="form-group" ng-class="{'has-error': createUser.password.$dirty && !createUser.password.$valid}">
+          <label class="col-sm-2 control-label" for="password">{{'home.userCreate.password' | translate}}</label>
+          <div class="col-sm-10">
+            <input class="form-control" type="password" id="password" name="password" ng-model="user.password" ng-minlength="6" ng-maxlength="255" placeholder="{{'home.userCreate.password' | translate}}" ng-maxlength="255" required>
+          </div>
+          <div class="align-form-error">
+            <span class="help-block" ng-if="createUser.password.$dirty && createUser.password.$error.required">{{'home.userCreate.required' | translate}}</span>
+            <span class="help-block" ng-if="createUser.password.$dirty && createUser.password.$error.minlength">{{ 'user.edit.shortPassword' | translate}}.</span>
+            <span class="help-block" ng-if="createUser.password.$dirty && createUser.password.$error.maxlength">{{ 'user.edit.longPassword' | translate}}.</span>
+          </div>
+        </div>
+
+        <div class="create-save-container text-right">
+          <button class="btn btn-green">{{'home.userCreate.action' | translate}}</button>
+        </div>
+      </form>
+
+    </div>
+
+
+  </div>
+
+</div>
